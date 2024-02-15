@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<targetImage fileVersion="1.1" is64bit="false">
+	<compilerSupport deviceFeatures="0x8FFFFDFF" extendedDeviceFeatures="0xFFFFFFF"/>
+	<info targetID="0x8E44297B" memoryID="0x5202" fullMemoryID="0xDBA8">
+		<features deviceFeatures="0x8E44297B" extendedDeviceFeatures="0xD138B"/>
+		<codeArea address="0xA0800000" size="0x100000" addrArea1="0xA0800000" addrArea2="0xA0900000"/>
+		<dataArea address="0xA0A00000" size="0x80000"/>
+		<auxDataArea address="0x0" size="0x0"/>
+		<bitDataArea address="0x0" size="0x0"/>
+		<retainDataArea address="0x0" size="0x0"/>
+		<debug address="0xA0A80000" size="0x80000" traceAreaAddress="0x0" traceAreaSize="0x0"/>
+		<stack limit="0x0"/>
+		<dynTask dimDynTaskTCB="0x0"/>
+		<functionTable address="0x0"/>
+		<sourceCode supported="0" address="0x0" size="0x0"/>
+	</info>
+	<tasks controlBitsAddress="0xA0270BAB">
+		<task index="0" name="Fast" flags="0x1D" period="0"/>
+		<task index="1" name="Bckg" flags="0x19" period="0"/>
+		<task index="2" name="Boot" flags="0x18" period="0"/>
+		<task index="3" name="Init" flags="0x18" period="0"/>
+		<task index="4" name="Serv" flags="0x18" period="0"/>
+	</tasks>
+	<dataBlocks address="0x709A0" size="95">
+		<dataBlock index="0" type="input" address="0x10000406" image="1" size="2" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="0" type="output" address="0x10000430" image="0" size="2" elementSize="2" access="readWrite" flags="0x00"/>
+		<dataBlock index="0" type="memory" address="0x1000052C" image="0" size="1" elementSize="4" access="read" flags="0x00"/>
+		<dataBlock index="1" type="input" address="0x10000438" image="1" size="8" elementSize="2" access="read" flags="0x00"/>
+		<dataBlock index="1" type="output" address="0x1000041A" image="0" size="6" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="1" type="memory" address="0x10000458" image="0" size="1" elementSize="9" access="read" flags="0x00"/>
+		<dataBlock index="2" type="input" address="0x10000448" image="1" size="8" elementSize="2" access="read" flags="0x00"/>
+		<dataBlock index="2" type="output" address="0x1000040A" image="0" size="3" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="2" type="memory" address="0x10000418" image="0" size="1" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="3" type="input" address="0x10000406" image="1" size="4" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="3" type="output" address="0x1000040D" image="0" size="1" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="3" type="memory" address="0x1000055C" image="0" size="1" elementSize="4" access="read" flags="0x00"/>
+		<dataBlock index="4" type="memory" address="0x10000554" image="0" size="1" elementSize="4" access="read" flags="0x00"/>
+		<dataBlock index="5" type="memory" address="0x100004F0" image="0" size="2" elementSize="4" access="read" flags="0x00"/>
+		<dataBlock index="5" type="input" address="0x100007E8" image="0" size="1" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="7" type="memory" address="0xA0217358" image="0" size="130" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="10" type="input" address="0x10000CEC" image="0" size="96" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="10" type="output" address="0x10000E30" image="0" size="60" elementSize="2" access="readWrite" flags="0x00"/>
+		<dataBlock index="11" type="output" address="0x10000D4C" image="0" size="84" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="11" type="input" address="0x10000DA0" image="0" size="72" elementSize="2" access="read" flags="0x00"/>
+		<dataBlock index="20" type="input" address="0x10001B98" image="1" size="8" elementSize="2" access="read" flags="0x00"/>
+		<dataBlock index="29" type="memory" address="0x100005A1" image="0" size="20" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="30" type="memory" address="0x10000510" image="0" size="1" elementSize="4" access="readWrite" flags="0x00"/>
+		<dataBlock index="31" type="memory" address="0x10000514" image="0" size="1" elementSize="4" access="read" flags="0x00"/>
+		<dataBlock index="32" type="memory" address="0x10000544" image="0" size="1" elementSize="2" access="read" flags="0x00"/>
+		<dataBlock index="33" type="memory" address="0x10000546" image="0" size="1" elementSize="2" access="read" flags="0x00"/>
+		<dataBlock index="34" type="memory" address="0x100005C4" image="0" size="1" elementSize="2" access="readWrite" flags="0x00"/>
+		<dataBlock index="35" type="memory" address="0x100005C6" image="0" size="1" elementSize="2" access="readWrite" flags="0x00"/>
+		<dataBlock index="40" type="memory" address="0x10000834" image="0" size="1" elementSize="4" access="read" flags="0x00"/>
+		<dataBlock index="50" type="memory" address="0x100007E9" image="0" size="1" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="55" type="memory" address="0x10001AE8" image="0" size="2" elementSize="4" access="read" flags="0x00"/>
+		<dataBlock index="56" type="memory" address="0x1000076D" image="0" size="2" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="99" type="memory" address="0x10000262" image="0" size="2" elementSize="2" access="readWrite" flags="0x00"/>
+		<dataBlock index="100" type="memory" address="0x10000000" image="0" size="416" elementSize="2" access="read" flags="0x00"/>
+		<dataBlock index="101" type="memory" address="0xA00017F0" image="0" size="5000" elementSize="2" access="read" flags="0x00"/>
+		<dataBlock index="102" type="memory" address="0x40024054" image="0" size="1" elementSize="4" access="readWrite" flags="0x00"/>
+		<dataBlock index="103" type="memory" address="0x10000417" image="0" size="1" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="110" type="memory" address="0xA0003F00" image="0" size="5000" elementSize="2" access="readWrite" flags="0x01"/>
+		<dataBlock index="500" type="memory" address="0x100004F8" image="0" size="2" elementSize="4" access="read" flags="0x00"/>
+		<dataBlock index="500" type="input" address="0x100007FC" image="0" size="1" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="550" type="memory" address="0x100007FD" image="0" size="1" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="600" type="memory" address="0x100005C0" image="0" size="1" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="601" type="memory" address="0x100005C1" image="0" size="1" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="602" type="memory" address="0x100005C2" image="0" size="1" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="1000" type="input" address="0xA0219460" image="0" size="8192" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="1000" type="output" address="0xA0217460" image="0" size="8192" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="2000" type="memory" address="0xA021735A" image="0" size="128" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="2001" type="memory" address="0xA0485170" image="0" size="128" elementSize="12" access="read" flags="0x00"/>
+		<dataBlock index="2002" type="memory" address="0xA0485770" image="0" size="16" elementSize="12" access="read" flags="0x00"/>
+		<dataBlock index="2003" type="memory" address="0xA0486250" image="0" size="128" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="2004" type="memory" address="0xA04862D0" image="0" size="16" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="2005" type="memory" address="0xA02173DA" image="0" size="130" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="2006" type="memory" address="0xA00001D2" image="0" size="1" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="2007" type="memory" address="0xA00001D3" image="0" size="1" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="2008" type="memory" address="0xA0486560" image="0" size="128" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="2009" type="memory" address="0xA04865E0" image="0" size="16" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="2100" type="memory" address="0xA04875D8" image="0" size="96256" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="2200" type="memory" address="0xA049EDD8" image="0" size="1328" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="2300" type="memory" address="0xA049F308" image="0" size="15104" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="2400" type="memory" address="0xA04A2E08" image="0" size="3392" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="2500" type="memory" address="0xA04A3B48" image="0" size="118784" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="2600" type="memory" address="0xA04C0B48" image="0" size="17664" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="2700" type="memory" address="0xA04C5048" image="0" size="276" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="2800" type="memory" address="0xA0000277" image="0" size="1" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="3000" type="memory" address="0x10000EC8" image="0" size="1" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="3001" type="memory" address="0x10000ECA" image="0" size="1" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="3002" type="memory" address="0x10000ECC" image="0" size="1" elementSize="2" access="read" flags="0x00"/>
+		<dataBlock index="3003" type="memory" address="0x10000ED0" image="0" size="1" elementSize="2" access="read" flags="0x00"/>
+		<dataBlock index="3004" type="memory" address="0xA000008C" image="0" size="1" elementSize="2" access="read" flags="0x00"/>
+		<dataBlock index="3100" type="memory" address="0x100005E4" image="0" size="6" elementSize="6" access="read" flags="0x00"/>
+		<dataBlock index="3101" type="memory" address="0xA020CB10" image="0" size="512" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="3102" type="memory" address="0xA020CD10" image="0" size="512" elementSize="2" access="readWrite" flags="0x00"/>
+		<dataBlock index="3103" type="memory" address="0xA020D110" image="0" size="128" elementSize="4" access="readWrite" flags="0x00"/>
+		<dataBlock index="3005" type="memory" address="0xA0000158" image="0" size="1" elementSize="2" access="read" flags="0x00"/>
+		<dataBlock index="3104" type="memory" address="0xA000000C" image="0" size="1" elementSize="4" access="readWrite" flags="0x00"/>
+		<dataBlock index="3105" type="memory" address="0xA00006AC" image="0" size="1" elementSize="2" access="read" flags="0x00"/>
+		<dataBlock index="3110" type="memory" address="0xA0000278" image="0" size="1" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="4000" type="memory" address="0xA0274AC0" image="0" size="1" elementSize="4" access="readWrite" flags="0x01"/>
+		<dataBlock index="4001" type="memory" address="0xA0274ABC" image="0" size="1" elementSize="4" access="readWrite" flags="0x01"/>
+		<dataBlock index="4100" type="memory" address="0xA00001C1" image="0" size="1" elementSize="1" access="read" flags="0x00"/>
+		<dataBlock index="4200" type="memory" address="0xA000020E" image="0" size="4" elementSize="2" access="read" flags="0x00"/>
+		<dataBlock index="4201" type="memory" address="0xA0486AA0" image="0" size="4" elementSize="2" access="read" flags="0x00"/>
+		<dataBlock index="4202" type="memory" address="0xA0486AA8" image="0" size="4" elementSize="2" access="read" flags="0x00"/>
+		<dataBlock index="4203" type="memory" address="0xA0486AB0" image="0" size="4" elementSize="2" access="read" flags="0x00"/>
+		<dataBlock index="5000" type="memory" address="0xA04866A8" image="0" size="4" elementSize="4" access="readWrite" flags="0x00"/>
+		<dataBlock index="5001" type="memory" address="0x10000914" image="0" size="1" elementSize="1" access="readWrite" flags="0x00"/>
+		<dataBlock index="5002" type="memory" address="0xA00001F2" image="0" size="1" elementSize="2" access="readWrite" flags="0x00"/>
+		<dataBlock index="5003" type="memory" address="0xA00002C8" image="0" size="1" elementSize="4" access="read" flags="0x00"/>
+		<dataBlock index="5004" type="memory" address="0xA00002CC" image="0" size="1" elementSize="4" access="read" flags="0x00"/>
+		<dataBlock index="5005" type="memory" address="0xA0000624" image="0" size="1" elementSize="4" access="read" flags="0x00"/>
+		<dataBlock index="5050" type="memory" address="0xA00001F4" image="0" size="1" elementSize="2" access="readWrite" flags="0x00"/>
+		<dataBlock index="5051" type="memory" address="0xA04866B8" image="0" size="65" elementSize="2" access="readWrite" flags="0x00"/>
+		<dataBlock index="5060" type="memory" address="0xA00001F6" image="0" size="1" elementSize="2" access="readWrite" flags="0x00"/>
+		<dataBlock index="5061" type="memory" address="0xA048673A" image="0" size="200" elementSize="2" access="readWrite" flags="0x00"/>
+		<dataBlock index="5062" type="memory" address="0xA00001F8" image="0" size="1" elementSize="2" access="readWrite" flags="0x00"/>
+	</dataBlocks>
+	<functions address="0x70F90" size="261" userSize="208">
+		<function name="strncpy" address="0x5905F"/>
+		<function name="strncmp" address="0x58D1B"/>
+		<function name="strncat" address="0x58BE5"/>
+		<function name="_do_int_div" address="0x1B625"/>
+		<function name="_do_mod" address="0x1B62D"/>
+		<function name="_ret_max_val" address="0x1B661"/>
+		<function name="_ret_min_val" address="0x1B679"/>
+		<function name="_ret_min_limit" address="0x1B6A9"/>
+		<function name="_ret_max_limit" address="0x1B691"/>
+		<function name="_plcerror" address="0x1229D"/>
+		<function name="sysWriteDbgMsg" address="0xFC99"/>
+		<function name="sysClockWrite" address="0xA5C9"/>
+		<function name="sysPwmDO" address="0x18EF1"/>
+		<function name="_memcopy" address="0x1B64D"/>
+		<function name="Video_Lock" address="0x31AC9"/>
+		<function name="Video_Unlock" address="0x31AB9"/>
+		<function name="Video_SendEvent" address="0x3372F"/>
+		<function name="Video_GetEvent" address="0x2F287"/>
+		<function name="Video_Sleep" address="0x2F209"/>
+		<function name="Video_PrintStr" address="0x33487"/>
+		<function name="Video_PrintNChar" address="0x33585"/>
+		<function name="Video_InitPage" address="0x32F09"/>
+		<function name="Video_ClrRect" address="0x331DD"/>
+		<function name="Video_SaveRect" address="0x33249"/>
+		<function name="Video_Switch" address="0x31EF1"/>
+		<function name="Video_InitHMI" address="0x31EF7"/>
+		<function name="Video_DrawFrames" address="0x31FAD"/>
+		<function name="Video_WriteFromBuff" address="0x33291"/>
+		<function name="Video_ResetMaps" address="0x340EF"/>
+		<function name="Video_SetWndSysProps" address="0x332E3"/>
+		<function name="Video_SetPageColors" address="0x332CF"/>
+		<function name="Video_SetEditKey" address="0x33315"/>
+		<function name="Video_AddFont" address="0x3332F"/>
+		<function name="Video_AddFontUnicode" address="0x2F019"/>
+		<function name="Video_SetColors" address="0x333A1"/>
+		<function name="Video_SetFont" address="0x2F32F"/>
+		<function name="Video_LoadLanguage" address="0x34121"/>
+		<function name="Video_LoadExternalFont" address="0x2F14D"/>
+		<function name="Video_PrintResStr" address="0x334E9"/>
+		<function name="Video_EnterEdit" address="0x33A91"/>
+		<function name="Video_EnterEditSel" address="0x337AD"/>
+		<function name="Video_NextEdit" address="0x33A9F"/>
+		<function name="Video_FirstLastEdit" address="0x33D1B"/>
+		<function name="Video_PrevEdit" address="0x33E57"/>
+		<function name="Video_Line" address="0x31F77"/>
+		<function name="Video_Rectangle" address="0x333BF"/>
+		<function name="Video_DrawBorder" address="0x32D37"/>
+		<function name="Video_PrintBitmap" address="0x33671"/>
+		<function name="Video_DelBitmap" address="0x336C1"/>
+		<function name="Video_EvNotify" address="0x34475"/>
+		<function name="Video_GetParam" address="0x3875F"/>
+		<function name="Video_GetParam2" address="0x3861D"/>
+		<function name="Video_SetParam" address="0x38785"/>
+		<function name="Image" address="0x37365"/>
+		<function name="Animation" address="0x3840D"/>
+		<function name="EditBox01" address="0x3496F"/>
+		<function name="Progress" address="0x376B1"/>
+		<function name="Button02" address="0x2E8E9"/>
+		<function name="Static01" address="0x38241"/>
+		<function name="sysSwap_DiaToHmi" address="0x1B6C1"/>
+		<function name="Video_InitBmpTreeRefresh" address="0x1E5DD"/>
+		<function name="Video_EndBmpTreeRefresh" address="0x1E5E5"/>
+		<function name="Video_SetDeviceCfg" address="0x1429B"/>
+		<function name="sysDBase_SetExtTable" address="0x13899"/>
+		<function name="sysDBase_SetBACnetAddressess" address="0x1383D"/>
+		<function name="sysBACnet_WriteE2Par" address="0x2E4F5"/>
+		<function name="sysBACnet_LoadDefaultsFromFile" address="0x2E52B"/>
+		<function name="sysBACnet_AV_PresentValue" address="0xA078D3C5"/>
+		<function name="sysBACnet_BV_PresentValue" address="0xA078DCF9"/>
+		<function name="sysBACnet_MV_PresentValue" address="0xA078E8C9"/>
+		<function name="sysBACnet_Ca_PresentValue" address="0xA0791585"/>
+		<function name="sysBACnet_BBMD" address="0xA078C9BF"/>
+		<function name="sysBACnet_WrStr" address="0xA07940D3"/>
+		<function name="sysBACnet_DeProfileName" address="0xA078C7AF"/>
+		<function name="sysWriteParUINT" address="0x27A79"/>
+		<function name="sysWriteParINT" address="0x27A8B"/>
+		<function name="sysWriteParWORD" address="0x27AAD"/>
+		<function name="sysWriteParUDINT" address="0x27ABD"/>
+		<function name="sysWriteParDINT" address="0x27ACF"/>
+		<function name="sysWriteParDWORD" address="0x27AE1"/>
+		<function name="sysWriteParUSINT" address="0x27AF1"/>
+		<function name="sysWriteParSINT" address="0x27B03"/>
+		<function name="sysWriteParBYTE" address="0x27B17"/>
+		<function name="sysWriteParBOOL" address="0x27B27"/>
+		<function name="sysWriteParREAL" address="0x27B41"/>
+		<function name="sysDBase_DevRead" address="0x13FA9"/>
+		<function name="sysDBase_DevReadF" address="0x1407D"/>
+		<function name="sysDBase_DevWrite" address="0x14173"/>
+		<function name="sysDBase_DevWriteF" address="0x141EF"/>
+		<function name="sysHmi_Message" address="0x1D4A7"/>
+		<function name="sys_F_WOPEN" address="0x45A7B"/>
+		<function name="sys_F_ROPEN" address="0x45ACF"/>
+		<function name="sys_FM_READ" address="0x45B23"/>
+		<function name="sys_FM_WRITE" address="0x45B67"/>
+		<function name="sys_F_CLOSE" address="0x45BA3"/>
+		<function name="sys_FA_READ" address="0x45BC3"/>
+		<function name="sys_FA_WRITE" address="0x45BE9"/>
+		<function name="sys_F_EOF" address="0x45C17"/>
+		<function name="sys_F_REMOVE" address="0x45C3D"/>
+		<function name="sys_F_WOPENA" address="0x45CBB"/>
+		<function name="sys_F_FILELENGTH" address="0x45D07"/>
+		<function name="sysWD_Background" address="0xA8FF"/>
+		<function name="sysWD_Timed" address="0xA91F"/>
+		<function name="sysSetMsTaskPeriod" address="0x83CF"/>
+		<function name="sys_mdconnts" address="0x2C6AD"/>
+		<function name="sys_mdcall" address="0x2C6C7"/>
+		<function name="sys_mdcallts" address="0x2C6D7"/>
+		<function name="sys_mdhangup" address="0x2C6E1"/>
+		<function name="sys_sndsms" address="0x2C6EB"/>
+		<function name="sys_sndsmsts" address="0x2C711"/>
+		<function name="sysCOPM_Command" address="0xF7BF"/>
+		<function name="sysCOPM_Sdo_OpenChn" address="0xF7E7"/>
+		<function name="sysCOPM_Sdo_CloseChn" address="0xF801"/>
+		<function name="sysCOPM_Sdo_DownloadRequest" address="0xF81F"/>
+		<function name="sysCOPM_Sdo_UploadRequest" address="0xF859"/>
+		<function name="sysExecutionPassword" address="0x27C27"/>
+		<function name="sysPlugInRelay" address="0x27C43"/>
+		<function name="sysAOasOC" address="0x27C79"/>
+		<function name="sysSetDI_SamplingMode" address="0x18F99"/>
+		<function name="sys_rcvsms" address="0x2C71B"/>
+		<function name="sys_rcvsmsts" address="0x2C72D"/>
+		<function name="sys_readsms" address="0x2C737"/>
+		<function name="sysWriteParSTRING" address="0x27B69"/>
+		<function name="sys_mdhwerr" address="0x2C6B7"/>
+		<function name="sys_mdswerr" address="0x2C6BF"/>
+		<function name="sysDBase_DevReadString" address="0x140CB"/>
+		<function name="sysDBase_DevReadString2" address="0x14119"/>
+		<function name="sysDBase_DevWriteString" address="0x1423F"/>
+		<function name="sysINT_TO_STRING" address="0x27DBB"/>
+		<function name="sysSTRCAT" address="0x27E33"/>
+		<function name="sysSTREQU" address="0x27E65"/>
+		<function name="sysSTREXT" address="0x27E8D"/>
+		<function name="sysSTRINGtoINT" address="0x27E7F"/>
+		<function name="sys_USBD_Command" address="0x45989"/>
+		<function name="sys_USBD_Status" address="0x459F7"/>
+		<function name="sysUART_init" address="0x27F4F"/>
+		<function name="sysUART_putbuff" address="0x27FCF"/>
+		<function name="sysUART_getbuff" address="0x27FED"/>
+		<function name="sysBridge" address="0x2808F"/>
+		<function name="sysSMTP_SendEmail" address="0x28237"/>
+		<function name="sysSMTP_Reset" address="0x2828B"/>
+		<function name="sysDNS_GetIpByName" address="0x282A9"/>
+		<function name="sysDNS_Reset" address="0x282DD"/>
+		<function name="sysHTTP_Authentication" address="0x28301"/>
+		<function name="sysHTTP_ListableFilesExt" address="0x283F3"/>
+		<function name="sysHTTP_Service" address="0x28487"/>
+		<function name="sysHTTP_AcceptClient" address="0x284FF"/>
+		<function name="sysHTTP_AuthentGuest" address="0x28549"/>
+		<function name="sysHTTP_AuthentOnOff" address="0x287F5"/>
+		<function name="sysFTP_Authentication" address="0x2883B"/>
+		<function name="sysFTP_Service" address="0x288E1"/>
+		<function name="sysFTP_AcceptClient" address="0x28959"/>
+		<function name="sysFTP_AuthentGuest" address="0x289A3"/>
+		<function name="sysFTP_ProtectFiles" address="0x28B05"/>
+		<function name="sysFTP_AuthentOnOff" address="0x28B0F"/>
+		<function name="sysMbS_AcceptClient" address="0x28B55"/>
+		<function name="sysSNTP_Reset" address="0x28CF9"/>
+		<function name="sysSNTP_GetTime" address="0x28C6D"/>
+		<function name="sysFTP_ClientReset" address="0x28D85"/>
+		<function name="sysFTP_ClientCommand" address="0x28D19"/>
+		<function name="sysMSTPDBG" address="0x28DBF"/>
+		<function name="sysAnswerDelayIncTime" address="0x28BA9"/>
+		<function name="sysDataPush_Start" address="0x28BD3"/>
+		<function name="sysDataPush_Reset" address="0x28C4B"/>
+		<function name="sysAOasOC_extended" address="0x27DB3"/>
+		<function name="sysLON_IFace_Stop" address="0x65D15"/>
+		<function name="sysLON_IFace_Start" address="0x65D37"/>
+		<function name="sysLON_IFace_ResetConfig" address="0x65D59"/>
+		<function name="sysLON_IFace_SetProgramID" address="0x65D7B"/>
+		<function name="sysLON_IFace_AddFunctionBlock" address="0x65D9D"/>
+		<function name="sysLON_IFace_AddNV" address="0x65DC3"/>
+		<function name="sysLON_IFace_ReadNV" address="0x65DE7"/>
+		<function name="sysLON_IFace_WriteNV" address="0x65E07"/>
+		<function name="sysLON_IFace_AddCP" address="0x65E27"/>
+		<function name="sysLON_IFace_ReadCP" address="0x65E4B"/>
+		<function name="sysLON_IFace_WriteCP" address="0x65E6B"/>
+		<function name="sysLON_IFace_SetAppSignature" address="0x65E8B"/>
+		<function name="sysLON_IFace_GetConfigured" address="0x65EAD"/>
+		<function name="sysLON_IFace_GetOnLineMode" address="0x65EC5"/>
+		<function name="sysLON_IFace_State" address="0x65EDD"/>
+		<function name="sysLON_IFace_SetGreenLed" address="0x65EF5"/>
+		<function name="sysWD_system" address="0xA937"/>
+		<function name="sysBridge_Priority" address="0x2822D"/>
+		<function name="sysMbMRtu_ChangeSetting" address="0x23897"/>
+		<function name="sysMbSTcp_SocketServerInfo" address="0x277F1"/>
+		<function name="sysLcd_RotateAt180" address="0x1A2FF"/>
+		<function name="sysLocalADCs_Fast" address="0x28DEB"/>
+		<function name="sysUART_Reinit" address="0x28013"/>
+		<function name="sysBACnet_PropertyExt" address="0xA078E93D"/>
+		<function name="sysProtectionFunction" address="0x28ED7"/>
+		<function name="sysMbMRTU_FC01" address="0x23FA3"/>
+		<function name="sysMbMRTU_FC02" address="0x23FFB"/>
+		<function name="sysMbMRTU_FC03" address="0x23F43"/>
+		<function name="sysMbMRTU_FC04" address="0x24053"/>
+		<function name="sysMbMRTU_FC05" address="0x240F9"/>
+		<function name="sysMbMRTU_FC06" address="0x240B3"/>
+		<function name="sysMbMRTU_FC15" address="0x2413F"/>
+		<function name="sysMbMRTU_FC16" address="0x2419D"/>
+		<function name="sysMbMTCP_FC01" address="0x244DF"/>
+		<function name="sysMbMTCP_FC02" address="0x2493F"/>
+		<function name="sysMbMTCP_FC03" address="0x242B7"/>
+		<function name="sysMbMTCP_FC04" address="0x24B9D"/>
+		<function name="sysMbMTCP_FC05" address="0x24DA3"/>
+		<function name="sysMbMTCP_FC06" address="0x24FBB"/>
+		<function name="sysMbMTCP_FC15" address="0x2471F"/>
+		<function name="sysMbMTCP_FC16" address="0x24257"/>
+		<function name="_do_uint_div" address="0x1B639"/>
+		<function name="_do_uint_mod" address="0x1B641"/>
+		<function name="UDINT_TO_REAL" address="0x110E7"/>
+		<function name="DINT_TO_REAL" address="0x110F7"/>
+		<function name="REAL_TO_UDINT" address="0x11107"/>
+		<function name="REAL_TO_DINT" address="0x11117"/>
+		<function name="ADD_REAL" address="0x11127"/>
+		<function name="SUB_REAL" address="0x11137"/>
+		<function name="MUL_REAL" address="0x11147"/>
+		<function name="DIV_REAL" address="0x11157"/>
+		<function name="GT_REAL" address="0x11167"/>
+		<function name="GE_REAL" address="0x1117F"/>
+		<function name="EQ_REAL" address="0x11197"/>
+		<function name="LT_REAL" address="0x111AF"/>
+		<function name="LE_REAL" address="0x111C7"/>
+		<function name="NE_REAL" address="0x111DF"/>
+		<function name="ST_STRING" address="0x11231"/>
+		<function name="EQ_STRING" address="0x11351"/>
+		<function name="NE_STRING" address="0x11363"/>
+		<function name="LE_STRING" address="0x11375"/>
+		<function name="LT_STRING" address="0x11387"/>
+		<function name="GE_STRING" address="0x11399"/>
+		<function name="GT_STRING" address="0x113AB"/>
+		<function name="LEN" address="0x1124F"/>
+		<function name="LEFT" address="0x1141B"/>
+		<function name="RIGHT" address="0x114C1"/>
+		<function name="MID" address="0x1158F"/>
+		<function name="CONCAT" address="0x11601"/>
+		<function name="INSERT" address="0x116FB"/>
+		<function name="DELETE" address="0x117CF"/>
+		<function name="REPLACE" address="0x1186F"/>
+		<function name="FIND" address="0x118A3"/>
+		<function name="INT_TO_STRING" address="0x11939"/>
+		<function name="REAL_TO_STRING" address="0x119C7"/>
+		<function name="STRING_TO_INT" address="0x11A31"/>
+		<function name="STRING_TO_UINT" address="0x11ABB"/>
+		<function name="STRING_TO_REAL" address="0x11BB7"/>
+		<function name="ABS_REAL" address="0x11C55"/>
+		<function name="SQRT" address="0x11C73"/>
+		<function name="LN" address="0x11C93"/>
+		<function name="LOG" address="0x11CB3"/>
+		<function name="EXP" address="0x11CD3"/>
+		<function name="POW" address="0x11CF3"/>
+		<function name="SIN" address="0x11D23"/>
+		<function name="COS" address="0x11D43"/>
+		<function name="TAN" address="0x11D95"/>
+		<function name="ASIN" address="0x11DB5"/>
+		<function name="ACOS" address="0x11DD5"/>
+		<function name="ATAN" address="0x11DF5"/>
+		<function name="ATAN2" address="0x11E15"/>
+		<function name="SINH" address="0x11E45"/>
+		<function name="COSH" address="0x11E65"/>
+		<function name="TANH" address="0x11E85"/>
+		<function name="CEIL" address="0x11EA5"/>
+		<function name="FLOOR" address="0x11EC5"/>
+	</functions>
+</targetImage>

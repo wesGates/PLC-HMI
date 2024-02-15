@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- #DEFINE PREFIX M1722DPLC -->
+<devicetemplate>
+	<deviceinfo caption="M172-PLC" name="M172-PLC" version="0.0" icon="img\application.ico" deviceid="M1722DPLC" devicetype="application" PLCApplicationID="M172-PLC">
+		<description>M172-PLC Application</description>
+		<protocols><protocol>TM172O_668p14_appl</protocol></protocols>
+	</deviceinfo>
+	<plcconfig>
+		<hmi>
+			<tree name="treeCommissioning">
+				<node name="PREFIX" caption="M172-PLC" icon="%CATALOG%\Applications\img\application.ico" datalink="PREFIX" captionedit="false" menu="menuAppPLC"/>
+			</tree>
+		</hmi>
+		<templatedata>
+			<PREFIX/>
+		</templatedata>
+		<extensions>
+		</extensions>
+		<datadef version="1.0">
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+				<xs:element name="PREFIX">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="insertableDevice">
+								<xs:sequence>
+								</xs:sequence>
+								<xs:attribute name="oncreatenode" type="xs:string" fixed="configurator.OnCreateDeviceChild"/>
+								<xs:attribute name="onloadnode" type="xs:string" fixed="configurator.OnLoadDeviceChild"/>
+								<xs:attribute name="ondeletenode" type="xs:string" fixed="configurator.OnDeleteDeviceChild"/>
+								<xs:attribute name="PLCProject" type="xs:string" fixed=""/>
+								<xs:attribute name="noAutoGenCaption" type="xs:boolean" fixed="true"/>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</datadef>
+		<cfgSettings><item name="newAccessLevelFormat">true</item></cfgSettings></plcconfig>
+	<deviceconfig>
+		<hmi>
+			<tree name="tree1">
+				<node name="PREFIX" caption="M172-PLC" icon="%CATALOG%\Applications\img\application.ico" datalink="PREFIX" captionedit="false" menu="menuAppPLC"/>
+			</tree>
+		</hmi>
+		<templatedata>
+			<PREFIX/>
+		</templatedata>
+		<extensions>
+			<eventhandler event="OnLoadTemplate">configurator.OnLoadDeviceTemplate</eventhandler>
+		</extensions>
+		<datadef version="1.0">
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+				<xs:element name="PREFIX">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="insertableDevice">
+								<xs:sequence>
+								</xs:sequence>
+								<xs:attribute name="oncreatenode" type="xs:string" fixed="configurator.OnCreateDeviceChild"/>
+								<xs:attribute name="onloadnode" type="xs:string" fixed="configurator.OnLoadDeviceChild"/>
+								<xs:attribute name="ondeletenode" type="xs:string" fixed="configurator.OnDeleteDeviceChild"/>
+								<xs:attribute name="PLCProject" type="xs:string" fixed="M172-PLC.RSM"/>
+								<xs:attribute name="HMIProject" type="xs:string" fixed="HMIRemote\M172-PLC.RSM"/>
+								<xs:attribute name="HMIRemoteProject" type="xs:string" fixed="HMIRemote\Download\M172-PLC.BIN"/>
+								<xs:attribute name="noAutoGenCaption" type="xs:boolean" fixed="true"/>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</datadef>
+		<parameters/>
+		<enums/>
+		<redefPars/>
+		<settings><item name="newAccessLevelFormat">true</item></settings><fieldVars/>
+		<BACnetsNotPublished/></deviceconfig>
+</devicetemplate>
