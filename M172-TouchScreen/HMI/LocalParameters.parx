@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<parx><deviceconfig><parameters><par ipa="8192" name="Par_TAB" descr="Tab (map code)" defval="0" min="0" max="65535" um="num" typepar="unsignedShort" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8192" commsubindex="0"/>
+				<menu id="01"/>
+			</par>
+			<par ipa="8193" name="Par_POLI" descr="Polycarbonate code" defval="2072" min="0" max="65535" um="num" typepar="unsignedShort" typetarg="unsignedShort" onbeforewrite="TM172DC-P_659p9.OnBeforeWrite_POLI" onchange="TM172DC-P_659p9.OnChange_POLI">
+				<protocol name="Modbus" commaddr="8193" commsubindex="0"/>
+				<menu id="01"/>
+			</par>
+			<par ipa="8194" name="Par_PARMOD" descr="Parameter modified" defval="0" min="0" max="1" um="flag" typepar="boolean" typetarg="boolean">
+				<protocol name="Modbus" commaddr="8194" commsubindex="0"/>
+				<menu id="01"/>
+			</par>
+			<par ipa="8195" name="CAL_RH_interne" descr="Calibration value for RH" readonly="true" defval="0" min="-32768" max="32767" um="num" typepar="short" typetarg="short">
+				<protocol name="Modbus" commaddr="8195" commsubindex="0"/>
+				<menu id="02"/>
+			</par>
+			<par ipa="8196" name="Temp_UM" descr="Unit of temperature measurement" defval="0" min="0" max="1" um="num" typepar="enum2" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8196" commsubindex="0"/>
+				<menu id="04"/>
+			</par>
+			<par ipa="8197" name="Calibration_NTC" descr="NTC differential" defval="0" min="-180" max="180" um="°C/10,°F/10" typepar="short" typetarg="short">
+				<protocol name="Modbus" commaddr="8197" commsubindex="0"/>
+				<menu id="04"/>
+			</par>
+			<par ipa="8206" name="Calibration_RH" descr="Rh percentage differential" defval="0" min="-1000" max="1000" um="%/10" typepar="short" typetarg="short">
+				<protocol name="Modbus" commaddr="8206" commsubindex="0"/>
+				<menu id="04"/>
+			</par>
+			<par ipa="8198" name="Addr_RS485_OB" descr="RS485 On Board address" defval="1" min="0" max="247" um="num" typepar="unsignedShort" typetarg="unsignedShort" parInRam="true">
+				<protocol name="Modbus" commaddr="8198" commsubindex="0"/>
+				<menu id="07"/>
+			</par>
+			<par ipa="8199" name="Proto_RS485_OB" descr="Select RS485 On Board protocol" defval="0" um="num" typepar="enum5" typetarg="unsignedShort" parInRam="true">
+				<protocol name="Modbus" commaddr="8199" commsubindex="0"/>
+				<menu id="07"/>
+			</par>
+			<par ipa="8200" name="DataBit_RS485_OB" descr="RS485 On Board Data bit number" defval="8" min="8" max="8" um="num" typepar="unsignedShort" typetarg="unsignedShort" parInRam="true">
+				<protocol name="Modbus" commaddr="8200" commsubindex="0"/>
+				<menu id="07"/>
+			</par>
+			<par ipa="8201" name="StopBit_RS485_OB" descr="RS485 On Board stop bit number" defval="1" min="1" max="2" um="num" typepar="unsignedShort" typetarg="unsignedShort" parInRam="true">
+				<protocol name="Modbus" commaddr="8201" commsubindex="0"/>
+				<menu id="07"/>
+			</par>
+			<par ipa="8202" name="Parity_RS485_OB" descr="RS485 On Board parity protocol" defval="2" min="0" max="2" um="num" typepar="enum6" typetarg="unsignedShort" parInRam="true">
+				<protocol name="Modbus" commaddr="8202" commsubindex="0"/>
+				<menu id="07"/>
+			</par>
+			<par ipa="8203" name="Baud_RS485_OB" descr="RS485 On Board baud rate protocol" defval="2" min="0" max="4" um="num" typepar="enum9" typetarg="unsignedShort" parInRam="true">
+				<protocol name="Modbus" commaddr="8203" commsubindex="0"/>
+				<menu id="07"/>
+			</par>
+			<par ipa="8204" readonly="false" name="Par_Orientation" typepar="enum20" typetarg="unsignedChar" defval="1" min="0" max="1" descr="Display orientation">
+				<protocol name="Modbus" commaddr="8204" commsubindex="0"/>
+				<menu id="14"/>
+			</par>
+			<par ipa="8205" name="Par_Language" descr="System Language" defval="1" min="0" max="65535" um="num" typepar="enum17" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8205" commsubindex="0"/>
+				<menu id="14"/>
+			</par>
+			<par ipa="8207" name="Par_BackLightTime" descr="Backlight time" defval="30" min="0" max="3600" um="sec" typepar="unsignedShort" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8207" commsubindex="0"/>
+				<menu id="14"/>
+			</par>
+			<par ipa="8250" name="Par_BackLightMinValue" descr="Backlight minimum value" defval="5" min="0" max="100" um="%" typepar="unsignedShort" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8250" commsubindex="0"/>
+				<menu id="14"/>
+			</par>
+			<par ipa="8211" readonly="false" name="sysBacklight" typepar="enum14" typetarg="unsignedChar" defval="2" min="0" max="2" um="num" scale="1" form="%d" descr="Display backlight" parInRam="true">
+				<protocol name="Modbus" commaddr="8211" commsubindex="0"/>
+				<menu id="18"/>
+			</par>
+			<par ipa="8208" readonly="true" name="NTC" typepar="short" typetarg="short" defval="-32767" um="°C/10,°F/10" descr="NTC thermistor sensor" parInRam="true">
+				<protocol name="Modbus" commaddr="8208" commsubindex="0"/>
+				<menu id="16"/>
+				<option dataBlock="IW1.0" parType=""/>
+			</par>
+			<par ipa="8209" readonly="true" name="RH" typepar="short" typetarg="short" defval="-32767" um="%/10" descr="RH humidity sensor" parInRam="true">
+				<protocol name="Modbus" commaddr="8209" commsubindex="0"/>
+				<menu id="16"/>
+				<option dataBlock="IW1.1" parType=""/>
+			</par>
+			<par ipa="8210" readonly="true" name="PIR" typepar="short" typetarg="short" defval="-32767" um="digit" descr="PIR proximity sensor" parInRam="true">
+				<protocol name="Modbus" commaddr="8210" commsubindex="0"/>
+				<menu id="16"/>
+				<option dataBlock="IW1.2" parType=""/>
+			</par>
+			<par ipa="8212" readonly="true" name="sysClock_seconds" descr="Second value" defval="0" min="0" max="59" um="sec" typepar="unsignedChar" typetarg="unsignedChar" parInRam="true">
+				<protocol name="Modbus" commaddr="8212" commsubindex="0"/>
+				<menu id="19"/>
+			</par>
+			<par ipa="8213" readonly="true" name="sysClock_minutes" descr="Minute value" defval="0" min="0" max="59" um="min" typepar="unsignedChar" typetarg="unsignedChar" parInRam="true">
+				<protocol name="Modbus" commaddr="8213" commsubindex="0"/>
+				<menu id="19"/>
+			</par>
+			<par ipa="8214" readonly="true" name="sysClock_hours" descr="Hour value" defval="0" min="0" max="23" um="hours" typepar="unsignedChar" typetarg="unsignedChar" parInRam="true">
+				<protocol name="Modbus" commaddr="8214" commsubindex="0"/>
+				<menu id="19"/>
+			</par>
+			<par ipa="8215" readonly="true" name="sysClock_dayweek" descr="Day of week value" defval="0" min="0" max="6" um="num" typepar="unsignedChar" typetarg="unsignedChar" parInRam="true">
+				<protocol name="Modbus" commaddr="8215" commsubindex="0"/>
+				<menu id="19"/>
+			</par>
+			<par ipa="8216" readonly="true" name="sysClock_daymonth" descr="Day of the month value" defval="1" min="1" max="31" um="num" typepar="unsignedChar" typetarg="unsignedChar" parInRam="true">
+				<protocol name="Modbus" commaddr="8216" commsubindex="0"/>
+				<menu id="19"/>
+			</par>
+			<par ipa="8217" readonly="true" name="sysClock_month" descr="Month value" defval="1" min="1" max="12" um="num" typepar="unsignedChar" typetarg="unsignedChar" parInRam="true">
+				<protocol name="Modbus" commaddr="8217" commsubindex="0"/>
+				<menu id="19"/>
+			</par>
+			<par ipa="8218" readonly="true" name="sysClock_year" descr="Year value" defval="0" min="0" max="99" um="num" typepar="unsignedChar" typetarg="unsignedChar" parInRam="true">
+				<protocol name="Modbus" commaddr="8218" commsubindex="0"/>
+				<menu id="19"/>
+			</par>
+			<par ipa="8219" readonly="true" name="sysClock_Error" descr="RTC not initialized" defval="0" min="0" max="1" um="flag" typepar="boolean" typetarg="boolean" parInRam="true">
+				<protocol name="Modbus" commaddr="8219" commsubindex="0"/>
+				<menu id="19"/>
+			</par>
+			<par ipa="8220" readonly="false" name="sysClockSet_seconds" descr="Second value (write)" defval="0" min="0" max="59" um="sec" typepar="unsignedChar" typetarg="unsignedChar" parInRam="true">
+				<protocol name="Modbus" commaddr="8220" commsubindex="0"/>
+				<menu id="19"/>
+			</par>
+			<par ipa="8221" readonly="false" name="sysClockSet_minutes" descr="Minute value (write)" defval="0" min="0" max="59" um="min" typepar="unsignedChar" typetarg="unsignedChar" parInRam="true">
+				<protocol name="Modbus" commaddr="8221" commsubindex="0"/>
+				<menu id="19"/>
+			</par>
+			<par ipa="8222" readonly="false" name="sysClockSet_hours" descr="Hour value (write)" defval="0" min="0" max="23" um="hours" typepar="unsignedChar" typetarg="unsignedChar" parInRam="true">
+				<protocol name="Modbus" commaddr="8222" commsubindex="0"/>
+				<menu id="19"/>
+			</par>
+			<par ipa="8223" readonly="false" name="sysClockSet_dayweek" descr="Day of week value (write)" defval="0" min="0" max="6" um="num" typepar="unsignedChar" typetarg="unsignedChar" parInRam="true">
+				<protocol name="Modbus" commaddr="8223" commsubindex="0"/>
+				<menu id="19"/>
+			</par>
+			<par ipa="8224" readonly="false" name="sysClockSet_daymonth" descr="Day of the month value (write)" defval="1" min="1" max="31" um="num" typepar="unsignedChar" typetarg="unsignedChar" parInRam="true">
+				<protocol name="Modbus" commaddr="8224" commsubindex="0"/>
+				<menu id="19"/>
+			</par>
+			<par ipa="8225" readonly="false" name="sysClockSet_month" descr="Month value (write)" defval="1" min="1" max="12" um="num" typepar="unsignedChar" typetarg="unsignedChar" parInRam="true">
+				<protocol name="Modbus" commaddr="8225" commsubindex="0"/>
+				<menu id="19"/>
+			</par>
+			<par ipa="8226" readonly="false" name="sysClockSet_year" descr="Year value (write)" defval="0" min="0" max="99" um="num" typepar="unsignedChar" typetarg="unsignedChar" parInRam="true">
+				<protocol name="Modbus" commaddr="8226" commsubindex="0"/>
+				<menu id="19"/>
+			</par>
+			<par ipa="8227" readonly="false" name="sysClockSet_Upload" descr="RTC upload" defval="0" min="0" max="1" um="flag" typepar="boolean" typetarg="boolean" parInRam="true">
+				<protocol name="Modbus" commaddr="8227" commsubindex="0"/>
+				<menu id="19"/>
+			</par>
+			<par ipa="8254" name="RemoteSlave1_addr" descr="Remote Slave 1 address" defval="0" min="0" max="247" um="num" typepar="unsignedShort" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8254" commsubindex="0"/>
+				<menu id="21"/>
+			</par>
+			<par ipa="8255" name="RemoteSlave2_addr" descr="Remote Slave 2 address" defval="0" min="0" max="247" um="num" typepar="unsignedShort" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8255" commsubindex="0"/>
+				<menu id="22"/>
+			</par>
+			<par ipa="8256" name="RemoteSlave3_addr" descr="Remote Slave 3 address" defval="0" min="0" max="247" um="num" typepar="unsignedShort" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8256" commsubindex="0"/>
+				<menu id="23"/>
+			</par>
+			<par ipa="8257" name="RemoteSlave4_addr" descr="Remote Slave 4 address" defval="0" min="0" max="247" um="num" typepar="unsignedShort" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8257" commsubindex="0"/>
+				<menu id="24"/>
+			</par>
+			<par ipa="8258" name="RemoteSlave5_addr" descr="Remote Slave 5 address" defval="0" min="0" max="247" um="num" typepar="unsignedShort" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8258" commsubindex="0"/>
+				<menu id="25"/>
+			</par>
+			<par ipa="8259" name="RemoteSlave6_addr" descr="Remote Slave 6 address" defval="0" min="0" max="247" um="num" typepar="unsignedShort" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8259" commsubindex="0"/>
+				<menu id="26"/>
+			</par>
+			<par ipa="8260" name="RemoteSlave7_addr" descr="Remote Slave 7 address" defval="0" min="0" max="247" um="num" typepar="unsignedShort" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8260" commsubindex="0"/>
+				<menu id="27"/>
+			</par>
+			<par ipa="8261" name="RemoteSlave8_addr" descr="Remote Slave 8 address" defval="0" min="0" max="247" um="num" typepar="unsignedShort" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8261" commsubindex="0"/>
+				<menu id="28"/>
+			</par>
+			<par ipa="8262" name="RemoteSlave1_32bit_order" descr="Remote Slave 1 32bit order" um="num" defval="0" min="0" max="3" typepar="enum18" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8262" commsubindex="0"/>
+				<menu id="21"/>
+			</par>
+			<par ipa="8263" name="RemoteSlave2_32bit_order" descr="Remote Slave 2 32bit order" um="num" defval="0" min="0" max="3" typepar="enum18" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8263" commsubindex="0"/>
+				<menu id="22"/>
+			</par>
+			<par ipa="8264" name="RemoteSlave3_32bit_order" descr="Remote Slave 3 32bit order" um="num" defval="0" min="0" max="3" typepar="enum18" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8264" commsubindex="0"/>
+				<menu id="23"/>
+			</par>
+			<par ipa="8265" name="RemoteSlave4_32bit_order" descr="Remote Slave 4 32bit order" um="num" defval="0" min="0" max="3" typepar="enum18" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8265" commsubindex="0"/>
+				<menu id="24"/>
+			</par>
+			<par ipa="8266" name="RemoteSlave5_32bit_order" descr="Remote Slave 5 32bit order" um="num" defval="0" min="0" max="3" typepar="enum18" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8266" commsubindex="0"/>
+				<menu id="25"/>
+			</par>
+			<par ipa="8267" name="RemoteSlave6_32bit_order" descr="Remote Slave 6 32bit order" um="num" defval="0" min="0" max="3" typepar="enum18" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8267" commsubindex="0"/>
+				<menu id="26"/>
+			</par>
+			<par ipa="8268" name="RemoteSlave7_32bit_order" descr="Remote Slave 7 32bit order" um="num" defval="0" min="0" max="3" typepar="enum18" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8268" commsubindex="0"/>
+				<menu id="27"/>
+			</par>
+			<par ipa="8269" name="RemoteSlave8_32bit_order" descr="Remote Slave 8 32bit order" um="num" defval="0" min="0" max="3" typepar="enum18" typetarg="unsignedShort">
+				<protocol name="Modbus" commaddr="8269" commsubindex="0"/>
+				<menu id="28"/>
+			</par>
+		</parameters><enums>
+			<enum id="2">
+				<elem value="0" descr="0=°C"/>
+				<elem value="1" descr="1=°F"/>
+			</enum>
+			<enum id="5">
+				<elem value="0" descr="0=Modbus/RTU slave"/>
+				<elem value="1" descr="1=Modbus/RTU master"/>
+			</enum>
+			<enum id="6">
+				<elem value="0" descr="0=Null"/>
+				<elem value="1" descr="1=Odd"/>
+				<elem value="2" descr="2=Even"/>
+			</enum>
+			<enum id="9">
+				<elem value="0" descr="0=9600"/>
+				<elem value="1" descr="1=19200"/>
+				<elem value="2" descr="2=38400"/>
+				<elem value="3" descr="3=57600"/>
+				<elem value="4" descr="4=115200"/>
+			</enum>
+			<enum id="14">
+				<elem value="0" descr="0=Min"/>
+				<elem value="1" descr="1=On"/>
+				<elem value="2" descr="2=Timed"/>
+			</enum>
+			<enum id="15">
+				<elem value="11" descr="11=HMI local"/>
+				<elem value="0" descr="0=HMI remote 1"/>
+				<elem value="1" descr="1=HMI remote 2"/>
+				<elem value="2" descr="2=HMI remote 3"/>
+				<elem value="3" descr="3=HMI remote 4"/>
+				<elem value="4" descr="4=HMI remote 5"/>
+				<elem value="5" descr="5=HMI remote 6"/>
+				<elem value="6" descr="6=HMI remote 7"/>
+				<elem value="7" descr="7=HMI remote 8"/>
+				<elem value="8" descr="8=HMI remote 9"/>
+				<elem value="9" descr="9=HMI remote 10"/>
+			</enum>
+			<enum id="17">
+				<elem value="0" descr="0"/>
+				<elem value="1" descr="1"/>
+				<elem value="2" descr="2"/>
+				<elem value="3" descr="3"/>
+				<elem value="4" descr="4"/>
+			</enum>
+			<enum id="18">
+				<elem value="0" descr="0=Word NOT swapped"/>
+				<elem value="1" descr="1=Word swapped for DWORD"/>
+				<elem value="2" descr="2=Word swapped for REAL"/>
+				<elem value="3" descr="3=Word swapped"/>
+			</enum>
+			<enum id="20">
+				<elem value="0" descr="0=Landscape"/>
+				<elem value="1" descr="1=Portrait"/>
+			</enum>
+		</enums>
+	</deviceconfig></parx>

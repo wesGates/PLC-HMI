@@ -1,0 +1,788 @@
+(************************************************************************)
+(*                                                                      *)
+(*	Description: Definition of target variables and functions           *)
+(*                                                                      *)
+(************************************************************************)
+
+
+(************************************************************************)
+(*                                                                      *)
+(*   ENUMS                                                              *)
+(*                                                                      *)
+(************************************************************************)
+TYPE
+	MBM_ERRORS: (                             { DE:"Modbus Master possible error list" }
+		MBM_E_NO := 0,                        { DE:"No error occurred" }
+		MBM_E_ILLEGALFUNCTION := 1,           { DE:"Invalid request message" }
+		MBM_E_ILLEGALDATAADDR := 2,           { DE:"Illegal data address" }
+		MBM_E_ILLEGALDATAVALUE := 3,          { DE:"Illegal data value" }
+		MBM_E_SLAVEDEVICEFAILURE := 4,        { DE:"Salve device failure" }
+		MBM_E_ACKNOWLEDGE := 5,               { DE:"Acknowledge error" }
+		MBM_E_SLAVEDEVICEBUSY := 6,           { DE:"Slave device busy" }
+		MBM_E_MEMORYPARITYERROR := 7,         { DE:"Memory parity error" }
+		MBM_E_COMM_CHN := 8,                  { DE:"Communication channel configuration error" }
+		MBM_E_SLAVE_ADR := 9,                 { DE:"Invalid slave address (address range 0 - 247)" }
+		MBM_E_GATEWAYPATHUNAV := 10,          { DE:"Gateway path unavailable" }
+		MBM_E_GATEWAYDEVICEFAILED := 11,      { DE:"Gateway target device failed to respond" }
+		MBM_E_MSG_MAX := 12,                  { DE:"Invalid number of element for this function" }
+		MBM_E_RQ_INVALID := 13,               { DE:"Cannot correctly build the request message" }
+		MBM_E_MSG_INVALID := 14,              { DE:"Invalid response message" }
+		MBM_E_MSG_SIZE := 15,                 { DE:"Response size error" }
+		MBM_E_TIMEOUT := 16,                  { DE:"Timeout reached" }
+		MBM_E_INVALIDTASK := 17				  { DE:"Function invoked by an invalid task"}		
+	);
+END_TYPE
+
+
+
+
+(************************************************************************)
+(*                                                                      *)
+(*   GLOBAL VARIABLES                                                   *)
+(*                                                                      *)
+(************************************************************************)
+
+TYPE
+    TypeDataTime : STRUCT
+	seconds : USINT;  {DE: "seconds          " }
+	minutes : USINT;  {DE: "minutes          " }
+	hours   : USINT;  {DE: "hours            " }
+	dayweek : USINT;  {DE: "day of week      " }
+	daymonth: USINT;  {DE: "day of month     " }
+	month   : USINT;  {DE: "month            " }
+	year    : USINT;  {DE: "year             " }
+	Error   : BOOL;   {DE: "RTC writing error" }
+    END_STRUCT;
+END_TYPE
+
+TYPE
+    SetDataTime : STRUCT
+	seconds : USINT;  {DE: "seconds          " }
+	minutes : USINT;  {DE: "minutes          " }
+	hours   : USINT;  {DE: "hours            " }
+	dayweek : USINT;  {DE: "day of week      " }
+	daymonth: USINT;  {DE: "day of month     " }
+	month   : USINT;  {DE: "month            " }
+	year    : USINT;  {DE: "year             " }
+	Update  : BOOL;   {DE: "Write flag       " }
+    END_STRUCT;
+END_TYPE
+
+TYPE
+	LCD_pressure : STRUCT
+	is_LCD_pressed : BOOL;	{DE: "Notify if the touch screen is pressed or not  (ongoing event)"}
+	pressed_event : BOOL;	{DE: "Notify if the touch screen has ever been pressed or not "} 
+	last_x_press : UINT;	{DE: "Last x coordinate where touch event happened  "}
+	last_y_press : UINT;	{DE: "Last y coordinate where touch event happened  "}
+	last_x_release : UINT;	{DE: "Last x coordinate where release event happened"}
+	last_y_release : UINT;	{DE: "Last x coordinate where release event happened"}
+	END_STRUCT;
+END_TYPE
+
+VAR_GLOBAL 
+	
+	{G:"HMI Access level"}
+	$CurrentAccessLevel			: USINT := 255;			{ DE:"Current parameters access level"}
+	
+	{G:"System Timers"}
+	sysTimer					AT %MD60000.0 : UDINT; 					{ DE:"System timer 1 KHz"}
+	
+	{G:"General purpose Data Block"}
+	sysUserDatablock			AT %MB0.0	: ARRAY[0..127] OF USINT;	{ IO:"User datablock" }
+	
+	{G:"Analog and Digital Inputs"} 
+	sysSensorNTC				AT %IW0.0	: INT;						{ DE:"NTC thermistor sensor value" }
+	sysSensorRH					AT %IW1.0	: INT;						{ DE:"RH humidity sensor value" }
+	sysSensorPIR				AT %IW2.0	: INT;						{ DE:"PIR proximity sensor value" }
+	
+	{G:"System Parameters: EEPROM image in RAM (read)"}
+	sysParameters				AT %MW100.0 : ARRAY[0..16] OF UINT;		{ DE:"System Parameters DB (read)" }
+	sysLangID					AT %MW100.13 : UINT;					{ DE:"HMI active Language ID [0=Italiano, 1=English, 2=Francais, 3=Deutsch, 4=Espanol]" }
+	
+	{G:"System Parameters: image in RAM (read)"}
+	sysPar_PARTAB				AT %MW100.0 : UINT;						{ DE:"Map code" }
+	sysPar_PARPOLI				AT %MW100.1 : UINT;						{ DE:"Polycarbonate code" }
+	sysPar_PARMOD				AT %MW100.2 : BOOL;						{ DE:"Parameter modified flag" }
+	sysPar_CAL_RH_interne		AT %MW100.3 : INT;						{ DE:"Calibration value for RH sensor (read)" }
+	sysPar_Calibration_RH		AT %MW100.4 : UINT;						{ DE:"RH percentage differential (%/10)" }
+	sysPar_Temp_UM				AT %MW100.5 : UINT;						{ DE:"Unit of temperature measurement (°C/°F)" }
+	sysPar_Calibration_NTC		AT %MW100.6 : UINT;						{ DE:"NTC differential (°C/10 , °F/10)" }
+	sysPar_Addr_RS485_OB		AT %MW100.7 : UINT;						{ DE:"RS485 On Board address [1..255]" }
+	sysPar_Proto_RS485_OB		AT %MW100.8 : UINT;						{ DE:"RS485 On Board protocol [0 = Slave, 1 = Master]" }
+	sysPar_DataBit_RS485_OB		AT %MW100.9 : UINT;						{ DE:"RS485 On Board data bit number [8]" }
+	sysPar_StopBit_RS485_OB		AT %MW100.10 : UINT;					{ DE:"RS485 On Board stop bit number [1..2]" }
+	sysPar_Parity_RS485_OB		AT %MW100.11 : UINT;					{ DE:"RS485 On Board parity protocol [0=NULL, 1=ODD, 2=EVEN]" }
+	sysPar_Baud_RS485_OB		AT %MW100.12 : UINT;					{ DE:"RS485 On Board baud rate protocol [0=9600, 1=19200, 2= 38400, 3=57600, 4=115200]" }
+	sysPar_Orientation			AT %MW100.14 : UINT;					{ DE:"Display Orientation [0=Landscape, 1=Portrait]" }
+	sysPar_BacklightTime		AT %MW100.15 : UINT;					{ DE:"Time to wait befor fading; used only if Backlight = Timed [seconds]" }
+	sysPar_BacklightMinValue	AT %MW100.16 : UINT;					{ DE:"Minimum light intensity; used only if Backlight = Timed [% percentage]" }
+	
+	{G:"System Clock"}
+	sysClock					AT %MB102.0	: TypeDataTime;
+	{ DE:"System Date and Time Read. It is a structure of type TypeDataTime composed 
+by the following fields:
+	seconds		: USINT; seconds [0...59]
+	minutes		: USINT; minutes [0...59] 
+	hours		: USINT; hours [0...23]
+	dayweek		: USINT; day of week [0...6] 0=sunday,...,6=saturday
+	daymonth	: USINT; day of month [1...31]
+	month		: USINT; month [1...12]
+	year		: USINT; year [0...99]
+	Error 		: BOOL;  RTC writing error
+" }
+
+	sysSetClock					AT %MB101.0	: SetDataTime;
+	{ DE:"System Date and Time write parameters, set Update TRUE to execute the update. Type SetDataTime
+is composed of the following fields:
+	seconds		: USINT; seconds [0...59]
+	minutes		: USINT; minutes [0...59] 
+	hours		: USINT; hours [0...23]
+	dayweek		: USINT; day of week [0...6]
+	daymonth	: USINT; day of month [1...31]
+	month		: USINT; month [1...12]
+	year		: USINT; year [0...99]
+	update		: BOOL;  update RTC 
+"}
+
+	sysClockError				AT %MX102.7 : BOOL;						{ DE:"System Date and Time invalid" }   
+	
+	{G:"Backlight Status"}  
+	sysBacklight				AT %MW103.0 : UINT;						{ DE:"Display Backlight [0=Min, 1=On, 2=Timed]" }
+	
+	{G:"System Display Touch Information"}
+	sysLCDPressed				AT %MB60007.0 : LCD_pressure;
+	{ DE:"Status and coordinates of the tousch screen. Type LCD_pressure is a structure composed of the 
+following fields:
+	is_LCD_pressed 	: BOOL;		Notify if the touch screen is pressed or not (ongoing event)
+	pressed_event 	: BOOL;		Notify if the touch screen has ever been pressed or not
+	last_x_press 	: UINT;		Last x coordinate where touch event happened
+	last_y_press 	: UINT;		Last y coordinate where touch event happened
+	last_x_release 	: UINT;		Last x coordinate where release event happened
+	last_y_release 	: UINT;		Last x coordinate where release event happened 
+" }
+
+	
+	{G:"System BIOS version"}
+	sysMSK						AT %MW104.0 : UINT;						{ DE:"Mask Number" }
+	sysVER						AT %MW105.0 : UINT;						{ DE:"Versione Number" }
+
+	{G:"System Modbus messages"}
+	sysMODBUS_msg_received		AT %MD60020.0 : UDINT;					{ DE:"Counter for modbus message received" }
+	sysRemoteSlave_Addresses	AT %MW106.0   : ARRAY[0..7] OF UINT;	{ DE:"Physical address of the remote slaves with ID from 1 to 8" }
+	sysRemoteSlave_Ordering		AT %MW107.0   : ARRAY[0..7] OF UINT;	{ DE:"32 bit data type swap (DWORD / REAL) of the remote slaves with ID from 1 to 8.
+	Possible values are:
+		0=Word NOT swapped
+		1=Word swapped for DWORD 
+		2=Word swapped for REAL
+		3=Word swapped
+" }
+
+	sysMbMRtuNodePresence       AT %MX108.0	  : ARRAY[0..7] OF BOOL;    { DE:"Modbus Master Message Enable of the remote slaves with ID from 1 to 8" }
+	
+	waitBeforeSendHMI			AT %MW109.0   : UINT;					{ DE:"Time to wait on modbus operations called by HMI" }	
+
+END_VAR
+
+
+(************************************************************************)
+(*                         									            *)
+(*   EMBEDDED FUNCTIONS                                                 *)
+(*                                                                      *)
+(************************************************************************)
+
+FUNCTION sysHmi_Message : BOOL
+	{ DE:"Open a Message window on display.
+The function return a BOOL which could have the following meanings:
+TRUE	=	Command accepted.
+FALSE	=	Error entering id value or HMI not running or function called into task timed
+" }
+
+	VAR_INPUT
+	    id	:  USINT; { DE:"User Message window ID [1..99]" }
+	END_VAR
+	{CODE:EMBEDDED}
+END_FUNCTION
+
+FUNCTION sysDBase_SetExtTable : USINT
+	{ HIDDEN:ON }
+	{ DE:"Set extended database table" }
+	VAR_INPUT
+		ptrDB   : DWORD;    { DE:"Database Physical address" }
+		numPars : UDINT;    { DE:"Number of parameters" }
+		idxDatablockE2   : UINT;  { DE:"Index of datablock for E2 parameters" }
+		ptrDatablockE2   : DWORD; { DE:"Address of datablock for E2 parameters" }
+		numelemsDatablockE2  : UDINT; { DE:"Number of elements of datablock for E2 parameters" }
+		datasizeDatablockE2  : USINT; { DE:"Size of an element of datablock for E2 parameters" }
+		idxDatablockRAM  : UINT;  { DE:"Index of datablock for RAM parameters" }
+		ptrDatablockRAM  : DWORD; { DE:"Address of datablock for RAM parameters" }
+		numelemsDatablockRAM : UDINT; { DE:"Number of elements of datablock for RAM parameters" }
+		datasizeDatablockRAM  : USINT; { DE:"Size of an element of datablock for RAM parameters" }
+	END_VAR
+	{CODE:EMBEDDED}
+END_FUNCTION
+
+
+FUNCTION sysWriteParBOOL: BOOL
+	{ DE:"Write BOOL to EEPROM. 
+The function return a BOOL which could have the following meanings:
+TRUE	=	Writing executed correctly.
+FALSE	=	Writing not executed.
+
+Example: bret:=sysWriteParBOOL(ADR(EEPROMPARAMETER),NewValue); 
+" }
+	VAR_INPUT
+		address : UDINT;  { DE:"Address" }
+		Value   : BOOL;   { DE:"Value" }
+	END_VAR
+	{ CODE:EMBEDDED }
+END_FUNCTION
+
+
+FUNCTION sysWriteParUSINT: BOOL
+	{ DE:"Write USINT to EEPROM.
+The function return a BOOL which could have the following meanings:
+TRUE	=	Writing executed correctly.
+FALSE	=	Writing not executed.
+
+Example: bret:=sysWriteParUSINT(ADR(EEPROMPARAMETER),NewValue); 	
+" }
+	VAR_INPUT
+		address : UDINT;  { DE:"Address" }
+		Value   : USINT;   { DE:"Value" }
+	END_VAR
+	{ CODE:EMBEDDED }
+END_FUNCTION
+
+
+FUNCTION sysWriteParSINT: BOOL
+	{ DE:"Write SINT to EEPROM.
+The function return a BOOL which could have the following meanings:
+TRUE	=	Writing executed correctly.
+FALSE	=	Writing not executed.
+
+Example: bret:=sysWriteParSINT(ADR(EEPROMPARAMETER),NewValue); 	
+" }
+	VAR_INPUT
+		address : UDINT;  { DE:"Address" }
+		Value   : SINT;   { DE:"Value" }
+	END_VAR
+	{ CODE:EMBEDDED }
+END_FUNCTION
+
+
+FUNCTION sysWriteParBYTE: BOOL
+	{ DE:"Write BYTE to EEPROM.
+The function return a BOOL which could have the following meanings:
+TRUE	=	Writing executed correctly.
+FALSE	=	Writing not executed.
+
+Example: bret:=sysWriteParBYTE(ADR(EEPROMPARAMETER),NewValue); 	
+" }
+	VAR_INPUT
+		address : UDINT;  { DE:"Address" }
+		Value   : BYTE;   { DE:"Value" }
+	END_VAR
+	{ CODE:EMBEDDED }
+END_FUNCTION
+
+
+FUNCTION sysWriteParINT: BOOL
+	{ DE:"Write INT to EEPROM.
+The function return a BOOL which could have the following meanings:
+TRUE	=	Writing executed correctly.
+FALSE	=	Writing not executed.
+
+Example: bret:=sysWriteParINT(ADR(EEPROMPARAMETER),NewValue); 	
+" }
+	VAR_INPUT
+		address : UDINT;  { DE:"Address" }
+		Value   : INT;    { DE:"Value" }
+	END_VAR
+	{ CODE:EMBEDDED }
+END_FUNCTION
+
+
+FUNCTION sysWriteParUINT: BOOL
+	{ DE:"Write UINT to EEPROM.
+The function return a BOOL which could have the following meanings:
+TRUE	=	Writing executed correctly.
+FALSE	=	Writing not executed.
+
+Example: bret:=sysWriteParUINT(ADR(EEPROMPARAMETER),NewValue); 	
+" }
+	VAR_INPUT
+		address : UDINT;  { DE:"Address" }
+		Value   : UINT;   { DE:"Value" }
+	END_VAR
+	{ CODE:EMBEDDED }
+END_FUNCTION
+
+
+FUNCTION sysWriteParWORD: BOOL
+	{ DE:"Write WORD to EEPROM.
+The function return a BOOL which could have the following meanings:
+TRUE	=	Writing executed correctly.
+FALSE	=	Writing not executed.
+
+Example: bret:=sysWriteParWORD(ADR(EEPROMPARAMETER),NewValue); 	
+" }
+	VAR_INPUT
+		address : UDINT;  { DE:"Address" }
+		Value   : WORD;   { DE:"Value" }
+	END_VAR
+	{ CODE:EMBEDDED }
+END_FUNCTION
+
+
+FUNCTION sysWriteParDINT: BOOL
+	{ DE:"Write DINT to EEPROM.
+The function return a BOOL which could have the following meanings:
+TRUE	=	Writing executed correctly.
+FALSE	=	Writing not executed.
+
+Example: bret:=sysWriteParDINT(ADR(EEPROMPARAMETER),NewValue); 
+" }
+	VAR_INPUT
+		address : UDINT;  { DE:"Address" }
+		Value   : DINT;   { DE:"Value" }
+	END_VAR
+	{ CODE:EMBEDDED }
+END_FUNCTION
+
+
+FUNCTION sysWriteParUDINT: BOOL
+	{ DE:"Write UDINT to EEPROM.
+The function return a BOOL which could have the following meanings:
+TRUE	=	Writing executed correctly.
+FALSE	=	Writing not executed.
+
+Example: bret:=sysWriteParUDINT(ADR(EEPROMPARAMETER),NewValue); 	
+" }
+	VAR_INPUT
+		address : UDINT;  { DE:"Address" }
+		Value   : UDINT;   { DE:"Value" }
+	END_VAR
+	{ CODE:EMBEDDED }
+END_FUNCTION
+
+
+FUNCTION sysWriteParDWORD: BOOL
+	{ DE:"Write DWORD to EEPROM.
+The function return a BOOL which could have the following meanings:
+TRUE	=	Writing executed correctly.
+FALSE	=	Writing not executed.
+
+Example: bret:=sysWriteParDWORD(ADR(EEPROMPARAMETER),NewValue); 	
+" }
+	VAR_INPUT
+		address : UDINT;  { DE:"Address" }
+		Value   : DWORD;  { DE:"Value" }
+	END_VAR
+	{ CODE:EMBEDDED }
+END_FUNCTION
+
+
+FUNCTION sysWriteParREAL: BOOL
+	{ DE:"Write REAL to EEPROM.
+The function return a BOOL which could have the following meanings:
+TRUE	=	Writing executed correctly.
+FALSE	=	Writing not executed.
+
+Example: bret:=sysWriteParREAL(ADR(EEPROMPARAMETER),NewValue); 	
+" }
+	VAR_INPUT
+		address : UDINT;  { DE:"Address" }
+		Value   : REAL;   { DE:"Value" }
+	END_VAR
+	{ CODE:EMBEDDED }
+END_FUNCTION
+
+
+FUNCTION sysWriteParSTRING : BOOL
+	{ DE:"Write a STRING to EEPROM.
+The function return a BOOL which could have the following meanings:
+TRUE	=	Writing executed correctly.
+FALSE	=	Writing not executed.
+
+Example: bret:=sysWriteParSTRING(ADR(EEPROMPARAMETER),NewValue, SIZEOF(NewValue)); 
+" }
+	VAR_INPUT
+		id  : UDINT;  { DE:"Address" }
+		msg : STRING; { DE:"String" }
+		len : USINT;  { DE:"SIZEOF(String to write)" }		
+	END_VAR
+  {CODE:EMBEDDED}
+END_FUNCTION
+
+
+FUNCTION sys_Reboot : BOOL
+	{ DE:"Force device to reboot" }
+	VAR_INPUT
+		doReboot : BOOL;	{ DE:"TRUE to force reboot" }
+	END_VAR
+	{ CODE:EMBEDDED }
+END_FUNCTION
+
+
+FUNCTION sysClockWrite: USINT
+	{ DE:"Write system clock.
+The function returns always 0
+" }
+
+	VAR_INPUT
+	    seconds	:	USINT; { DE:"seconds [0...59]" }
+	    minutes	:	USINT; { DE:"minutes [0...59]" }
+	    hours	:	USINT; { DE:"hours [0...23]" }
+	    dayweek	:	USINT; { DE:"day of week [0...6]" }
+	    daymonth	:	USINT; { DE:"day of month [1...31]" }
+	    month	:	USINT; { DE:"month [1...12]" } 
+	    year	:	USINT; { DE:"year [10...99]" }
+	END_VAR
+	{ CODE:EMBEDDED }
+END_FUNCTION
+
+
+FUNCTION Video_SetDeviceCfg : BOOL
+	{ HIDDEN:ON }
+    
+	VAR_INPUT
+		idxDevice	: USINT;    {DE:"index of device"}
+		res         : USINT;    {DE:"0 - local device, 1 - Modbus RTU, 2 - Modbus TCP, 3 - CANopen"}
+		address     : UDINT;    {DE:"Modbus RTU/CANopen node address"}
+    END_VAR
+	
+	{ CODE:ST }
+	(* This function in automatically generated by PageLab to configure remote slaves. However this is not present on TM172DC firmware, because remote slaves are configured with BIOS parameters *)
+	Video_SetDeviceCfg := TRUE;
+
+END_FUNCTION 
+
+
+        (***************************)
+        (*                         *)
+        (*     FUNCTION BLOCKS     *)
+        (*                         *)
+        (***************************)
+
+FUNCTION_BLOCK sysMbMRTU_FC01
+{ DE:" Read Coil Status - Function 01 (0x01).
+This function block can be used in the Background task only.
+You have to assure that all input variables are properly set before invoking the function block. In particular, the addr input variable must be set to the physical address of an existing Modbus Slave target of this operation.
+After function block execution, unless an error occurred, you can use a subset of its output variables (from object1 to objectN, where N equals the value of no input variable) to get the Modbus objects read from the communication bus. If an error did occur, you can read its code from the errorCode output variable." }
+
+	VAR_INPUT
+		addr : USINT;				{ DE:"Physical address of the target slave" }
+		base : UINT;				{ DE:"Address of the first coil to be read" }
+		no : UINT;					{ DE:"Number of contiguous coils to be read" }
+		pollingTime : UINT;			{ DE:"Polling time [ms]" }
+		waitBeforeSend : UINT;		{ DE:"Time to wait before sending the message [ms]" }
+		timeout : UINT;				{ DE:"Timeout [ms]" }
+	END_VAR
+
+	VAR_OUTPUT
+		errorCode : MBM_ERRORS;		{ DE:"Exception Code" }
+		error : BOOL;				{ DE:"TRUE = error occurred; FALSE = no error" }
+		object1 : BOOL;				{ DE:"1st Coil" }
+		object2 : BOOL;				{ DE:"2nd Coil" }
+		object3 : BOOL;				{ DE:"3rd Coil" }
+		object4 : BOOL;				{ DE:"4th Coil" }
+		object5 : BOOL;				{ DE:"5th Coil" }
+		object6 : BOOL;				{ DE:"6th Coil" }
+		object7 : BOOL;				{ DE:"7th Coil" }
+		object8 : BOOL;				{ DE:"8th Coil" }
+		object9 : BOOL;				{ DE:"9th Coil" }
+		object10 : BOOL;			{ DE:"10th Coil" }
+		object11 : BOOL;			{ DE:"11th Coil" }
+		object12 : BOOL;			{ DE:"12th Coil" }
+		object13 : BOOL;			{ DE:"13th Coil" }
+		object14 : BOOL;			{ DE:"14th Coil" }
+		object15 : BOOL;			{ DE:"15th Coil" }
+		object16 : BOOL;			{ DE:"16th Coil" }
+	END_VAR
+
+	VAR
+		timestamp : UDINT;			{ DE:"Message timestamp [ms]" }
+	END_VAR
+
+	{ CODE:EMBEDDED }
+
+END_FUNCTION_BLOCK
+
+
+FUNCTION_BLOCK sysMbMRTU_FC02
+{ DE:"Read Inputs Status - Function 02 (0x02).
+This function block can be used in the Background task only.
+You have to assure that all input variables are properly set before invoking the function block. In particular, the addr input variable must be set to the physical address of an existing Modbus Slave target of this operation.
+After function block execution, unless an error occurred, you can use a subset of its output variables (from object1 to objectN, where N equals the value of no input variable) to get the Modbus objects read from the communication bus. If an error did occur, you can read its code from the errorCode output variable." }
+
+	VAR_INPUT
+		addr : USINT;				{ DE:"Physical address of the target slave" }
+		base : UINT;				{ DE:"Address of the first Input to be read" }
+		no : UINT;					{ DE:"Number of contiguous Inputs to be read" }
+		pollingTime : UINT;			{ DE:"Polling time [ms]" }
+		waitBeforeSend : UINT;		{ DE:"Time to wait before sending the message [ms]" }
+		timeout : UINT;				{ DE:"Timeout [ms]" }
+	END_VAR
+
+	VAR_OUTPUT
+		errorCode : MBM_ERRORS;		{ DE:"Exception Code" }
+		error : BOOL;				{ DE:"TRUE = error occurred; FALSE = no error" } 
+		object1 : BOOL;				{ DE:"1st Input" }
+		object2 : BOOL;				{ DE:"2nd Input" }
+		object3 : BOOL;				{ DE:"3rd Input" }
+		object4 : BOOL;				{ DE:"4th Input" }
+		object5 : BOOL;				{ DE:"5th Input" }
+		object6 : BOOL;				{ DE:"6th Input" }
+		object7 : BOOL;				{ DE:"7th Input" }
+		object8 : BOOL;				{ DE:"8th Input" }
+		object9 : BOOL;				{ DE:"9th Input" }
+		object10 : BOOL;			{ DE:"10th Input" }
+		object11 : BOOL;			{ DE:"11th Input" }
+		object12 : BOOL;			{ DE:"12th Input" }
+		object13 : BOOL;			{ DE:"13th Input" }
+		object14 : BOOL;			{ DE:"14th Input" }
+		object15 : BOOL;			{ DE:"15th Input" }
+		object16 : BOOL;			{ DE:"16th Input" }
+	END_VAR
+
+	VAR
+		timestamp : UDINT;			{ DE:"Message timestamp [ms]" }
+	END_VAR
+
+	{ CODE:EMBEDDED }
+
+END_FUNCTION_BLOCK
+
+
+FUNCTION_BLOCK sysMbMRTU_FC03
+{ DE:"Read Holding Registers - Function 03 (0x03).
+This function block can be used in the Background task only.
+You have to assure that all input variables are properly set before invoking the function block. In particular, the addr input variable must be set to the physical address of an existing Modbus Slave target of this operation.
+After function block execution, unless an error occurred, you can use a subset of its output variables (from object1 to objectN, where N equals the value of no input variable) to get the Modbus objects read from the communication bus. If an error did occur, you can read its code from the errorCode output variable." }
+
+	VAR_INPUT
+		addr : USINT;				{ DE:"Physical address of the target slave" }
+		base : UINT;				{ DE:"Address of the first Holding Register to be read" }
+		no : UINT;					{ DE:"Number of contiguous Holding Registers to be read" }
+		pollingTime : UINT;			{ DE:"Polling time [ms]" }
+		waitBeforeSend : UINT;		{ DE:"Time to wait before sending the message [ms]" }
+		timeout : UINT;				{ DE:"Timeout [ms]" }
+	END_VAR
+
+	VAR_OUTPUT
+		errorCode : MBM_ERRORS;		{ DE:"Exception Code" } 
+		error : BOOL;				{ DE:"TRUE = error occurred; FALSE = no error" }
+		object1 : UINT;				{ DE:"1st Holding Register" }
+		object2 : UINT;				{ DE:"2nd Holding Register" }
+		object3 : UINT;				{ DE:"3rd Holding Register" }
+		object4 : UINT;				{ DE:"4th Holding Register" }
+		object5 : UINT;				{ DE:"5th Holding Register" }
+		object6 : UINT;				{ DE:"6th Holding Register" }
+		object7 : UINT;				{ DE:"7th Holding Register" }
+		object8 : UINT;				{ DE:"8th Holding Register" }
+		object9 : UINT;				{ DE:"9th Holding Register" }
+		object10 : UINT;			{ DE:"10th Holding Register" }
+		object11 : UINT;			{ DE:"11th Holding Register" }
+		object12 : UINT;			{ DE:"12th Holding Register" }
+		object13 : UINT;			{ DE:"13th Holding Register" }
+		object14 : UINT;			{ DE:"14th Holding Register" }
+		object15 : UINT;			{ DE:"15th Holding Register" }
+		object16 : UINT;			{ DE:"16th Holding Register" }
+	END_VAR
+
+	VAR
+		timestamp : UDINT;			{ DE:"Message timestamp [ms]" }
+	END_VAR
+
+	{ CODE:EMBEDDED }
+
+END_FUNCTION_BLOCK
+
+
+FUNCTION_BLOCK sysMbMRTU_FC04
+{ DE:"Read Input Registers - Function 04 (0x04).
+This function block can be used in the Background task only.
+You have to assure that all input variables are properly set before invoking the function block. In particular, the addr input variable must be set to the physical address of an existing Modbus Slave target of this operation.
+After function block execution, unless an error occurred, you can use a subset of its output variables (from object1 to objectN, where N equals the value of no input variable) to get the Modbus objects read from the communication bus. If an error did occur, you can read its code from the errorCode output variable." }
+
+	VAR_INPUT
+		addr : USINT;				{ DE:"Physical address of the target slave" }
+		base : UINT;				{ DE:"Address of the first Input Register to be read" }
+		no : UINT;					{ DE:"Number of contiguous Input Registers to be read" }
+		pollingTime : UINT;			{ DE:"Polling time [ms]" }
+		waitBeforeSend : UINT;		{ DE:"Time to wait before sending the message [ms]" }
+		timeout : UINT;				{ DE:"Timeout [ms]" }
+	END_VAR
+
+	VAR_OUTPUT
+		errorCode : MBM_ERRORS;		{ DE:"Exception Code" } 
+		error : BOOL;				{ DE:"TRUE = error occurred; FALSE = no error" } 
+		object1 : UINT;				{ DE:"1st Input Register" }
+		object2 : UINT;				{ DE:"2nd Input Register" }
+		object3 : UINT;				{ DE:"3rd Input Register" }
+		object4 : UINT;				{ DE:"4th Input Register" }
+		object5 : UINT;				{ DE:"5th Input Register" }
+		object6 : UINT;				{ DE:"6th Input Register" }
+		object7 : UINT;				{ DE:"7th Input Register" }
+		object8 : UINT;				{ DE:"8th Input Register" }
+	END_VAR
+
+	VAR
+		timestamp : UDINT;			{ DE:"Message timestamp [ms]" }
+	END_VAR
+
+	{ CODE:EMBEDDED }
+
+END_FUNCTION_BLOCK
+
+
+
+FUNCTION_BLOCK sysMbMRTU_FC05
+{ DE:"Write Single Coil - Function 05 (0x05).
+This function block can be used in the Background task only.
+You have to assure that all input variables are properly set before invoking the function block. In particular, the addr input variable must be set to the physical address of an existing Modbus Slave target of this operation. The value of the object input variable is the value sent on the communication bus to the slave node.
+After function block execution, if an error did occur, you can read its code from the errorCode output variable." }
+
+	VAR_INPUT
+		addr : USINT;				{ DE:"Physical address of the target slave" }
+		base : UINT;				{ DE:"Address of the Coil to write" }
+		object : BOOL;				{ DE:"Coil value" }
+		pollingTime : UINT;			{ DE:"Polling time [ms]" }
+		waitBeforeSend : UINT;		{ DE:"Time to wait before sending the message [ms]" }
+		timeout : UINT;				{ DE:"Timeout [ms]; used as Turnaround time in case of BROADCAST MESSAGE" }
+	END_VAR
+
+	VAR_OUTPUT
+		errorCode : MBM_ERRORS;		{ DE:"Exception Code" } 
+		error : BOOL;				{ DE:"TRUE = error occurred; FALSE = no error" }
+	END_VAR
+
+	VAR
+		timestamp : UDINT;			{ DE:"Message timestamp [ms]" }
+	END_VAR
+
+	{ CODE:EMBEDDED }
+
+END_FUNCTION_BLOCK
+
+
+
+FUNCTION_BLOCK sysMbMRTU_FC06
+{ DE:"Write Single Register - Function 06 (0x06).
+This function block can be used in the Background task only.
+You have to assure that all input variables are properly set before invoking the function block. In particular, the addr input variable must be set to the physical address of an existing Modbus Slave target of this operation. The value of the object input variable is the value sent on the communication bus to the slave node.
+After function block execution, if an error did occur, you can read its code from the errorCode output variable." }
+
+	VAR_INPUT
+		addr : USINT;				{ DE:"Physical address of the target slave" }
+		base : UINT;				{ DE:"Address of the Register to write" }
+		object :  UINT;				{ DE:"Register value" }
+		pollingTime : UINT;			{ DE:"Polling time [ms]" }
+		waitBeforeSend : UINT;		{ DE:"Time to wait before sending the message [ms]" }
+		timeout : UINT;				{ DE:"Timeout [ms]; used as Turnaround time in case of BROADCAST MESSAGE" }
+	END_VAR
+
+	VAR_OUTPUT
+		errorCode : MBM_ERRORS;		{ DE:"Exception Code" } 
+		error : BOOL;				{ DE:"TRUE = error occurred; FALSE = no error" }
+	END_VAR
+
+	VAR
+		timestamp : UDINT;			{ DE:"Message timestamp [ms]" }
+	END_VAR
+
+	{ CODE:EMBEDDED }
+
+END_FUNCTION_BLOCK
+
+
+
+FUNCTION_BLOCK sysMbMRTU_FC15
+{ DE:"Write Multiple Coils - Function 15 (0x0F).
+This function block can be used in the Bakcground task only.
+You have to assure that all input variables, except any objectN variable, where N is greater than the value of no input variable, are properly set before invoking the function block. In particular, the addr input variable must be set to the physical address of an existing Modbus Slave target of this operation. The values of all input variables ranging from object1 to objectN, where N equals the value of no input variable are the values sent on the communication bus to the slave node.
+After function block execution, if an error did occur, you can read its code from the errorCode output variable." }
+
+	VAR_INPUT
+		addr : USINT;				{ DE:"Physical address of the target slave" }
+		base : UINT;				{ DE:"Address of the first Coils to write" }
+		no : UINT;					{ DE:"Number of contiguous Coils to write" }
+		object1 : BOOL;				{ DE:"1st Coil value" }
+		object2 : BOOL;				{ DE:"2nd Coil value" }
+		object3 : BOOL;				{ DE:"3rd Coil value" }
+		object4 : BOOL;				{ DE:"4th Coil value" }
+		object5 : BOOL;				{ DE:"5th Coil value" }
+		object6 : BOOL;				{ DE:"6th Coil value" }
+		object7 : BOOL;				{ DE:"7th Coil value" }
+		object8 : BOOL;				{ DE:"8th Coil value" }
+		object9 : BOOL;				{ DE:"9th Coil value" }
+		object10 : BOOL;			{ DE:"10th Coil value" }
+		object11 : BOOL;			{ DE:"11th Coil value" }
+		object12 : BOOL;			{ DE:"12th Coil value" }
+		object13 : BOOL;			{ DE:"13th Coil value" }
+		object14 : BOOL;			{ DE:"14th Coil value" }
+		object15 : BOOL;			{ DE:"15th Coil value" }
+		object16 : BOOL;			{ DE:"16th Coil value" }
+		pollingTime : UINT;			{ DE:"Polling time [ms]" }
+		waitBeforeSend : UINT;		{ DE:"Time to wait before sending the message [ms]" }
+		timeout : UINT;				{ DE:"Timeout [ms]; used as Turnaround time in case of BROADCAST MESSAGE" }
+	END_VAR
+
+	VAR_OUTPUT
+		errorCode : MBM_ERRORS;		{ DE:"Exception Code" } 
+		error : BOOL;				{ DE:"TRUE = error occurred; FALSE = no error" }
+	END_VAR
+
+	VAR
+		timestamp : UDINT;			{ DE:"Message timestamp [ms]" }
+	END_VAR
+
+	{ CODE:EMBEDDED }
+
+END_FUNCTION_BLOCK
+
+
+
+FUNCTION_BLOCK sysMbMRTU_FC16
+{ DE:"Write Multiple Registers - Function 16 (0x10).
+This function block can be used in the Background task only.
+You have to assure that all input variables, except any objectN variable, where N is greater than the value of no input variable, are properly set before invoking the function block. In particular, the addr input variable must be set to the physical address of an existing Modbus Slave target of this operation. The values of all input variables ranging from object1 to objectN, where N equals the value of no input variable are the values sent on the communication bus to the slave node.
+After function block execution, if an error did occur, you can read its code from the errorCode output variable." }
+
+	VAR_INPUT
+		addr : USINT;				{ DE:"Physical address of the target slave" }
+		base : UINT;				{ DE:"Address of the first Holding Register to write" }
+		no : UINT;					{ DE:"Number of contiguous Holding Registers to write" }
+		object1 : UINT;				{ DE:"1st Holding Register value" }
+		object2 : UINT;				{ DE:"2nd Holding Register value" }
+		object3 : UINT;				{ DE:"3rd Holding Register value" }
+		object4 : UINT;				{ DE:"4th Holding Register value" }
+		object5 : UINT;				{ DE:"5th Holding Register value" }
+		object6 : UINT;				{ DE:"6th Holding Register value" }
+		object7 : UINT;				{ DE:"7th Holding Register value" }
+		object8 : UINT;				{ DE:"8th Holding Register value" }
+		object9 : UINT;				{ DE:"9th Holding Register value" }
+		object10 : UINT;			{ DE:"10th Holding Register value" }
+		object11 : UINT;			{ DE:"11th Holding Register value" }
+		object12 : UINT;			{ DE:"12th Holding Register value" }
+		object13 : UINT;			{ DE:"13th Holding Register value" }
+		object14 : UINT;			{ DE:"14th Holding Register value" }
+		object15 : UINT;			{ DE:"15th Holding Register value" }
+		object16 : UINT;			{ DE:"16th Holding Register value" }
+		pollingTime : UINT;			{ DE:"Polling time [ms]" }
+		waitBeforeSend : UINT;		{ DE:"Time to wait before sending the message [ms]" }
+		timeout : UINT;				{ DE:"Timeout [ms]; used as Turnaround time in case of BROADCAST MESSAGE" }
+	END_VAR
+
+	VAR_OUTPUT
+		errorCode : MBM_ERRORS;		{ DE:"Exception Code" } 
+		error : BOOL;				{ DE:"TRUE = error occurred; FALSE = no error" }
+	END_VAR
+
+	VAR
+		timestamp : UDINT;			{ DE:"Message timestamp [ms]" }
+	END_VAR
+
+	{ CODE:EMBEDDED }
+
+END_FUNCTION_BLOCK

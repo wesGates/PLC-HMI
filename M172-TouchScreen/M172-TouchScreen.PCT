@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- #DEFINE PREFIX M1722DTouchScreen -->
+<devicetemplate>
+	<deviceinfo caption="M172-TouchScreen" name="M172-TouchScreen" version="0.0" icon="img\application.ico" deviceid="M1722DTouchScreen" devicetype="application" PLCApplicationID="M172-Touch">
+		<description>M172-TouchScreen Application</description>
+		<protocols><protocol>TM172DC_659p9_appl</protocol></protocols>
+	</deviceinfo>
+	<plcconfig>
+		<hmi>
+			<tree name="treeCommissioning">
+				<node name="PREFIX" caption="M172-TouchScreen" icon="%CATALOG%\Applications\img\HMI.ico" datalink="PREFIX" captionedit="false" menu="menuAppPLC"/>
+			</tree>
+		</hmi>
+		<templatedata>
+			<PREFIX/>
+		</templatedata>
+		<extensions>
+			<eventhandler event="OnLoadTemplate">configurator.OnLoadDeviceTemplate</eventhandler>
+		</extensions>
+		<datadef version="1.0">
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+				<xs:element name="PREFIX">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="insertableDevice">
+								<xs:sequence>
+								</xs:sequence>
+								<xs:attribute name="oncreatenode" type="xs:string" fixed="configurator.OnCreateDeviceChild"/>
+								<xs:attribute name="onloadnode" type="xs:string" fixed="configurator.OnLoadDeviceChild"/>
+								<xs:attribute name="ondeletenode" type="xs:string" fixed="configurator.OnDeleteDeviceChild"/>
+								<xs:attribute name="PLCProject" type="xs:string" fixed=""/>
+								<xs:attribute name="noAutoGenCaption" type="xs:boolean" fixed="true"/>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</datadef>
+		<cfgSettings><item name="newAccessLevelFormat">true</item></cfgSettings></plcconfig>
+	<deviceconfig>
+		<hmi>
+			<tree name="tree1">
+				<node name="PREFIX" caption="M172-TouchScreen" icon="%CATALOG%\Applications\img\HMI.ico" datalink="PREFIX" captionedit="false" menu="menuAppPLC"/>
+			</tree>
+		</hmi>
+		<templatedata>
+			<PREFIX/>
+		</templatedata>
+		<extensions>
+			<eventhandler event="OnLoadTemplate">configurator.OnLoadDeviceTemplate</eventhandler>
+		</extensions>
+		<datadef version="1.0">
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+				<xs:element name="PREFIX">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="insertableDevice">
+								<xs:sequence>
+								</xs:sequence>
+								<xs:attribute name="oncreatenode" type="xs:string" fixed="configurator.OnCreateDeviceChild"/>
+								<xs:attribute name="onloadnode" type="xs:string" fixed="configurator.OnLoadDeviceChild"/>
+								<xs:attribute name="ondeletenode" type="xs:string" fixed="configurator.OnDeleteDeviceChild"/>
+								<xs:attribute name="PLCProject" type="xs:string" fixed="M172-TouchScreen.RSM"/>
+								<xs:attribute name="noAutoGenCaption" type="xs:boolean" fixed="true"/>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</datadef>
+		<parameters/>
+		<enums/>
+		<redefPars><redefPar ipa="8199" defval="0"/><redefPar ipa="8198" defval="1"/><redefPar ipa="8203" defval="2"/><redefPar ipa="8202" defval="2"/><redefPar ipa="8200" defval="8"/><redefPar ipa="8201" defval="1"/></redefPars>
+		<settings><item name="newAccessLevelFormat">true</item></settings></deviceconfig>
+</devicetemplate>

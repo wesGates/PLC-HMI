@@ -1,0 +1,538 @@
+PROGRAM PageDraw WITH Draw;
+PROGRAM PageRefresh WITH Refresh;
+
+	(***************************)
+	(*                         *)
+	(*     GLOBAL VARIABLES    *)
+	(*                         *)
+	(***************************)
+
+VAR_GLOBAL
+
+	{G:"Call stack"}
+	giStackPtr : INT := -1;
+	guiCallStack : ARRAY[ 0..9 ] OF UINT;
+
+	{G:"Back buffer"}
+	$giBackBufferCurr : INT := -1;
+	$giBackBufferFirst : INT := -1;
+	$giBackBufferLast : INT := -1;
+	$guiBackBuffer : ARRAY[ 0..9 ] OF UINT;
+
+	{G:"Sets"}
+	$PagIndex : UINT;
+	$PagNumber : UINT;
+	$waitRefresh : BOOL;
+
+	{G:"page1_vars"}
+	fbpage1 : Drawpage1;
+	fbRefrpage1 : Refrpage1;
+
+	{G:"Back page manager"}
+	fbBackPage : DrawBackPage;
+
+END_VAR
+
+	(***************************)
+	(*                         *)
+	(*        CONSTANTS        *)
+	(*                         *)
+	(***************************)
+
+VAR_GLOBAL CONSTANT
+
+	{G:"Fonts"}
+	EWP2_8x16_len : USINT := 8;
+	EWP2_8x16_hei : USINT := 16;
+	EWP2_8x16_offs : USINT := 0;
+	EWP2_8x16 AT %MB1000.0 : ARRAY[ 0..5 ] OF BYTE := 254,8,16,0,0,2;
+
+	{G:"Keys"}
+	kKEY_Enter : USINT := 13;
+	kKEY_Esc : USINT := 27;
+	kKEY_Del : USINT := 127;
+	kKEY_Left : USINT := 8;
+	kKEY_Right : USINT := 12;
+	kKEY_ArrowUp : USINT := 11;
+	kKEY_ArrowDw : USINT := 10;
+	kKEY_Back : USINT := 4;
+	kKEY_Tab : USINT := 9;
+	kKEY_Shift : USINT := 6;
+	kKEY_Caps : USINT := 5;
+	kKEY_Confirm : USINT := 14;
+	kKEY_VK_F1 : USINT := 30;
+	kKEY_VK_F2 : USINT := 31;
+	kKEY_VK_F3 : USINT := 32;
+	kKEY_VK_F4 : USINT := 33;
+	kKEY_VK_F5 : USINT := 34;
+	kKEY_VK_F6 : USINT := 35;
+	kKEY_VK_F7 : USINT := 36;
+	kKEY_VK_F8 : USINT := 37;
+	kKEY_VK_F9 : USINT := 38;
+	kKEY_VK_F10 : USINT := 39;
+
+	{G:"Data types"}
+	tyUndefined : USINT := 19;
+	tyBool : USINT := 1;
+	tySInt : USINT := 2;
+	tyInt : USINT := 5;
+	tyDInt : USINT := 9;
+	tyLInt : USINT := 12;
+	tyUSInt : USINT := 3;
+	tyUInt : USINT := 6;
+	tyUDInt : USINT := 10;
+	tyULInt : USINT := 13;
+	tyReal : USINT := 15;
+	tyLReal : USINT := 16;
+	tyByte : USINT := 4;
+	tyWord : USINT := 7;
+	tyDWord : USINT := 11;
+	tyLWord : USINT := 14;
+	tyString : USINT := 17;
+
+	{G:"Messages"}
+	kWM_NULL : UINT := 0;
+	kWM_KEY : UINT := 1;
+	kWM_MSG : UINT := 2;
+	kWM_SELECT : UINT := 3;
+	kWM_PUSH : UINT := 4;
+	kEV_WM_TEXTSELECT : UINT := 5;
+	kEV_WM_OPENPAGE : UINT := 6;
+	kEV_WM_CLOSEPAGE : UINT := 7;
+	kEV_WM_CHANGESETPAGE : UINT := 8;
+
+	{G:"Access modes"}
+	kACS_IDLE : USINT := 0;
+	kACS_INIT : USINT := 1;
+	kACS_PRINT : USINT := 2;
+	kACS_SELECT : USINT := 3;
+	kACS_MODIFY : USINT := 4;
+	kACS_DELETE : USINT := 5;
+	kACS_QUERY : USINT := 6;
+	kACS_BCKQUERY : USINT := 7;
+	kACS_CLOSE : USINT := 8;
+	kACS_OPEN : USINT := 9;
+
+	{G:"Parameters and device"}
+	kCOMM_PROTO_ID_LOCAL : USINT := 1;
+	kCOMM_PROTO_ID_MODBUS_RTU : USINT := 2;
+	kCOMM_PROTO_ID_MODBUS_TCP : USINT := 3;
+	kCOMM_PROTO_ID_CANOPEN : USINT := 4;
+
+	{G:"Button types"}
+	kBTN_TYPE_NORMAL : USINT := 0;
+	kBTN_TYPE_TOGGLE : USINT := 1;
+
+	{G:"Resources"}
+	kLangBaseLanguage : UDINT := 0;
+
+
+	(*** Enumeratives: ***)
+
+	{G:"Parameters"}
+	kPAR_MSG_NOTFOUND : UINT := 103;
+	kPAR_MSG_SYSERR : UINT := 106;
+	kPAR_ERR_OK : UINT := 0;
+	kPAR_ERR_NOTFOUND : UINT := 1;
+	kPAR_ERR_INVTYPE : UINT := 3;
+
+END_VAR
+
+	(***************************)
+	(*                         *)
+	(*        PROGRAMS         *)
+	(*                         *)
+	(***************************)
+
+PROGRAM PageDraw
+
+	VAR
+	res : USINT;
+	END_VAR
+
+	{CODE:ST}
+	(* Locking the video *)
+	res := Video_Lock( res );
+
+	(* The resource bitmaps color depth is supported... *)
+	res := Video_SetUseBitmapsColorDepth( TRUE );
+
+	(* INIT HMI ENVIRONMENT *)
+	res := Video_InitHMI_ZOrder( TRUE );
+
+	(* Switching on the LCD *)
+	res := Video_Switch( TRUE );
+
+	(* Initializing the length of the call stack *)
+	giStackPtr := 0;
+
+	(* Initializing the back circular buffer indexes *)
+	$giBackBufferCurr := -1;
+	$giBackBufferFirst := -1;
+	$giBackBufferLast := -1;
+
+	(* Declaring the code of the keys for driving the editing mode *)
+	res := Video_SetEditKey( 0, kKEY_Enter );
+	res := Video_SetEditKey( 1, kKEY_Esc );
+	res := Video_SetEditKey( 2, kKEY_Del );
+	res := Video_SetEditKey( 3, kKEY_Left );
+	res := Video_SetEditKey( 4, kKEY_Right );
+	res := Video_SetEditKey( 5, kKEY_ArrowUp );
+	res := Video_SetEditKey( 6, kKEY_ArrowDw );
+	res := Video_SetEditKey( 7, kKEY_Back );
+	res := Video_SetEditKey( 8, kKEY_Tab );
+	res := Video_SetEditKey( 9, kKEY_Shift );
+	res := Video_SetEditKey( 10, kKEY_Caps );
+	res := Video_SetEditKey( 11, kKEY_Confirm );
+
+	(* *** DECLARING THE RESOURCES *** *)
+	res := Video_LoadLanguage( 0, 0 );
+
+	(* Declaring the imported fonts *)
+	res := Video_AddFontUnicode( ?EWP2_8x16, EWP2_8x16_len, EWP2_8x16_hei );
+
+	(* Declaring the system attributes of windows *)
+	res := Video_SetWndSysProps( ?EWP2_8x16, 12632256, 0 );
+
+	(* *** INITIALIZING THE OBJECTS OF PAGE 'page1' *** *)
+
+	(* Init the set elements *)
+	guiCallStack[ giStackPtr ] := 0;
+	WHILE TRUE DO
+		CASE guiCallStack[ giStackPtr ] OF
+
+			0:
+				fbpage1();
+
+
+		END_CASE;
+
+
+	END_WHILE;
+
+
+END_PROGRAM
+
+PROGRAM PageRefresh
+
+VAR
+res : USINT;
+END_VAR
+
+	{CODE:ST}
+	(* Wait for the PageDraw to start *)
+	WHILE giStackPtr < 0 DO
+		res := Video_Sleep(50);
+	END_WHILE;
+
+	WHILE TRUE DO
+		CASE guiCallStack[ giStackPtr ] OF
+
+			0:
+				fbRefrpage1();
+
+
+		END_CASE;
+
+		res := Video_Sleep( 50 );
+
+	END_WHILE;
+
+
+END_PROGRAM
+
+	(***************************)
+	(*                         *)
+	(*  ALARM PAGE F. BLOCKS   *)
+	(*                         *)
+	(***************************)
+
+FUNCTION_BLOCK DrawBackPage
+
+	VAR_INPUT
+		IsOpening : BOOL;
+		CurrPageId : UINT;
+	END_VAR
+	VAR_OUTPUT
+		BackPageId : UINT;
+	END_VAR
+	VAR_EXTERNAL
+		$giBackBufferCurr : INT;
+		$giBackBufferFirst : INT;
+		$giBackBufferLast : INT;
+		$guiBackBuffer : ARRAY[ 0..9 ] OF UINT;
+	END_VAR
+	{CODE:ST}
+
+	IF IsOpening THEN
+
+		(* Entering page *)
+
+		(* Save this page's ID into circular back buffer *)
+		$giBackBufferCurr := $giBackBufferCurr + 1;
+		IF $giBackBufferCurr >= 10 THEN
+			$giBackBufferCurr := 0;
+		END_IF;
+		$guiBackBuffer[ $giBackBufferCurr ] := CurrPageId;
+		IF $giBackBufferFirst = -1 THEN
+			$giBackBufferFirst := 0;
+		ELSIF $giBackBufferCurr = $giBackBufferFirst AND $giBackBufferFirst <> $giBackBufferLast THEN
+			$giBackBufferFirst := $giBackBufferFirst + 1;
+			IF $giBackBufferFirst = 10 THEN
+				$giBackBufferFirst := 0;
+			END_IF;
+		END_IF;
+
+		(* Set last page's ID *)
+		IF $giBackBufferCurr = $giBackBufferFirst THEN
+			$giBackBufferLast := -1;
+		ELSIF $giBackBufferCurr = 0 AND $giBackBufferFirst <> 9 THEN
+			$giBackBufferLast := 9;
+		ELSIF $giBackBufferCurr <> $giBackBufferFirst THEN
+			$giBackBufferLast := $giBackBufferCurr - 1;
+		ELSE
+			$giBackBufferLast := -1;
+		END_IF;
+		IF $giBackBufferLast <> -1 THEN
+			BackPageId := $guiBackBuffer[$giBackBufferLast];
+		ELSE
+			BackPageId := 16#FFFF;
+		END_IF;
+
+	ELSE
+
+		(* Closing page *)
+		$giBackBufferCurr := $giBackBufferCurr - 1;
+		IF $giBackBufferCurr < 0 THEN
+			$giBackBufferCurr := 9;
+		END_IF;
+		$giBackBufferCurr := $giBackBufferCurr - 1;
+		IF $giBackBufferCurr < 0 THEN
+			$giBackBufferCurr := 9;
+		END_IF;
+
+	END_IF;
+
+	END_FUNCTION_BLOCK
+
+	(***********************************)
+	(*                                 *)
+	(* EXPRESSIONS RESOLVER F. BLOCKS  *)
+	(*                                 *)
+	(***********************************)
+
+	(***************************)
+	(*                         *)
+	(* PAGE-DRAWING F. BLOCKS  *)
+	(*                         *)
+	(***************************)
+
+FUNCTION_BLOCK Drawpage1
+
+	VAR_OUTPUT
+	uiOutVar : UINT;
+	END_VAR
+
+	VAR_EXTERNAL
+	guiCallStack : ARRAY[ 0..9 ] OF UINT;
+	giStackPtr : INT;
+	fbBackPage : DrawBackPage;
+	$waitRefresh : BOOL;
+	END_VAR
+
+	VAR
+	res : USINT;
+	bStatRedrw : BOOL;
+	bMapsReset : BOOL;
+	iNextSel : INT;
+	$Set_IndexVisEl : UINT;
+	$Set_CycleRefresh : UINT;
+	$Set_PtrBoolVis : @BOOL;
+	$Set_VisEl : BOOL;
+	$Set_IndexPageInSet : UINT;
+	$Set_ForcePageReload : BOOL;
+	$Set_NextPage : BOOL;
+	$Set_PrevPage : BOOL;
+	$Set_LocalSetPagNumber: UINT;
+	$Set_NumVisEl: UINT;
+	$Set_LastFirstEl: INT;
+	udiev : UDINT;
+	ev : UINT;
+	key : USINT;
+	x1 : UINT;
+	y1 : UINT;
+	x2 : UINT;
+	y2 : UINT;
+	wParam : UINT;
+	END_VAR
+
+	{CODE:ST}
+
+	(* Writing this page's ID to the top of the callstack *)
+	guiCallStack[ giStackPtr ] := 16#00;
+
+	(* Manage back page index for opening page *)
+	fbBackPage.IsOpening := TRUE;
+	fbBackPage.CurrPageId := 16#00;
+	fbBackPage();
+
+
+	(* Flag of waiting for refresh task *)
+	$waitRefresh := TRUE;
+
+	(* Resetting the object map *)
+	res := Video_ResetMaps( 16#00 );
+
+	(* Setting flags: this page is to be drawn *)
+	bStatRedrw := TRUE;
+	bMapsReset := TRUE;
+
+	(* The area to be cleared is the area of the entire page *)
+	x1:= 0;
+	y1:= 0;
+	x2:= 239;
+	y2:= 319;
+
+	(* Unlocking the video *)
+	res := Video_Unlock( res );
+
+	WHILE TRUE DO
+
+		(* Locking the video *)
+		res := Video_Lock( res );
+
+		(* Initializing the page *)
+		res := Video_InitPage( 0, 0, 239, 319, ?' ', 16#0003 );
+
+		(* Setting the page colors *)
+		res := Video_SetPageColors( 0, 12632256 );
+
+		IF bStatRedrw THEN
+
+			(* *** CLEARING PAGE AREA *** *)
+			res := Video_ClrRect( x1, y1, x2, y2 );
+
+		END_IF;
+
+		IF bMapsReset THEN
+
+			(* Resetting all maps *)
+			res := Video_ResetMaps( 16#FF );
+
+			(* *** DRAW PAGE CONTROLS *** *)
+
+			(* *** PAGE SECTION *** *)
+
+			(* *** DRAW CONTROLS *** *)
+
+		END_IF;
+
+		(* Unlocking the video *)
+		res := Video_Unlock( res );
+
+		(* Reset the flags for page redraw request *)
+		bStatRedrw := FALSE;
+		bMapsReset := FALSE;
+
+		(* *** EVENTS HANDLING *** *)
+		WHILE NOT bStatRedrw DO
+
+			(* the drawing task wait the refreshing task *)
+			IF $waitRefresh THEN
+				res := Video_Sleep( 50 );
+			ELSE
+
+				(* Retrieving events *)
+				udiev := Video_GetEvent( res );
+				(* Extracting the event code *)
+				ev := TO_UINT(udiev);
+
+				CASE ev OF
+
+				(* Key-related events handling: *)
+				kWM_KEY:
+
+					key := TO_USINT(SHR(udiev, 16));
+
+				END_CASE;
+			END_IF;
+
+		END_WHILE;
+
+	END_WHILE;
+
+END_FUNCTION_BLOCK
+
+	(***************************)
+	(*                         *)
+	(* REFRESHING FUN. BLOCKS  *)
+	(*                         *)
+	(***************************)
+
+FUNCTION_BLOCK Refrpage1
+
+	VAR_EXTERNAL
+	guiCallStack : ARRAY[ 0..9 ] OF UINT;
+	giStackPtr : INT;
+	$waitRefresh : BOOL;
+	END_VAR
+
+	VAR
+	res : USINT;
+	pagID : UINT;
+	n : USINT;
+	iSP : INT;
+	pDC : UDINT;
+	rx1 : UINT;
+	ry1 : UINT;
+	rx2 : UINT;
+	ry2 : UINT;
+	END_VAR
+
+	{CODE:ST}
+
+	REPEAT
+
+		(* Locking the video *)
+		res := Video_Lock( res );
+
+		(* Testing if page has changed *)
+		pagID := guiCallStack[ giStackPtr ];
+
+		IF pagID = 16#00 THEN
+
+			(* the refresh task is arrived *)
+			$waitRefresh := FALSE;
+
+			(* *** REFRESH PAGE CONTROLS *** *)
+
+			(* Update refresh flags for page controls *)
+			res := Video_UpdatePageControls( TRUE );
+
+
+			(* *** REFRESHING BACKGROUND ITEMS *** *)
+			(* Cursor across the call stack *)
+			iSP := giStackPtr;
+
+			(* *** REFRESHING PARENT BACKGROUND ITEMS *** *)
+
+			
+		END_IF;
+
+		(* Unlocking the video *)
+		res := Video_Unlock( res );
+
+		(* Suspending the task *)
+		res := Video_Sleep( 50 );
+
+	UNTIL pagID <> 16#00
+	END_REPEAT;
+
+END_FUNCTION_BLOCK
+
+	(***************************)
+	(*                         *)
+	(* PARAMETER  FUN. BLOCKS  *)
+	(*                         *)
+	(***************************)
+

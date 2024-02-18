@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<plcProject caseSensitive="false" useCustomWorkspace="true" strictEnumsCheck="false"  strictPointerCheck = "false" debugMode="false" extcheck="true" SFCControl="false" copyWarningThreshold="200" version="2.1" useLD2="true" useFBMethods="false">
+	<image>TM172DC_659p0_emptyPLC.imgx</image>
+	<commSettings>Modbus:1,1000#COM:1,115200,E,8,1,H</commSettings>
+	<sources>
+		<main>
+			<resources/>
+			<tasks>
+				<task name="Background">
+					<program>background_dummy</program>
+				</task>
+			</tasks>
+			<globalVars>
+				<group name="Global vars">
+					<var name="cnt_dummy" type="INT"/>
+				</group>
+			</globalVars>
+			<retainVars/>
+			<constantVars/>
+			<functions/>
+			<functionBlocks/>
+			<programs>
+				<program name="background_dummy" version="1.0.0">
+					<vars/>
+					<sourceCode type="ST">
+						<![CDATA[
+cnt_dummy := cnt_dummy + 1;
+]]>
+					</sourceCode>
+				</program>
+			</programs>
+			<macros/>
+			<structs/>
+			<typedefs/>
+			<enums/>
+			<subranges/>
+			<interfaces/>
+		</main>
+		<!-- il TGT del PLC verrà inserito al momento della PostCodeGen da parte di UI, qui lasciarlo vuoto per evitare duplicazioni -->
+		<target id="TM172DC_659p0" name="TM172DC_emptyPLC.tgt" fullXml="false"/>
+		<targetXML name="TM172DC_emptyPLC.tgtx" fullXml="true">
+			<target>
+				<resources>
+					<resource name="TM172DC" processor="ARMv7M">
+						<task id="0" name="Timed" period="100000" type="cyclic" descr="Timed task">
+							<constraints minPeriod="10000" maxPeriod="1000000"/>
+						</task>
+						<task id="1" name="Background" period="10000" type="cyclic" descr="Background task - executes continuously at low priority"/>
+						<task id="2" name="Boot" type="single" period="0" descr="Boot task - executes once at system startup"/>
+						<task id="3" name="Init" type="single" period="0" descr="Init task - executes once at every PLC full restart"/>
+						<task id="4" name="Draw" type="cyclic" period="50000" hidden="true" descr="Draw task for HMI"/>
+						<task id="5" name="Refresh" type="cyclic" period="50000" hidden="true" descr="Refresh task for HMI"/>
+					</resource>
+				</resources>
+			</target>
+		</targetXML>
+		<libraries>
+		</libraries>
+		<aux>
+		</aux>
+		<workspace>
+			<root name="TM172DC_emptyPLC" nextID="14">
+				<GlobalVars name="Global vars" id="11">
+					<var name="cnt_dummy" id="13"/>
+				</GlobalVars>
+				<Pou name="background_dummy" id="2"/>
+			</root>
+		</workspace>
+	</sources>
+	<codegen crossReference="false" crossReferenceOptions="0x3000001D" listing="true" hideSourceCodeInListing="true" saveEXPFile="true" saveTargetFiles="false" warningEnable="true" symMap="true" checkIndexType="false" waitExtension="false" allocateUnusedVariables="false" checkArrayBounds="false" checkDivisionByZero="false" checkPointers="false" checkReferences="false" checkInterfaces="false" customTargetBINFileName="TM172DC_emptyPLC.bin" customTargetTSCFileName="TM172DC_emptyPLC_source.bin" customTargetTDSFileName="TM172DC_emptyPLC_debug.bin" generateCustomFilesName="false">
+		<disabledWarnings>
+			<warning>G0094</warning>
+			<warning>G0091</warning>
+		</disabledWarnings>
+		<applicationDataBlocks/>
+	</codegen>
+	<simWorkspaces/>
+	<debug watchRefresh="20" watchVarRefresh="0" watchMaxArray="20" autoSaveWatchList="false"/>
+	<editor useOldGridSize="false"/>
+	<userDef>
+		<release/>
+		<author/>
+		<note/>
+		<version/>
+		<password disabled="false"/>
+	</userDef>
+	<downloadSequence sourceCode="onPLCApplicationDownload" debugSymbols="onPLCApplicationDownload"/>
+	<commands>
+		<postbuild>"%APPLPATH%\..\UserInterface\PostBuild_TM172DC.bat"</postbuild>
+		<postdown/>
+		<predown/>
+	</commands>
+	<resources/>
+</plcProject>

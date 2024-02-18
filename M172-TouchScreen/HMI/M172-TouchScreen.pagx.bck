@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<PRJ_RESOURCES version="20170929">
+	<LANGUAGES>
+		<LANG id="0" descr="BaseLanguage">
+			<ENUMS/>
+			<STRINGTABLE/>
+		</LANG>
+	</LANGUAGES>
+	<PAGES_INFO>
+		<MODEL>flat</MODEL>
+		<FIRST_PAGE>page1</FIRST_PAGE>
+		<CURR_LANG>0</CURR_LANG>
+		<TITLEBAR_FONT>EWP2_8x16</TITLEBAR_FONT>
+		<TITLEBAR_COLOR type="RGBColor">12632256</TITLEBAR_COLOR>
+		<TITLEBAR_BCKCOLOR type="RGBColor">0</TITLEBAR_BCKCOLOR>
+		<GLOBAL_TIMER/>
+	</PAGES_INFO>
+	<COMMON_OBJECTS/>
+	<RESOURCES>
+		<STRINGSENUMS useOnTarget="false"/>
+		<BITMAPS useOnTarget="false" downloadOnlyUsed="true" downloadChanged="false"/>
+		<FONTS useOnTarget="false" downloadUsedChars="true"/>
+	</RESOURCES>
+	<PAGES>
+		<PAGE name="page1">
+			<ATTRIBUTES>
+				<MSGID>0</MSGID>
+				<WNDMODE>0</WNDMODE>
+				<MODAL>No</MODAL>
+				<FONT/>
+				<COLOR type="RGBColor">0</COLOR>
+				<BCKCOLOR type="RGBColor">12632256</BCKCOLOR>
+				<STYLE>Flat</STYLE>
+				<XDIM>240</XDIM>
+				<YDIM>320</YDIM>
+				<XPOS>0</XPOS>
+				<YPOS>0</YPOS>
+				<CHARGRIDDIMX>1</CHARGRIDDIMX>
+				<CHARGRIDDIMY>1</CHARGRIDDIMY>
+				<CAPTION/>
+				<TITLEBAR>No</TITLEBAR>
+				<SYSMENU>No</SYSMENU>
+				<BORDER>No</BORDER>
+				<DESC/>
+			</ATTRIBUTES>
+			<OBJECTS>
+				<STRINGS/>
+				<IMGS/>
+				<LINES/>
+				<RECTS/>
+				<ANIMS/>
+				<EDITS/>
+				<TEXTBOXES/>
+				<COMBOBOXES/>
+				<BUTTONS/>
+				<CHECKBOXES/>
+				<PROGRESSES/>
+				<CHARTS/>
+				<CUSTOMS/>
+			</OBJECTS>
+			<EVENTS/>
+			<ACTIONS/>
+			<SCRIPT>
+				<![CDATA[]]>
+			</SCRIPT>
+		</PAGE>
+	</PAGES>
+	<ACTIONS/>
+	<FONTSTYLES/>
+	<EXPRESSIONS/>
+	<SCRIPT>
+		<![CDATA[]]>
+	</SCRIPT>
+	<TEMPLATES/>
+</PRJ_RESOURCES>
