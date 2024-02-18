@@ -1,0 +1,640 @@
+***********************************************************************
+*
+*	CODE GENERATION LISTING FOR: M172-PLC
+*	COMPILER VERSION: 5.20.0.53
+*
+***********************************************************************
+
+**************************************************
+	List function block: TON
+**************************************************
+
+FUNCTION_BLOCK TON
+
+	{ DE:"<HTML>The TON block produces a delayed output Q of the input IN. The delay time is expressed in milliseconds on the PT input.</br></br>
+<img src= tonscheme.png>
+<ul>
+<li>if IN is FALSE Q is false</li>
+<li>Q becomes TRUE as IN remains TRUE for PT milliseconds</li>
+<li>Q remains TRUE until IN remains TRUE</li>
+</ul>" }
+
+        VAR_INPUT
+IN : BOOL;	{ DE:"Timer input source" }
+PT : UDINT;	{ DE:"Preset time value (ms)" }
+	END_VAR
+
+        VAR_OUTPUT
+Q : BOOL;	{ DE:"Timer output" }
+ET : UDINT;	{ DE:"Timer current value (ms)" }
+	END_VAR
+
+        VAR_EXTERNAL
+	{G:"System_Timers"}
+sysTimer AT %MD0.0 : UDINT;	{ DE:"System timer [ms]" }
+	END_VAR
+
+        VAR
+timStart : UDINT;	{ DE:"Time value at start of counting" }
+	END_VAR
+
+END_FUNCTION_BLOCK
+
+0BAA41F0  55                            push ebp
+0BAA41F1  8B EB                         mov ebp, ebx
+0BAA41F3  57                            push edi
+
+#0		{SRC:TON}
+#1		
+#2			(*	Check if in counting	*)
+#3		
+#4			LD		IN
+(*) UNDEF
+0BAA41F4  33 C0                         xor eax, eax
+0BAA41F6  8A 45 04                      mov al, 4[ebp]
+
+#5			JMPCN	lReset
+(-) BOOL
+0BAA41F9  84 C0                         test al, al
+0BAA41FB  90 74 61 90 90 90             je 0BAA425FH
+
+#6		
+#7			(*	Check if Q is TRUE *)
+#8			LD		Q
+(*) UNDEF
+0BAA4201  33 C0                         xor eax, eax
+0BAA4203  8A 45 09                      mov al, 9[ebp]
+
+#9			RETC
+#10			
+(-) BOOL
+0BAA4206  84 C0                         test al, al
+0BAA4208  90 75 6A 90 90 90             jne 0BAA4275H
+
+#11			(*	Check if already in counting *)
+#12			LD		timStart
+(*) UNDEF
+0BAA420E  8B 45 00                      mov eax, [ebp]
+
+#13			EQ		0
+(*) UDINT
+0BAA4211  3D 00 00 00 00                cmp eax, 0
+0BAA4216  0F 94 C0                      sete al
+0BAA4219  25 FF 00 00 00                and eax, 0FFh
+
+#14			JMPCN	lUpdate
+(-) BOOL
+0BAA421E  84 C0                         test al, al
+0BAA4220  90 74 0C 90 90 90             je 0BAA422FH
+
+#15		
+#16			(*	Start of counting *)
+#17			LD		sysTimer
+(*) UNDEF
+0BAA4226  8B 05 CC CC CC CC             mov eax, [CCCCCCCCH] ; %M0+0
+
+#18			ST		timStart
+(*) UDINT
+0BAA422C  89 45 00                      mov [ebp], eax
+
+#19			
+#20		lUpdate:
+#21		
+#22			(*	Update timer and check if time elapsed *)
+#23			LD		sysTimer
+(*) UNDEF
+0BAA422F  8B 05 CC CC CC CC             mov eax, [CCCCCCCCH] ; %M0+0
+
+#24			SUB		timStart
+(*) UDINT
+0BAA4235  2B 45 00                      sub eax, [ebp]
+
+#25			ST		ET
+(*) UDINT
+0BAA4238  89 45 0A                      mov 10[ebp], eax
+
+#26			GE		PT
+(*) UDINT
+0BAA423B  3B 45 05                      cmp eax, [ebp+5]
+0BAA423E  0F 93 C0                      setae al
+0BAA4241  25 FF 00 00 00                and eax, 0FFh
+
+#27			ST		Q
+(*) BOOL
+0BAA4246  84 C0                         test al, al
+0BAA4248  0F 95 45 09                   setne 9[ebp]
+
+#28			RETCN
+#29		
+(-) BOOL
+0BAA424C  84 C0                         test al, al
+0BAA424E  90 74 24 90 90 90             je 0BAA4275H
+
+#30			(*	Limit actual time value *)
+#31			LD		PT
+(*) UNDEF
+0BAA4254  8B 45 05                      mov eax, 5[ebp]
+
+#32			ST		ET
+(*) UDINT
+0BAA4257  89 45 0A                      mov 10[ebp], eax
+
+#33			RET
+#34		
+(-) UDINT
+0BAA425A  EB 19 90 90 90                jmp 0BAA4275H
+
+#35		lReset:
+#36		
+#37			(*	Reset status *)
+#38			LD		0
+(*) UNDEF
+0BAA425F  B8 00 00 00 00                mov eax, 00H
+
+#39			ST		ET
+(*) USINT
+0BAA4264  89 45 0A                      mov 10[ebp], eax
+
+#40			ST		timStart
+(*) UDINT
+0BAA4267  89 45 00                      mov [ebp], eax
+
+#41			LD		FALSE
+(*) UNDEF
+0BAA426A  B8 00 00 00 00                mov eax, 00H
+
+#42			ST		Q
+(*) BOOL
+0BAA426F  84 C0                         test al, al
+0BAA4271  0F 95 45 09                   setne 9[ebp]
+
+0BAA4275  5F                            pop edi
+0BAA4276  5D                            pop ebp
+
+0BAA4277  C3                            ret
+
+
+Frame allocation:
+
+	0000       : VAR timStart
+	0004 bit  0: VAR IN
+	0005       : VAR PT
+	0009 bit  0: VAR Q
+	000A       : VAR ET
+
+END_FUNCTION_BLOCK
+**************************************************
+	List program: main
+**************************************************
+
+PROGRAM main
+
+END_PROGRAM
+
+0BAA4280  55                            push ebp
+0BAA4281  8B EC                         mov ebp, esp
+0BAA4283  60                            pushad
+
+#0		{SRC:main}
+#1		(*$WAITSWITCH$*)
+#2		
+#3			(* cnt := cnt + 1; *)
+#4			LD		cnt	{LNXT:2|2|-1}
+(*) UNDEF
+0BAA4284  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+40
+
+#5			ADD		1	{LNXT:2|2|-1}
+(*) INT
+0BAA428B  05 01 00 00 00                add eax, 1
+
+#6			ST		cnt	{LNXT:2|2|-1}
+(*) INT
+0BAA4290  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+40
+
+0BAA4297  61                            popad
+0BAA4298  5D                            pop ebp
+
+0BAA4299  C3                            ret
+
+END_PROGRAM
+
+
+**************************************************
+	Target variable image generation
+**************************************************
+
+
+*** INPUT:
+0BAA429A  55                            push ebp
+0BAA429B  8B EC                         mov ebp, esp
+
+0BAA429D  8B E5                         mov esp, ebp
+0BAA429F  5D                            pop ebp
+
+0BAA42A0  C3                            ret
+
+
+*** OUTPUT:
+0BAA42A1  55                            push ebp
+0BAA42A2  8B EC                         mov ebp, esp
+
+0BAA42A4  8B E5                         mov esp, ebp
+0BAA42A6  5D                            pop ebp
+
+0BAA42A7  C3                            ret
+
+
+
+**************************************************
+	Task Background init code
+**************************************************
+
+0BAA42A8  55                            push ebp
+0BAA42A9  8B EC                         mov ebp, esp
+
+0BAA42AB  8B E5                         mov esp, ebp
+0BAA42AD  5D                            pop ebp
+
+0BAA42AE  C3                            ret
+
+**************************************************
+	List program: InitParDB
+**************************************************
+
+PROGRAM InitParDB
+
+        VAR
+warningsKiller : USINT;
+dummyCrc32 : UDINT;
+	END_VAR
+
+END_PROGRAM
+
+0BAA42C0  55                            push ebp
+0BAA42C1  8B EC                         mov ebp, esp
+0BAA42C3  60                            pushad
+
+#0		{SRC:InitParDB}
+#1		(*$WAITSWITCH$*)
+#2		
+#3			(* dummyCrc32 := 1229475968; *)
+#4			MOVE		1229475968,dummyCrc32	{LNXT:3|5|-1}
+(*) UDINT
+0BAA42C4  B8 80 50 48 49                mov eax, 49485080H
+0BAA42C9  89 05 CC CC CC CC             mov [CCCCCCCCH], eax ; $$DATA$$+36
+
+#5		
+#6			(* warningsKiller := sysDBase_SetExtTable( ADR( $$ParDB ), $$ParDBLength ); *)
+#7			ADR		$$ParDB	{LNXT:5|3|-1}
+(*) UDINT
+0BAA42CF  B8 CC CC CC CC                mov eax, CCCCCCCCH ; $$CODE$$+240
+
+#8			sysDBase_SetExtTable		$$ParDBLength	{LNXT:5|3|-1}
+(*) @USINT
+0BAA42D4  68 06 00 00 00                push 6
+0BAA42D9  8B C8                         mov ecx, eax
+0BAA42DB  51                            push ecx
+0BAA42DC  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; sysDBase_SetExtTable
+0BAA42E1  FF D1                         call ecx
+0BAA42E3  81 C4 08 00 00 00             add esp, 8
+
+#9			ST		warningsKiller	{LNXT:5|3|-1}
+(*) USINT
+0BAA42E9  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+13
+
+0BAA42EF  61                            popad
+0BAA42F0  5D                            pop ebp
+
+0BAA42F1  C3                            ret
+
+END_PROGRAM
+
+
+**************************************************
+	Target variable image generation
+**************************************************
+
+
+*** INPUT:
+0BAA42F2  C3                            ret
+
+
+*** OUTPUT:
+0BAA42F3  C3                            ret
+
+
+
+**************************************************
+	Task Serv init code
+**************************************************
+
+0BAA42F4  55                            push ebp
+0BAA42F5  8B EC                         mov ebp, esp
+
+0BAA42F7  8B E5                         mov esp, ebp
+0BAA42F9  5D                            pop ebp
+
+0BAA42FA  C3                            ret
+
+**************************************************
+	List program: RegTemp
+**************************************************
+
+PROGRAM RegTemp
+
+END_PROGRAM
+
+0BAA4310  55                            push ebp
+0BAA4311  8B EC                         mov ebp, esp
+0BAA4313  60                            pushad
+
+#0		{SRC:RegTemp}
+#1		(*$WAITSWITCH$*)
+#2		
+#3		
+#4			(* IF iTempProbe > (iSetpointCooling + iDifferential) OR xForceCooling OR xForceRemote *)
+#5			LD		iTempProbe	{LNXT:3|-1|-1}
+(*) UNDEF
+0BAA4314  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+42
+
+#6			GT(		iSetpointCooling	{LNXT:3|-1|-1}
+(*) INT
+0BAA431B  50                            push eax
+0BAA431C  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; %M101+0
+
+#7			ADD		iDifferential	{LNXT:3|-1|-1}
+(*) INT
+0BAA4323  0F BF 0D CC CC CC CC          movsx ecx, word ptr [CCCCCCCCH] ; %M101+2
+0BAA432A  03 C1                         add eax, ecx
+
+#8			)	{LNXT:3|-1|-1}
+(*) INT
+0BAA432C  8B C8                         mov ecx, eax
+0BAA432E  58                            pop eax
+0BAA432F  3B C1                         cmp eax, ecx
+0BAA4331  0F 9F C0                      setg al
+0BAA4334  25 FF 00 00 00                and eax, 0FFh
+
+#9			OR		xForceCooling	{LNXT:3|-1|-1}
+(*) BOOL
+0BAA4339  33 C9                         xor ecx, ecx
+0BAA433B  8A 0D CC CC CC CC             mov cl, [CCCCCCCCH] ; %M110+4
+0BAA4341  0B C1                         or eax, ecx
+
+#10			OR		xForceRemote	{LNXT:3|-1|-1}
+(*) BOOL
+0BAA4343  33 C9                         xor ecx, ecx
+0BAA4345  8A 0D CC CC CC CC             mov cl, [CCCCCCCCH] ; $$DATA$$+44
+0BAA434B  0B C1                         or eax, ecx
+
+#11			JMPCN	$label0	{LNXT:3|4|5}
+(-) BOOL
+0BAA434D  84 C0                         test al, al
+0BAA434F  90 74 16 90 90 90             je 0BAA4368H
+
+#12		
+#13			(* THEN *)
+#14		
+#15				(* xRequestCooling := TRUE; *)
+#16				MOVE		TRUE,xRequestCooling	{LNXT:4|9|-1}
+(*) BOOL
+0BAA4355  B8 01 00 00 00                mov eax, 01H
+0BAA435A  84 C0                         test al, al
+0BAA435C  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+12
+
+#17				JMP		$label1	{LNXT:3|4|5}
+(-) BOOL
+0BAA4363  EB 31 90 90 90                jmp 0BAA4396H
+
+#18		$label0:
+#19		
+#20			(* ELSIF iTempProbe < iSetpointCooling *)
+#21			LD		iTempProbe	{LNXT:5|-1|-1}
+(*) UNDEF
+0BAA4368  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+42
+
+#22			LT		iSetpointCooling	{LNXT:5|-1|-1}
+(*) INT
+0BAA436F  0F BF 0D CC CC CC CC          movsx ecx, word ptr [CCCCCCCCH] ; %M101+0
+0BAA4376  3B C1                         cmp eax, ecx
+0BAA4378  0F 9C C0                      setl al
+0BAA437B  25 FF 00 00 00                and eax, 0FFh
+
+#23			JMPCN	$label1	{LNXT:5|6|9}
+(-) BOOL
+0BAA4380  84 C0                         test al, al
+0BAA4382  90 74 11 90 90 90             je 0BAA4396H
+
+#24		
+#25			(* THEN *)
+#26		
+#27				(* xRequestCooling := FALSE; *)
+#28				MOVE		FALSE,xRequestCooling	{LNXT:6|9|-1}
+(*) BOOL
+0BAA4388  B8 00 00 00 00                mov eax, 00H
+0BAA438D  84 C0                         test al, al
+0BAA438F  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+12
+
+#29		
+#30		$label1:
+#31			(* END_IF *)
+#32		
+#33			(* iAmbTemp := iTempProbe; *)
+#34			MOVE		iTempProbe,iAmbTemp	{LNXT:9|3|-1}
+(*) BOOL
+0BAA4396  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+42
+0BAA439D  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; %M110+2
+
+END_PROGRAM
+**************************************************
+	List program: DO_Delay
+**************************************************
+
+PROGRAM DO_Delay
+
+        VAR
+DO_del : TON;
+	END_VAR
+
+END_PROGRAM
+
+#0		{SRC:DO_Delay}
+#1		
+#2		
+#3		
+#4		(*** Network 1 ***)
+#5		
+#6		(* Call for FB TON instance DO_DEL *)
+#7		MOVE	XREQUESTCOOLING,DO_DEL.IN	{R:"1$FB:DO_DEL"}
+(*) UDINT
+0BAA43A4  33 C0                         xor eax, eax
+0BAA43A6  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+12
+0BAA43AC  84 C0                         test al, al
+0BAA43AE  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+18
+
+#8		MOVE	UIDELAY,DO_DEL.PT	{R:"1$FB:DO_DEL"}
+(*) BOOL
+0BAA43B5  33 C0                         xor eax, eax
+0BAA43B7  66 8B 05 CC CC CC CC          mov ax, [CCCCCCCCH] ; %M101+4
+0BAA43BE  89 05 CC CC CC CC             mov [CCCCCCCCH], eax ; $$DATA$$+19
+
+#9		CAL	DO_DEL	{R:"1$FB:DO_DEL"}
+(*) UINT
+0BAA43C4  50                            push eax
+0BAA43C5  BB CC CC CC CC                mov ebx, CCCCCCCCH ; $$DATA$$+14
+0BAA43CA  E8 21 FE FF FF                call 0BAA41F0H ; $$CODE$$+16880
+0BAA43CF  58                            pop eax
+
+#10		MOVE	DO_DEL.Q,XOUTPUTCOOLING	{R:"1$FB:DO_DEL"}
+(*) UINT
+0BAA43D0  33 C0                         xor eax, eax
+0BAA43D2  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+23
+0BAA43D8  84 C0                         test al, al
+0BAA43DA  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %M110+0
+
+#11		MOVE	DO_DEL.Q,XCOOLING	{R:"1$FB:DO_DEL"}
+(*) BOOL
+0BAA43E1  33 C0                         xor eax, eax
+0BAA43E3  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+23
+0BAA43E9  84 C0                         test al, al
+0BAA43EB  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q1+0
+
+0BAA43F2  61                            popad
+0BAA43F3  5D                            pop ebp
+
+0BAA43F4  C3                            ret
+
+END_PROGRAM
+
+
+**************************************************
+	Target variable image generation
+**************************************************
+
+
+*** INPUT:
+0BAA43F5  55                            push ebp
+0BAA43F6  8B EC                         mov ebp, esp
+
+0BAA43F8  66 8B 0D CC CC CC CC          mov cx, [CCCCCCCCH] ; %I1+0
+0BAA43FF  66 89 0D CC CC CC CC          mov [CCCCCCCCH], cx ; $$DATA$$+42
+
+0BAA4406  8A 0D CC CC CC CC             mov cl, [CCCCCCCCH] ; %I0+0
+0BAA440C  88 0D CC CC CC CC             mov [CCCCCCCCH], cl ; $$DATA$$+44
+
+0BAA4412  8B E5                         mov esp, ebp
+0BAA4414  5D                            pop ebp
+
+0BAA4415  C3                            ret
+
+
+*** OUTPUT:
+0BAA4416  55                            push ebp
+0BAA4417  8B EC                         mov ebp, esp
+
+0BAA4419  8B E5                         mov esp, ebp
+0BAA441B  5D                            pop ebp
+
+0BAA441C  C3                            ret
+
+
+
+**************************************************
+	Task Timed init code
+**************************************************
+
+0BAA441D  55                            push ebp
+0BAA441E  8B EC                         mov ebp, esp
+
+0BAA4420  8B E5                         mov esp, ebp
+0BAA4422  5D                            pop ebp
+
+0BAA4423  C3                            ret
+
+
+
+**************************************************
+	Global init code
+**************************************************
+
+0BAA4430  55                            push ebp
+0BAA4431  8B EC                         mov ebp, esp
+
+Var init: V:EMBEDDEDELEMENTS:$$POUCBARRAY$$BACKGROUND = 0
+0BAA4433  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; $$DATA$$+76
+0BAA4438  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+48
+
+Var init: V:EMBEDDEDELEMENTS:$$POUCBARRAY$$SERV = 0
+0BAA443E  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; $$DATA$$+82
+0BAA4443  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+56
+
+Var init: V:EMBEDDEDELEMENTS:$$POUCBARRAY$$TIMED = 0
+0BAA4449  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; $$DATA$$+88
+0BAA444E  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+64
+0BAA4454  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; $$DATA$$+94
+0BAA4459  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+64
+
+0BAA445F  8B E5                         mov esp, ebp
+0BAA4461  5D                            pop ebp
+
+0BAA4462  C3                            ret
+
+
+
+**************************************************
+	Global RETAIN init code
+**************************************************
+
+0BAA4463  55                            push ebp
+0BAA4464  8B EC                         mov ebp, esp
+
+0BAA4466  8B E5                         mov esp, ebp
+0BAA4468  5D                            pop ebp
+
+0BAA4469  C3                            ret
+
+
+
+**************************************************
+	Task $$VirtualTables init code
+**************************************************
+
+0BAA446A  55                            push ebp
+0BAA446B  8B EC                         mov ebp, esp
+
+0BAA446D  8B E5                         mov esp, ebp
+0BAA446F  5D                            pop ebp
+
+0BAA4470  C3                            ret
+
+
+
+********************************************
+MEMORY MAP
+********************************************
+
+Code area type:          		       main code
+Start code area:          		000000000BAA0000h
+End code area:            		000000000BAA46B8h
+Code size:                		000046B8h
+
+Start local data area:    		000000000BA20000h
+End local data area:      		000000000BA20064h
+Local data size:          		00000064h
+
+Start retentive data area:		0000000000000000h
+End retentive data area:  		0000000000000000h
+Retentive data size:      		00000000h
+
+Start bit data area:      		0000000000000000h
+End bit data area:        		0000000000000000h
+Bit data size:            		00000000h
+
+
+
+********************************************
+CODE ID:                                212F818B
+DEBUG MEMO ID:                          000034F7
+FULL MEMO ID:                           00007FC3
+RELOCATION ADDR:                        000000000BAA0000
+********************************************

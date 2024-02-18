@@ -4,3 +4,18 @@
 	(*                            *)
 	(******************************)
 
+        VAR_GLOBAL
+	{G:"EEPROM_Parameters"}
+iSetpointCooling AT %MW101.0 : INT;
+iDifferential AT %MW101.1 : INT;
+uiDelay AT %MW101.2 : UINT;
+	{G:"Status_variables"}
+xOutputCooling AT %MW110.0 : BOOL;
+iAmbTemp AT %MW110.1 : INT;
+xForceCooling AT %MW110.2 : BOOL := 0;
+	{G:"IO_Mapping"}
+iTempProbe AT %IW1.0 : INT;	{ DE:"AIL1 analogue input" }
+xForceRemote AT %IX0.0 : BOOL;	{ DE:"DIL1 digital input" }
+xCooling AT %QX1.0 : BOOL;	{ DE:"DOL1 digital output" }
+	END_VAR
+
