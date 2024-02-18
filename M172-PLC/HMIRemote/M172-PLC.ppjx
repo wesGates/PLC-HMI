@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <plcProject caseSensitive="false" extcheck="true">
 	<image>M172-PLC.imgx</image>
-	<commSettings>Modbus:1,1000#COM:1,38400,E,8,1</commSettings>
+	<commSettings>Modbus:1,1000,M#COM:6,38400,N,8,1,H</commSettings>
 	<sources>
 		<main>M172-PLC.plc</main>
 		<target id="TM172O_668p14">FreeAdvanceSmall_HMI_668p14.tgt</target>
