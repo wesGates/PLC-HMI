@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- #DEFINE PREFIX M1722DPLC -->
+<devicetemplate>
+	<deviceinfo caption="M172-PLC" name="M172-PLC" version="0.0" icon="img\application.ico" deviceid="M1722DPLC" devicetype="application" PLCApplicationID="M172-PLC">
+		<description>M172-PLC Application</description>
+		<protocols><protocol>TM172O_668p14_appl</protocol></protocols>
+	</deviceinfo>
+	<plcconfig>
+		<hmi>
+			<tree name="treeCommissioning">
+				<node name="PREFIX" caption="M172-PLC" icon="%CATALOG%\Applications\img\application.ico" datalink="PREFIX" captionedit="false" menu="menuAppPLC"/>
+			</tree>
+		</hmi>
+		<templatedata>
+			<PREFIX/>
+		</templatedata>
+		<extensions>
+		</extensions>
+		<datadef version="1.0">
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+				<xs:element name="PREFIX">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="insertableDevice">
+								<xs:sequence>
+								</xs:sequence>
+								<xs:attribute name="oncreatenode" type="xs:string" fixed="configurator.OnCreateDeviceChild"/>
+								<xs:attribute name="onloadnode" type="xs:string" fixed="configurator.OnLoadDeviceChild"/>
+								<xs:attribute name="ondeletenode" type="xs:string" fixed="configurator.OnDeleteDeviceChild"/>
+								<xs:attribute name="PLCProject" type="xs:string" fixed=""/>
+								<xs:attribute name="noAutoGenCaption" type="xs:boolean" fixed="true"/>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</datadef>
+		<cfgSettings><item name="newAccessLevelFormat">true</item></cfgSettings></plcconfig>
+	<deviceconfig>
+		<hmi>
+			<tree name="tree1">
+				<node name="PREFIX" caption="M172-PLC" icon="%CATALOG%\Applications\img\application.ico" datalink="PREFIX" captionedit="false" menu="menuAppPLC"/>
+			</tree>
+		</hmi>
+		<templatedata>
+			<PREFIX/>
+		</templatedata>
+		<extensions>
+			<eventhandler event="OnLoadTemplate">configurator.OnLoadDeviceTemplate</eventhandler>
+		</extensions>
+		<datadef version="1.0">
+			<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+				<xs:element name="PREFIX">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="insertableDevice">
+								<xs:sequence>
+								</xs:sequence>
+								<xs:attribute name="oncreatenode" type="xs:string" fixed="configurator.OnCreateDeviceChild"/>
+								<xs:attribute name="onloadnode" type="xs:string" fixed="configurator.OnLoadDeviceChild"/>
+								<xs:attribute name="ondeletenode" type="xs:string" fixed="configurator.OnDeleteDeviceChild"/>
+								<xs:attribute name="PLCProject" type="xs:string" fixed="M172-PLC.RSM"/>
+								<xs:attribute name="HMIProject" type="xs:string" fixed="HMIRemote\M172-PLC.RSM"/>
+								<xs:attribute name="HMIRemoteProject" type="xs:string" fixed="HMIRemote\Download\M172-PLC.BIN"/>
+								<xs:attribute name="noAutoGenCaption" type="xs:boolean" fixed="true"/>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:schema>
+		</datadef>
+		<parameters><par ipa="0" name="iSetpointCooling" descr="" typetarg="short" typepar="short" scale="1" form="%.1D" offs="0" um="°C" readonly="false" defval="260" min="200" max="350" accesslevel="0"><protocol name="Modbus" commaddr="16384" commsubindex="0"/><option dataBlock="MW101.0" typeIEC="INT" parType="eeprom"/><option name="typeIEC">INT</option><option name="softscope">0</option><option name="dbScale">1</option><option name="dbOffset">0</option><protocol name="CanOpen" commaddr="16384" commsubindex="0"/></par><par ipa="1" name="iDifferential" descr="" typetarg="short" typepar="short" scale="1" form="%.1D" offs="0" um="°C" readonly="false" defval="20" min="0" max="50" accesslevel="0"><protocol name="Modbus" commaddr="16385" commsubindex="0"/><option dataBlock="MW101.1" typeIEC="INT" parType="eeprom"/><option name="typeIEC">INT</option><option name="softscope">0</option><option name="dbScale">1</option><option name="dbOffset">0</option><protocol name="CanOpen" commaddr="16385" commsubindex="0"/></par><par ipa="2" name="uiDelay" descr="" typetarg="unsignedShort" typepar="unsignedShort" scale="1" form="" offs="0" um="sec" readonly="false" defval="5" min="1" max="30" accesslevel="0"><protocol name="Modbus" commaddr="16386" commsubindex="0"/><option dataBlock="MW101.2" typeIEC="UINT" parType="eeprom"/><option name="typeIEC">UINT</option><option name="softscope">0</option><option name="dbScale">1000</option><option name="dbOffset">0</option><protocol name="CanOpen" commaddr="16386" commsubindex="0"/></par><par ipa="5000" name="xOutputCooling" descr="" typetarg="boolean" typepar="boolean" scale="1" form="" offs="0" um="" readonly="true" defval="" accesslevel="0"><protocol name="Modbus" commaddr="8960" commsubindex="0"/><option dataBlock="MW110.0" typeIEC="BOOL" parType="status"/><option name="typeIEC">BOOL</option><option name="softscope">0</option><option name="dbScale">1</option><option name="dbOffset">0</option><protocol name="CanOpen" commaddr="8960" commsubindex="0"/></par><par ipa="5001" name="iAmbTemp" descr="" typetarg="short" typepar="short" scale="1" form="" offs="0" um="" readonly="true" defval="" accesslevel="0"><protocol name="Modbus" commaddr="8961" commsubindex="0"/><option dataBlock="MW110.1" typeIEC="INT" parType="status"/><option name="typeIEC">INT</option><option name="softscope">0</option><option name="dbScale">1</option><option name="dbOffset">0</option><protocol name="CanOpen" commaddr="8961" commsubindex="0"/></par><par ipa="5002" name="xForceCooling" descr="" typetarg="boolean" typepar="boolean" scale="1" form="" offs="0" um="" readonly="false" defval="0" accesslevel="0"><protocol name="Modbus" commaddr="8962" commsubindex="0"/><option dataBlock="MW110.2" typeIEC="BOOL" parType="status"/><option name="typeIEC">BOOL</option><option name="softscope">0</option><option name="dbScale">1</option><option name="dbOffset">0</option><protocol name="CanOpen" commaddr="8962" commsubindex="0"/></par></parameters>
+		<enums/>
+		<redefPars><redefPar ipa="10020" defval="3"/><redefPar ipa="10024" defval="2"/><redefPar ipa="10021" defval="8"/><redefPar ipa="10022" defval="1"/><redefPar ipa="10023" defval="2"/></redefPars>
+		<settings><item name="newAccessLevelFormat">true</item></settings><fieldVars/>
+		<BACnetsNotPublished/></deviceconfig>
+</devicetemplate>
