@@ -2,13 +2,22 @@
 <PRJ_RESOURCES version="20181002">
 	<LANGUAGES>
 		<LANG id="0" descr="BaseLanguage">
-			<ENUMS/>
+			<ENUMS>
+				<ENUM id="1" name="UserDetected" descr="UserDetected">
+					<VAL id="0">...</VAL>
+					<VAL id="1">User Detected. </VAL>
+				</ENUM>
+				<ENUM id="2" name="Greeting" descr="Greeting">
+					<VAL id="0">...</VAL>
+					<VAL id="1">Hello!</VAL>
+				</ENUM>
+			</ENUMS>
 			<STRINGTABLE/>
 		</LANG>
 	</LANGUAGES>
 	<PAGES_INFO>
 		<MODEL>flat</MODEL>
-		<FIRST_PAGE>page1</FIRST_PAGE>
+		<FIRST_PAGE>TouchScreen</FIRST_PAGE>
 		<CURR_LANG>0</CURR_LANG>
 		<TITLEBAR_FONT>EWP2_8x16</TITLEBAR_FONT>
 		<TITLEBAR_COLOR type="RGBColor">12632256</TITLEBAR_COLOR>
@@ -22,14 +31,14 @@
 		<FONTS useOnTarget="false" downloadUsedChars="true"/>
 	</RESOURCES>
 	<PAGES>
-		<PAGE name="page1">
+		<PAGE name="TouchScreen">
 			<ATTRIBUTES>
 				<MSGID>0</MSGID>
 				<WNDMODE>0</WNDMODE>
 				<MODAL>No</MODAL>
-				<FONT/>
+				<FONT>EWP2_8x16</FONT>
 				<COLOR type="RGBColor">0</COLOR>
-				<BCKCOLOR type="RGBColor">12632256</BCKCOLOR>
+				<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
 				<STYLE>Flat</STYLE>
 				<XDIM>240</XDIM>
 				<YDIM>320</YDIM>
@@ -44,12 +53,239 @@
 				<DESC/>
 			</ATTRIBUTES>
 			<OBJECTS>
-				<STRINGS/>
+				<STRINGS>
+					<STRING name="String_7">
+						<FONT>DroidSansMono_12x24</FONT>
+						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
+						<COLOR type="RGBColor">0</COLOR>
+						<TEXT>
+							<![CDATA[Temperature]]>
+						</TEXT>
+						<XPOS>7</XPOS>
+						<YPOS>8</YPOS>
+						<XDIM>132</XDIM>
+						<YDIM>24</YDIM>
+						<VISIBLE>TRUE</VISIBLE>
+						<ZORDER>7</ZORDER>
+						<STYLE>Flat</STYLE>
+						<BORDCOL type="RGBColor">0</BORDCOL>
+						<BORDPTS>0</BORDPTS>
+						<SELBCK type="RGBColor">0</SELBCK>
+						<SELCOL type="RGBColor">16777215</SELCOL>
+						<NUMCHAR>0</NUMCHAR>
+						<ALIGN>Left</ALIGN>
+						<REFRESH>FALSE</REFRESH>
+						<SELECT>FALSE</SELECT>
+						<EVENTS>
+							<EVENT name="BeforeUpdate"/>
+							<EVENT name="AfterUpdate"/>
+						</EVENTS>
+					</STRING>
+					<STRING name="String_14">
+						<FONT>DroidSansMono_12x24</FONT>
+						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
+						<COLOR type="RGBColor">0</COLOR>
+						<TEXT>
+							<![CDATA[Humidity]]>
+						</TEXT>
+						<XPOS>7</XPOS>
+						<YPOS>51</YPOS>
+						<XDIM>96</XDIM>
+						<YDIM>24</YDIM>
+						<VISIBLE>TRUE</VISIBLE>
+						<ZORDER>14</ZORDER>
+						<STYLE>Flat</STYLE>
+						<BORDCOL type="RGBColor">0</BORDCOL>
+						<BORDPTS>0</BORDPTS>
+						<SELBCK type="RGBColor">0</SELBCK>
+						<SELCOL type="RGBColor">16777215</SELCOL>
+						<NUMCHAR>0</NUMCHAR>
+						<ALIGN>Left</ALIGN>
+						<REFRESH>FALSE</REFRESH>
+						<SELECT>FALSE</SELECT>
+						<EVENTS>
+							<EVENT name="BeforeUpdate"/>
+							<EVENT name="AfterUpdate"/>
+						</EVENTS>
+					</STRING>
+				</STRINGS>
 				<IMGS/>
-				<LINES/>
+				<LINES>
+					<LINE name="Line_9">
+						<BORDPTS>1</BORDPTS>
+						<BORDCOL type="RGBColor">0</BORDCOL>
+						<XPOS>7</XPOS>
+						<YPOS>40</YPOS>
+						<XPOS2>230</XPOS2>
+						<YPOS2>40</YPOS2>
+						<ZORDER>9</ZORDER>
+					</LINE>
+					<LINE name="Line_16">
+						<BORDPTS>1</BORDPTS>
+						<BORDCOL type="RGBColor">0</BORDCOL>
+						<XPOS>8</XPOS>
+						<YPOS>85</YPOS>
+						<XPOS2>231</XPOS2>
+						<YPOS2>85</YPOS2>
+						<ZORDER>16</ZORDER>
+					</LINE>
+				</LINES>
 				<RECTS/>
 				<ANIMS/>
-				<EDITS/>
+				<EDITS>
+					<EDIT name="Edit_1">
+						<FONT>DroidSansMono_12x24</FONT>
+						<COLOR type="RGBColor">0</COLOR>
+						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
+						<SELBCK type="RGBColor">0</SELBCK>
+						<SELCOL type="RGBColor">16777215</SELCOL>
+						<STYLE>Flat</STYLE>
+						<BORDCOL type="RGBColor">0</BORDCOL>
+						<BORDPTS>0</BORDPTS>
+						<XPOS>174</XPOS>
+						<YPOS>8</YPOS>
+						<XDIM>48</XDIM>
+						<YDIM>24</YDIM>
+						<NUMCHAR>4</NUMCHAR>
+						<ORDER>1</ORDER>
+						<FORMAT>%.1d</FORMAT>
+						<ALIGN>Right</ALIGN>
+						<ACCESS>RW</ACCESS>
+						<DESC/>
+						<ZORDER>1</ZORDER>
+						<VAR type="INT">@LocalParameters.NTC</VAR>
+						<TYPE>INT</TYPE>
+						<REFRESH>TRUE</REFRESH>
+						<VISIBLE>TRUE</VISIBLE>
+						<SELECT>FALSE</SELECT>
+						<LABEL/>
+						<VARMIN>*</VARMIN>
+						<VARMAX>*</VARMAX>
+						<EVENTS>
+							<EVENT name="BeforeUpdate"/>
+							<EVENT name="AfterUpdate"/>
+							<EVENT name="OnGotFocus"/>
+							<EVENT name="OnLostFocus"/>
+							<EVENT name="OnClick"/>
+							<EVENT name="OnEnter"/>
+							<EVENT name="OnChange"/>
+						</EVENTS>
+					</EDIT>
+					<EDIT name="Edit_15">
+						<FONT>DroidSansMono_12x24</FONT>
+						<COLOR type="RGBColor">0</COLOR>
+						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
+						<SELBCK type="RGBColor">0</SELBCK>
+						<SELCOL type="RGBColor">16777215</SELCOL>
+						<STYLE>Flat</STYLE>
+						<BORDCOL type="RGBColor">0</BORDCOL>
+						<BORDPTS>0</BORDPTS>
+						<XPOS>174</XPOS>
+						<YPOS>51</YPOS>
+						<XDIM>48</XDIM>
+						<YDIM>24</YDIM>
+						<NUMCHAR>4</NUMCHAR>
+						<ORDER>6</ORDER>
+						<FORMAT>%.1d</FORMAT>
+						<ALIGN>Right</ALIGN>
+						<ACCESS>RW</ACCESS>
+						<DESC/>
+						<ZORDER>15</ZORDER>
+						<VAR type="INT">@LocalParameters.RH</VAR>
+						<TYPE>INT</TYPE>
+						<REFRESH>TRUE</REFRESH>
+						<VISIBLE>TRUE</VISIBLE>
+						<SELECT>FALSE</SELECT>
+						<LABEL/>
+						<VARMIN>*</VARMIN>
+						<VARMAX>*</VARMAX>
+						<EVENTS>
+							<EVENT name="BeforeUpdate"/>
+							<EVENT name="AfterUpdate"/>
+							<EVENT name="OnGotFocus"/>
+							<EVENT name="OnLostFocus"/>
+							<EVENT name="OnClick"/>
+							<EVENT name="OnEnter"/>
+							<EVENT name="OnChange"/>
+						</EVENTS>
+					</EDIT>
+					<EDIT name="Edit_18">
+						<FONT>DroidSansMono_12x24</FONT>
+						<COLOR type="RGBColor">0</COLOR>
+						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
+						<SELBCK type="RGBColor">0</SELBCK>
+						<SELCOL type="RGBColor">16777215</SELCOL>
+						<STYLE>Flat</STYLE>
+						<BORDCOL type="RGBColor">0</BORDCOL>
+						<BORDPTS>0</BORDPTS>
+						<XPOS>33</XPOS>
+						<YPOS>107</YPOS>
+						<XDIM>168</XDIM>
+						<YDIM>24</YDIM>
+						<NUMCHAR>14</NUMCHAR>
+						<ORDER>7</ORDER>
+						<FORMAT>UserDetected</FORMAT>
+						<ALIGN>Center</ALIGN>
+						<ACCESS>RW</ACCESS>
+						<DESC/>
+						<ZORDER>18</ZORDER>
+						<VAR type="INT">@LocalParameters.PIR</VAR>
+						<TYPE>INT</TYPE>
+						<REFRESH>TRUE</REFRESH>
+						<VISIBLE>TRUE</VISIBLE>
+						<SELECT>FALSE</SELECT>
+						<LABEL/>
+						<VARMIN>*</VARMIN>
+						<VARMAX>*</VARMAX>
+						<EVENTS>
+							<EVENT name="BeforeUpdate"/>
+							<EVENT name="AfterUpdate"/>
+							<EVENT name="OnGotFocus"/>
+							<EVENT name="OnLostFocus"/>
+							<EVENT name="OnClick"/>
+							<EVENT name="OnEnter"/>
+							<EVENT name="OnChange"/>
+						</EVENTS>
+					</EDIT>
+					<EDIT name="Edit_19">
+						<FONT>DroidSansMono_12x24</FONT>
+						<COLOR type="RGBColor">0</COLOR>
+						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
+						<SELBCK type="RGBColor">0</SELBCK>
+						<SELCOL type="RGBColor">16777215</SELCOL>
+						<STYLE>Flat</STYLE>
+						<BORDCOL type="RGBColor">0</BORDCOL>
+						<BORDPTS>0</BORDPTS>
+						<XPOS>34</XPOS>
+						<YPOS>141</YPOS>
+						<XDIM>168</XDIM>
+						<YDIM>24</YDIM>
+						<NUMCHAR>14</NUMCHAR>
+						<ORDER>8</ORDER>
+						<FORMAT>Greeting</FORMAT>
+						<ALIGN>Center</ALIGN>
+						<ACCESS>RW</ACCESS>
+						<DESC/>
+						<ZORDER>19</ZORDER>
+						<VAR type="INT">@LocalParameters.PIR</VAR>
+						<TYPE>INT</TYPE>
+						<REFRESH>TRUE</REFRESH>
+						<VISIBLE>TRUE</VISIBLE>
+						<SELECT>FALSE</SELECT>
+						<LABEL/>
+						<VARMIN>*</VARMIN>
+						<VARMAX>*</VARMAX>
+						<EVENTS>
+							<EVENT name="BeforeUpdate"/>
+							<EVENT name="AfterUpdate"/>
+							<EVENT name="OnGotFocus"/>
+							<EVENT name="OnLostFocus"/>
+							<EVENT name="OnClick"/>
+							<EVENT name="OnEnter"/>
+							<EVENT name="OnChange"/>
+						</EVENTS>
+					</EDIT>
+				</EDITS>
 				<TEXTBOXES/>
 				<COMBOBOXES/>
 				<BUTTONS/>
@@ -58,7 +294,15 @@
 				<CHARTS/>
 				<CUSTOMS/>
 			</OBJECTS>
-			<EVENTS/>
+			<EVENTS>
+				<EVENT name="OnLoad"/>
+				<EVENT name="OnUnload"/>
+				<EVENT name="OnActivate"/>
+				<EVENT name="OnDeactivate"/>
+				<EVENT name="OnDraw"/>
+				<EVENT name="OnTimer"/>
+				<EVENT name="OnAfterDraw"/>
+			</EVENTS>
 			<ACTIONS/>
 			<SCRIPT>
 				<![CDATA[]]>

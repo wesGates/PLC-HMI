@@ -1,0 +1,2599 @@
+***********************************************************************
+*
+*	CODE GENERATION LISTING FOR: M172-TouchScreen
+*	COMPILER VERSION: 5.20.0.53
+*
+***********************************************************************
+
+**************************************************
+	List function block: DrawBackPage
+**************************************************
+
+FUNCTION_BLOCK DrawBackPage
+
+        VAR_INPUT
+IsOpening : BOOL;
+CurrPageId : UINT;
+	END_VAR
+
+        VAR_OUTPUT
+BackPageId : UINT;
+	END_VAR
+
+        VAR_EXTERNAL
+	{G:"Back_buffer"}
+$giBackBufferCurr : INT := -1;
+$giBackBufferFirst : INT := -1;
+$giBackBufferLast : INT := -1;
+$guiBackBuffer : ARRAY[0..9] OF UINT;
+	END_VAR
+
+END_FUNCTION_BLOCK
+
+084E41A0  55                            push ebp
+084E41A1  8B EB                         mov ebp, ebx
+084E41A3  57                            push edi
+
+#0		{SRC:DrawBackPage}
+#1		(*$WAITSWITCH$*)
+#2		
+#3		
+#4			(* IF IsOpening *)
+#5			LD		IsOpening	{LNXT:3|-1|-1}
+(*) UNDEF
+084E41A4  33 C0                         xor eax, eax
+084E41A6  8A 45 00                      mov al, [ebp]
+
+#6			JMPCN	$label0	{LNXT:3|8|41}
+(-) BOOL
+084E41A9  84 C0                         test al, al
+084E41AB  0F 84 F6 01 00 00             je 084E43A7H
+
+#7		
+#8			(* THEN *)
+#9		
+#10				(* $giBackBufferCurr := $giBackBufferCurr + 1; *)
+#11				LD		$giBackBufferCurr	{LNXT:8|9|-1}
+(*) UNDEF
+084E41B1  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#12				ADD		1	{LNXT:8|9|-1}
+(*) INT
+084E41B8  05 01 00 00 00                add eax, 1
+
+#13				ST		$giBackBufferCurr	{LNXT:8|9|-1}
+(*) INT
+084E41BD  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+22
+
+#14		
+#15		
+#16				(* IF $giBackBufferCurr >= 10 *)
+#17				LD		$giBackBufferCurr	{LNXT:9|-1|-1}
+(*) UNDEF
+084E41C4  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#18				GE		10	{LNXT:9|-1|-1}
+(*) INT
+084E41CB  3D 0A 00 00 00                cmp eax, 10
+084E41D0  0F 9D C0                      setge al
+084E41D3  25 FF 00 00 00                and eax, 0FFh
+
+#19				JMPCN	$label2	{LNXT:9|10|12}
+(-) BOOL
+084E41D8  84 C0                         test al, al
+084E41DA  90 74 0F 90 90 90             je 084E41ECH
+
+#20		
+#21				(* THEN *)
+#22		
+#23					(* $giBackBufferCurr := 0; *)
+#24					MOVE		0,$giBackBufferCurr	{LNXT:10|12|-1}
+(*) BOOL
+084E41E0  B8 00 00 00 00                mov eax, 00H
+084E41E5  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+22
+
+#25		
+#26		$label2:
+#27				(* END_IF *)
+#28		
+#29				(* $guiBackBuffer[ $giBackBufferCurr ] := CurrPageId; *)
+#30				MOVE		CurrPageId,$guiBackBuffer[$giBackBufferCurr]	{LNXT:12|13|-1}
+(*) INT
+084E41EC  33 C0                         xor eax, eax
+084E41EE  66 8B 45 01                   mov ax, 1[ebp]
+084E41F2  0F BF 1D CC CC CC CC          movsx ebx, word ptr [CCCCCCCCH] ; $$DATA$$+22
+084E41F9  66 89 04 5D CC CC CC CC       mov CCCCCCCCH[ebx*2], ax ; $$DATA$$+120
+
+#31		
+#32		
+#33				(* IF $giBackBufferFirst = -1 *)
+#34				LD		$giBackBufferFirst	{LNXT:13|-1|-1}
+(*) UNDEF
+084E4201  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+24
+
+#35				EQ		-1	{LNXT:13|-1|-1}
+(*) INT
+084E4208  3D FF FF FF FF                cmp eax, -1
+084E420D  0F 94 C0                      sete al
+084E4210  25 FF 00 00 00                and eax, 0FFh
+
+#36				JMPCN	$label3	{LNXT:13|14|15}
+(-) BOOL
+084E4215  84 C0                         test al, al
+084E4217  90 74 14 90 90 90             je 084E422EH
+
+#37		
+#38				(* THEN *)
+#39		
+#40					(* $giBackBufferFirst := 0; *)
+#41					MOVE		0,$giBackBufferFirst	{LNXT:14|23|-1}
+(*) BOOL
+084E421D  B8 00 00 00 00                mov eax, 00H
+084E4222  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+24
+
+#42					JMP		$label4	{LNXT:13|14|15}
+(-) INT
+084E4229  EB 7C 90 90 90                jmp 084E42A7H
+
+#43		$label3:
+#44		
+#45				(* ELSIF $giBackBufferCurr = $giBackBufferFirst AND $giBackBufferFirst <> $giBackBufferLast *)
+#46				LD		$giBackBufferFirst	{LNXT:15|-1|-1}
+(*) UNDEF
+084E422E  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+24
+
+#47				NE		$giBackBufferLast	{LNXT:15|-1|-1}
+(*) INT
+084E4235  0F BF 0D CC CC CC CC          movsx ecx, word ptr [CCCCCCCCH] ; $$DATA$$+26
+084E423C  3B C1                         cmp eax, ecx
+084E423E  0F 95 C0                      setne al
+084E4241  25 FF 00 00 00                and eax, 0FFh
+
+#48				AND(		$giBackBufferCurr	{LNXT:15|-1|-1}
+(*) BOOL
+084E4246  50                            push eax
+084E4247  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#49				EQ		$giBackBufferFirst	{LNXT:15|-1|-1}
+(*) INT
+084E424E  0F BF 0D CC CC CC CC          movsx ecx, word ptr [CCCCCCCCH] ; $$DATA$$+24
+084E4255  3B C1                         cmp eax, ecx
+084E4257  0F 94 C0                      sete al
+084E425A  25 FF 00 00 00                and eax, 0FFh
+
+#50				)	{LNXT:15|-1|-1}
+(*) BOOL
+084E425F  8B C8                         mov ecx, eax
+084E4261  58                            pop eax
+084E4262  23 C1                         and eax, ecx
+
+#51				JMPCN	$label4	{LNXT:15|16|23}
+(-) BOOL
+084E4264  84 C0                         test al, al
+084E4266  90 74 3E 90 90 90             je 084E42A7H
+
+#52		
+#53				(* THEN *)
+#54		
+#55					(* $giBackBufferFirst := $giBackBufferFirst + 1; *)
+#56					LD		$giBackBufferFirst	{LNXT:16|17|-1}
+(*) UNDEF
+084E426C  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+24
+
+#57					ADD		1	{LNXT:16|17|-1}
+(*) INT
+084E4273  05 01 00 00 00                add eax, 1
+
+#58					ST		$giBackBufferFirst	{LNXT:16|17|-1}
+(*) INT
+084E4278  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+24
+
+#59		
+#60		
+#61					(* IF $giBackBufferFirst = 10 *)
+#62					LD		$giBackBufferFirst	{LNXT:17|-1|-1}
+(*) UNDEF
+084E427F  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+24
+
+#63					EQ		10	{LNXT:17|-1|-1}
+(*) INT
+084E4286  3D 0A 00 00 00                cmp eax, 10
+084E428B  0F 94 C0                      sete al
+084E428E  25 FF 00 00 00                and eax, 0FFh
+
+#64					JMPCN	$label5	{LNXT:17|18|23}
+(-) BOOL
+084E4293  84 C0                         test al, al
+084E4295  90 74 0F 90 90 90             je 084E42A7H
+
+#65		
+#66					(* THEN *)
+#67		
+#68						(* $giBackBufferFirst := 0; *)
+#69						MOVE		0,$giBackBufferFirst	{LNXT:18|23|-1}
+(*) BOOL
+084E429B  B8 00 00 00 00                mov eax, 00H
+084E42A0  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+24
+
+#70		
+#71		$label5:
+#72					(* END_IF *)
+#73		
+#74		$label4:
+#75				(* END_IF *)
+#76		
+#77		
+#78				(* IF $giBackBufferCurr = $giBackBufferFirst *)
+#79				LD		$giBackBufferCurr	{LNXT:23|-1|-1}
+(*) UNDEF
+084E42A7  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#80				EQ		$giBackBufferFirst	{LNXT:23|-1|-1}
+(*) INT
+084E42AE  0F BF 0D CC CC CC CC          movsx ecx, word ptr [CCCCCCCCH] ; $$DATA$$+24
+084E42B5  3B C1                         cmp eax, ecx
+084E42B7  0F 94 C0                      sete al
+084E42BA  25 FF 00 00 00                and eax, 0FFh
+
+#81				JMPCN	$label6	{LNXT:23|24|25}
+(-) BOOL
+084E42BF  84 C0                         test al, al
+084E42C1  90 74 14 90 90 90             je 084E42D8H
+
+#82		
+#83				(* THEN *)
+#84		
+#85					(* $giBackBufferLast := -1; *)
+#86					MOVE		-1,$giBackBufferLast	{LNXT:24|32|-1}
+(*) BOOL
+084E42C7  B8 FF FF FF FF                mov eax, -1
+084E42CC  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+26
+
+#87					JMP		$label9	{LNXT:23|24|25}
+(-) INT
+084E42D3  E9 8B 00 00 00                jmp 084E4363H
+
+#88		$label6:
+#89		
+#90				(* ELSIF $giBackBufferCurr = 0 AND $giBackBufferFirst <> 9 *)
+#91				LD		$giBackBufferFirst	{LNXT:25|-1|-1}
+(*) UNDEF
+084E42D8  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+24
+
+#92				NE		9	{LNXT:25|-1|-1}
+(*) INT
+084E42DF  3D 09 00 00 00                cmp eax, 9
+084E42E4  0F 95 C0                      setne al
+084E42E7  25 FF 00 00 00                and eax, 0FFh
+
+#93				AND(		$giBackBufferCurr	{LNXT:25|-1|-1}
+(*) BOOL
+084E42EC  50                            push eax
+084E42ED  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#94				EQ		0	{LNXT:25|-1|-1}
+(*) INT
+084E42F4  3D 00 00 00 00                cmp eax, 0
+084E42F9  0F 94 C0                      sete al
+084E42FC  25 FF 00 00 00                and eax, 0FFh
+
+#95				)	{LNXT:25|-1|-1}
+(*) BOOL
+084E4301  8B C8                         mov ecx, eax
+084E4303  58                            pop eax
+084E4304  23 C1                         and eax, ecx
+
+#96				JMPCN	$label7	{LNXT:25|26|27}
+(-) BOOL
+084E4306  84 C0                         test al, al
+084E4308  90 74 14 90 90 90             je 084E431FH
+
+#97		
+#98				(* THEN *)
+#99		
+#100					(* $giBackBufferLast := 9; *)
+#101					MOVE		9,$giBackBufferLast	{LNXT:26|32|-1}
+(*) BOOL
+084E430E  B8 09 00 00 00                mov eax, 09H
+084E4313  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+26
+
+#102					JMP		$label9	{LNXT:25|26|27}
+(-) INT
+084E431A  EB 47 90 90 90                jmp 084E4363H
+
+#103		$label7:
+#104		
+#105				(* ELSIF $giBackBufferCurr <> $giBackBufferFirst *)
+#106				LD		$giBackBufferCurr	{LNXT:27|-1|-1}
+(*) UNDEF
+084E431F  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#107				NE		$giBackBufferFirst	{LNXT:27|-1|-1}
+(*) INT
+084E4326  0F BF 0D CC CC CC CC          movsx ecx, word ptr [CCCCCCCCH] ; $$DATA$$+24
+084E432D  3B C1                         cmp eax, ecx
+084E432F  0F 95 C0                      setne al
+084E4332  25 FF 00 00 00                and eax, 0FFh
+
+#108				JMPCN	$label8	{LNXT:27|28|30}
+(-) BOOL
+084E4337  84 C0                         test al, al
+084E4339  90 74 1B 90 90 90             je 084E4357H
+
+#109		
+#110				(* THEN *)
+#111		
+#112					(* $giBackBufferLast := $giBackBufferCurr - 1; *)
+#113					LD		$giBackBufferCurr	{LNXT:28|32|-1}
+(*) UNDEF
+084E433F  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#114					SUB		1	{LNXT:28|32|-1}
+(*) INT
+084E4346  2D 01 00 00 00                sub eax, 1
+
+#115					ST		$giBackBufferLast	{LNXT:28|32|-1}
+(*) INT
+084E434B  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+26
+
+#116					JMP		$label9	{LNXT:27|28|30}
+(-) INT
+084E4352  EB 0F 90 90 90                jmp 084E4363H
+
+#117		$label8:
+#118		
+#119				(* ELSE *)
+#120		
+#121					(* $giBackBufferLast := -1; *)
+#122					MOVE		-1,$giBackBufferLast	{LNXT:30|32|-1}
+(*) INT
+084E4357  B8 FF FF FF FF                mov eax, -1
+084E435C  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+26
+
+#123		
+#124		$label9:
+#125				(* END_IF *)
+#126		
+#127		
+#128				(* IF $giBackBufferLast <> -1 *)
+#129				LD		$giBackBufferLast	{LNXT:32|-1|-1}
+(*) UNDEF
+084E4363  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+26
+
+#130				NE		-1	{LNXT:32|-1|-1}
+(*) INT
+084E436A  3D FF FF FF FF                cmp eax, -1
+084E436F  0F 95 C0                      setne al
+084E4372  25 FF 00 00 00                and eax, 0FFh
+
+#131				JMPCN	$label10	{LNXT:32|33|35}
+(-) BOOL
+084E4377  84 C0                         test al, al
+084E4379  90 74 1D 90 90 90             je 084E4399H
+
+#132		
+#133				(* THEN *)
+#134		
+#135					(* BackPageId := $guiBackBuffer[$giBackBufferLast]; *)
+#136					MOVE		$guiBackBuffer[$giBackBufferLast],BackPageId	{LNXT:33|-1|-1}
+(*) BOOL
+084E437F  0F BF 1D CC CC CC CC          movsx ebx, word ptr [CCCCCCCCH] ; $$DATA$$+26
+084E4386  33 C0                         xor eax, eax
+084E4388  66 8B 04 5D CC CC CC CC       mov ax, CCCCCCCCH[ebx*2] ; $$DATA$$+120
+084E4390  66 89 45 03                   mov 3[ebp], ax
+
+#137					JMP		$label11	{LNXT:32|33|35}
+(-) UINT
+084E4394  EB 0C 90 90 90                jmp 084E43A2H
+
+#138		$label10:
+#139		
+#140				(* ELSE *)
+#141		
+#142					(* BackPageId := 16#FFFF; *)
+#143					MOVE		16#FFFF,BackPageId	{LNXT:35|-1|-1}
+(*) UINT
+084E4399  B8 FF FF 00 00                mov eax, FFFFH
+084E439E  66 89 45 03                   mov 3[ebp], ax
+
+#144		
+#145		$label11:
+#146				(* END_IF *)
+#147				JMP		$label1	{LNXT:3|8|41}
+(-) UINT
+084E43A2  EB 79 90 90 90                jmp 084E441DH
+
+#148		$label0:
+#149		
+#150			(* ELSE *)
+#151		
+#152				(* $giBackBufferCurr := $giBackBufferCurr - 1; *)
+#153				LD		$giBackBufferCurr	{LNXT:41|42|-1}
+(*) UNDEF
+084E43A7  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#154				SUB		1	{LNXT:41|42|-1}
+(*) INT
+084E43AE  2D 01 00 00 00                sub eax, 1
+
+#155				ST		$giBackBufferCurr	{LNXT:41|42|-1}
+(*) INT
+084E43B3  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+22
+
+#156		
+#157		
+#158				(* IF $giBackBufferCurr < 0 *)
+#159				LD		$giBackBufferCurr	{LNXT:42|-1|-1}
+(*) UNDEF
+084E43BA  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#160				LT		0	{LNXT:42|-1|-1}
+(*) INT
+084E43C1  3D 00 00 00 00                cmp eax, 0
+084E43C6  0F 9C C0                      setl al
+084E43C9  25 FF 00 00 00                and eax, 0FFh
+
+#161				JMPCN	$label12	{LNXT:42|43|45}
+(-) BOOL
+084E43CE  84 C0                         test al, al
+084E43D0  90 74 0F 90 90 90             je 084E43E2H
+
+#162		
+#163				(* THEN *)
+#164		
+#165					(* $giBackBufferCurr := 9; *)
+#166					MOVE		9,$giBackBufferCurr	{LNXT:43|45|-1}
+(*) BOOL
+084E43D6  B8 09 00 00 00                mov eax, 09H
+084E43DB  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+22
+
+#167		
+#168		$label12:
+#169				(* END_IF *)
+#170		
+#171				(* $giBackBufferCurr := $giBackBufferCurr - 1; *)
+#172				LD		$giBackBufferCurr	{LNXT:45|46|-1}
+(*) UNDEF
+084E43E2  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#173				SUB		1	{LNXT:45|46|-1}
+(*) INT
+084E43E9  2D 01 00 00 00                sub eax, 1
+
+#174				ST		$giBackBufferCurr	{LNXT:45|46|-1}
+(*) INT
+084E43EE  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+22
+
+#175		
+#176		
+#177				(* IF $giBackBufferCurr < 0 *)
+#178				LD		$giBackBufferCurr	{LNXT:46|-1|-1}
+(*) UNDEF
+084E43F5  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#179				LT		0	{LNXT:46|-1|-1}
+(*) INT
+084E43FC  3D 00 00 00 00                cmp eax, 0
+084E4401  0F 9C C0                      setl al
+084E4404  25 FF 00 00 00                and eax, 0FFh
+
+#180				JMPCN	$label13	{LNXT:46|47|-1}
+(-) BOOL
+084E4409  84 C0                         test al, al
+084E440B  90 74 0F 90 90 90             je 084E441DH
+
+#181		
+#182				(* THEN *)
+#183		
+#184					(* $giBackBufferCurr := 9; *)
+#185					MOVE		9,$giBackBufferCurr	{LNXT:47|-1|-1}
+(*) BOOL
+084E4411  B8 09 00 00 00                mov eax, 09H
+084E4416  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+22
+
+084E441D  5F                            pop edi
+084E441E  5D                            pop ebp
+
+084E441F  C3                            ret
+
+
+Frame allocation:
+
+	0000 bit  0: VAR IsOpening
+	0001       : VAR CurrPageId
+	0003       : VAR BackPageId
+
+END_FUNCTION_BLOCK
+**************************************************
+	List function block: RefrTouchScreen
+**************************************************
+
+FUNCTION_BLOCK RefrTouchScreen
+
+        VAR_EXTERNAL
+	{G:"Call_stack"}
+guiCallStack : ARRAY[0..9] OF UINT;
+giStackPtr : INT := -1;
+	{G:"TouchScreen_vars"}
+fbTouchScreenString_7 : Static02 := (x:=7, y:=8, pFont:=?DroidSansMono_12x24, bckCol:=16777215, pString:=?kStr00001, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
+fbTouchScreenLine_9 : Line01 := (x1:=7, y1:=40, x2:=230, y2:=40, bordPts:=1);
+fbTouchScreenString_14 : Static02 := (wHnd:=1, x:=7, y:=51, pFont:=?DroidSansMono_12x24, bckCol:=16777215, pString:=?kStr00002, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
+fbTouchScreenLine_16 : Line01 := (x1:=8, y1:=85, x2:=231, y2:=85, bordPts:=1);
+fbTouchScreenEdit_1 : EditBox03 := (wHnd:=2, x1:=174, y1:=8, x2:=221, y2:=31, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201000, order:=1, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#0100000C, pEnumId:=0);
+fbTouchScreenEdit_15 : EditBox03 := (wHnd:=3, x1:=174, y1:=51, x2:=221, y2:=74, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201100, order:=6, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#0100000C, pEnumId:=0);
+fbTouchScreenEdit_18 : EditBox03 := (wHnd:=4, x1:=45, y1:=107, x2:=188, y2:=130, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201200, order:=7, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#00000014, pEnumId:=1);
+fbTouchScreenEdit_19 : EditBox03 := (wHnd:=5, x1:=46, y1:=141, x2:=189, y2:=164, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201200, order:=8, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#00000014, pEnumId:=2);
+	{G:"Sets"}
+$waitRefresh : BOOL;
+	END_VAR
+
+        VAR
+res : USINT;
+pagID : UINT;
+n : USINT;
+iSP : INT;
+pDC : UDINT;
+rx1 : UINT;
+ry1 : UINT;
+rx2 : UINT;
+ry2 : UINT;
+	END_VAR
+
+END_FUNCTION_BLOCK
+
+084E4420  55                            push ebp
+084E4421  8B EB                         mov ebp, ebx
+084E4423  57                            push edi
+
+#0		{SRC:RefrTouchScreen}
+#1		(*$WAITSWITCH$*)
+#2		
+#3			(* REPEAT *)
+#4		$label0:
+#5		
+#6				(* res := Video_Lock( res ); *)
+#7				LDP0		res	{LNXT:6|9|-1}
+(*) UNDEF
+#8				Video_Lock	{LNXT:6|9|-1}
+(*) UNDEF
+084E4424  0F B6 4D 00                   movzx ecx, byte ptr [ebp]
+084E4428  51                            push ecx
+084E4429  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_Lock
+084E442E  FF D1                         call ecx
+084E4430  81 C4 04 00 00 00             add esp, 4
+
+#9				ST		res	{LNXT:6|9|-1}
+(*) USINT
+084E4436  88 45 00                      mov [ebp], al
+
+#10		
+#11				(* pagID := guiCallStack[ giStackPtr ]; *)
+#12				MOVE		guiCallStack[giStackPtr],pagID	{LNXT:9|11|-1}
+(*) USINT
+084E4439  0F BF 1D CC CC CC CC          movsx ebx, word ptr [CCCCCCCCH] ; $$DATA$$+20
+084E4440  33 C0                         xor eax, eax
+084E4442  66 8B 04 5D CC CC CC CC       mov ax, CCCCCCCCH[ebx*2] ; $$DATA$$+32
+084E444A  66 89 45 01                   mov 1[ebp], ax
+
+#13		
+#14		
+#15				(* IF pagID = 16#00 *)
+#16				LD		pagID	{LNXT:11|-1|-1}
+(*) UNDEF
+084E444E  33 C0                         xor eax, eax
+084E4450  66 8B 45 01                   mov ax, 1[ebp]
+
+#17				EQ		16#00	{LNXT:11|-1|-1}
+(*) UINT
+084E4454  3D 00 00 00 00                cmp eax, 0
+084E4459  0F 94 C0                      sete al
+084E445C  25 FF 00 00 00                and eax, 0FFh
+
+#18				JMPCN	$label2	{LNXT:11|14|32}
+(-) BOOL
+084E4461  84 C0                         test al, al
+084E4463  90 74 31 90 90 90             je 084E4497H
+
+#19		
+#20				(* THEN *)
+#21		
+#22					(* $waitRefresh := FALSE; *)
+#23					MOVE		FALSE,$waitRefresh	{LNXT:14|19|-1}
+(*) BOOL
+084E4469  B8 00 00 00 00                mov eax, 00H
+084E446E  84 C0                         test al, al
+084E4470  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+117
+
+#24		
+#25					(* res := Video_UpdatePageControls( TRUE ); *)
+#26					LDP0		TRUE	{LNXT:19|24|-1}
+(*) BOOL
+#27					Video_UpdatePageControls	{LNXT:19|24|-1}
+(*) BOOL
+084E4477  68 01 00 00 00                push 1
+084E447C  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_UpdatePageControls
+084E4481  FF D1                         call ecx
+084E4483  81 C4 04 00 00 00             add esp, 4
+
+#28					ST		res	{LNXT:19|24|-1}
+(*) BOOL
+084E4489  88 45 00                      mov [ebp], al
+
+#29		
+#30					(* iSP := giStackPtr; *)
+#31					MOVE		giStackPtr,iSP	{LNXT:24|32|-1}
+(*) BOOL
+084E448C  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+20
+084E4493  66 89 45 04                   mov 4[ebp], ax
+
+#32		
+#33		$label2:
+#34				(* END_IF *)
+#35		
+#36				(* res := Video_Unlock( res ); *)
+#37				LDP0		res	{LNXT:32|35|-1}
+(*) INT
+#38				Video_Unlock	{LNXT:32|35|-1}
+(*) INT
+084E4497  0F B6 4D 00                   movzx ecx, byte ptr [ebp]
+084E449B  51                            push ecx
+084E449C  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_Unlock
+084E44A1  FF D1                         call ecx
+084E44A3  81 C4 04 00 00 00             add esp, 4
+
+#39				ST		res	{LNXT:32|35|-1}
+(*) USINT
+084E44A9  88 45 00                      mov [ebp], al
+
+#40		
+#41				(* res := Video_Sleep( 50 ); *)
+#42				LDP0		50	{LNXT:35|37|-1}
+(*) USINT
+#43				Video_Sleep	{LNXT:35|37|-1}
+(*) USINT
+084E44AC  68 32 00 00 00                push 50
+084E44B1  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_Sleep
+084E44B6  FF D1                         call ecx
+084E44B8  81 C4 04 00 00 00             add esp, 4
+
+#44				ST		res	{LNXT:35|37|-1}
+(*) USINT
+084E44BE  88 45 00                      mov [ebp], al
+
+#45		
+#46			(* UNTIL pagID <> 16#00 *)
+#47		
+#48			(*  *)
+#49			LD		pagID	{LNXT:37|-1|-1}
+(*) UNDEF
+084E44C1  33 C0                         xor eax, eax
+084E44C3  66 8B 45 01                   mov ax, 1[ebp]
+
+#50			NE		16#00	{LNXT:37|-1|-1}
+(*) UINT
+084E44C7  3D 00 00 00 00                cmp eax, 0
+084E44CC  0F 95 C0                      setne al
+084E44CF  25 FF 00 00 00                and eax, 0FFh
+
+#51				JMPCN	$label0	{LNXT:37|6|-1}
+(-) BOOL
+084E44D4  84 C0                         test al, al
+084E44D6  0F 84 48 FF FF FF             je 084E4424H
+
+084E44DC  5F                            pop edi
+084E44DD  5D                            pop ebp
+
+084E44DE  C3                            ret
+
+
+Frame allocation:
+
+	0000       : VAR res
+	0001       : VAR pagID
+	0003       : VAR n
+	0004       : VAR iSP
+	0006       : VAR pDC
+	000A       : VAR rx1
+	000C       : VAR ry1
+	000E       : VAR rx2
+	0010       : VAR ry2
+
+END_FUNCTION_BLOCK
+**************************************************
+	List function block: DrawTouchScreen
+**************************************************
+
+FUNCTION_BLOCK DrawTouchScreen
+
+        VAR_OUTPUT
+uiOutVar : UINT;
+	END_VAR
+
+        VAR_EXTERNAL
+	{G:"Call_stack"}
+guiCallStack : ARRAY[0..9] OF UINT;
+giStackPtr : INT := -1;
+	{G:"Back_page_manager"}
+fbBackPage : DrawBackPage;
+	{G:"TouchScreen_vars"}
+fbTouchScreenString_7 : Static02 := (x:=7, y:=8, pFont:=?DroidSansMono_12x24, bckCol:=16777215, pString:=?kStr00001, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
+fbTouchScreenLine_9 : Line01 := (x1:=7, y1:=40, x2:=230, y2:=40, bordPts:=1);
+fbTouchScreenString_14 : Static02 := (wHnd:=1, x:=7, y:=51, pFont:=?DroidSansMono_12x24, bckCol:=16777215, pString:=?kStr00002, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
+fbTouchScreenLine_16 : Line01 := (x1:=8, y1:=85, x2:=231, y2:=85, bordPts:=1);
+fbTouchScreenEdit_1 : EditBox03 := (wHnd:=2, x1:=174, y1:=8, x2:=221, y2:=31, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201000, order:=1, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#0100000C, pEnumId:=0);
+fbTouchScreenEdit_15 : EditBox03 := (wHnd:=3, x1:=174, y1:=51, x2:=221, y2:=74, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201100, order:=6, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#0100000C, pEnumId:=0);
+fbTouchScreenEdit_18 : EditBox03 := (wHnd:=4, x1:=45, y1:=107, x2:=188, y2:=130, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201200, order:=7, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#00000014, pEnumId:=1);
+fbTouchScreenEdit_19 : EditBox03 := (wHnd:=5, x1:=46, y1:=141, x2:=189, y2:=164, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201200, order:=8, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#00000014, pEnumId:=2);
+	{G:"Sets"}
+$waitRefresh : BOOL;
+	END_VAR
+
+        VAR
+res : USINT;
+bStatRedrw : BOOL;
+bMapsReset : BOOL;
+iNextSel : INT;
+$Set_IndexVisEl : UINT;
+$Set_CycleRefresh : UINT;
+$Set_PtrBoolVis : @BOOL;
+$Set_VisEl : BOOL;
+$Set_IndexPageInSet : UINT;
+$Set_ForcePageReload : BOOL;
+$Set_NextPage : BOOL;
+$Set_PrevPage : BOOL;
+$Set_LocalSetPagNumber : UINT;
+$Set_NumVisEl : UINT;
+$Set_LastFirstEl : INT;
+udiev : UDINT;
+ev : UINT;
+key : USINT;
+x1 : UINT;
+y1 : UINT;
+x2 : UINT;
+y2 : UINT;
+wParam : UINT;
+	END_VAR
+
+END_FUNCTION_BLOCK
+
+084E44DF  55                            push ebp
+084E44E0  8B EB                         mov ebp, ebx
+084E44E2  57                            push edi
+084E44E3  8B FC                         mov edi, esp
+084E44E5  81 EC 04 00 00 00             sub esp, 4
+
+#0		{SRC:DrawTouchScreen}
+#1		(*$WAITSWITCH$*)
+#2		
+#3			(* guiCallStack[ giStackPtr ] := 16#00; *)
+#4			MOVE		16#00,guiCallStack[giStackPtr]	{LNXT:4|7|-1}
+(*) UNDEF
+084E44EB  B8 00 00 00 00                mov eax, 00H
+084E44F0  0F BF 1D CC CC CC CC          movsx ebx, word ptr [CCCCCCCCH] ; $$DATA$$+20
+084E44F7  66 89 04 5D CC CC CC CC       mov CCCCCCCCH[ebx*2], ax ; $$DATA$$+32
+
+#5		
+#6			(* fbBackPage.IsOpening := TRUE; *)
+#7			MOVE		TRUE,fbBackPage.IsOpening	{LNXT:7|8|-1}
+(*) USINT
+084E44FF  B8 01 00 00 00                mov eax, 01H
+084E4504  84 C0                         test al, al
+084E4506  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+104
+
+#8		
+#9			(* fbBackPage.CurrPageId := 16#00; *)
+#10			MOVE		16#00,fbBackPage.CurrPageId	{LNXT:8|9|-1}
+(*) BOOL
+084E450D  B8 00 00 00 00                mov eax, 00H
+084E4512  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+105
+
+#11		
+#12			(* fbBackPage *)
+#13			CAL		fbBackPage	{LNXT:9|13|-1}
+(*) UINT
+084E4519  50                            push eax
+084E451A  BB CC CC CC CC                mov ebx, CCCCCCCCH ; $$DATA$$+104
+084E451F  E8 7C FC FF FF                call 084E41A0H ; $$CODE$$+16800
+084E4524  58                            pop eax
+
+#14		
+#15			(* $waitRefresh := TRUE; *)
+#16			MOVE		TRUE,$waitRefresh	{LNXT:13|16|-1}
+(*) UINT
+084E4525  B8 01 00 00 00                mov eax, 01H
+084E452A  84 C0                         test al, al
+084E452C  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+117
+
+#17		
+#18			(* res := Video_ResetMaps( 16#00 ); *)
+#19			LDP0		16#00	{LNXT:16|19|-1}
+(*) BOOL
+#20			Video_ResetMaps	{LNXT:16|19|-1}
+(*) BOOL
+084E4533  68 00 00 00 00                push 0
+084E4538  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_ResetMaps
+084E453D  FF D1                         call ecx
+084E453F  81 C4 04 00 00 00             add esp, 4
+
+#21			ST		res	{LNXT:16|19|-1}
+(*) USINT
+084E4545  88 45 00                      mov [ebp], al
+
+#22		
+#23			(* bStatRedrw := TRUE; *)
+#24			MOVE		TRUE,bStatRedrw	{LNXT:19|20|-1}
+(*) USINT
+084E4548  B8 01 00 00 00                mov eax, 01H
+084E454D  84 C0                         test al, al
+084E454F  0F 95 45 01                   setne 1[ebp]
+
+#25		
+#26			(* bMapsReset := TRUE; *)
+#27			MOVE		TRUE,bMapsReset	{LNXT:20|23|-1}
+(*) BOOL
+084E4553  B8 01 00 00 00                mov eax, 01H
+084E4558  84 C0                         test al, al
+084E455A  0F 95 45 02                   setne 2[ebp]
+
+#28		
+#29			(* x1:= 0; *)
+#30			MOVE		0,x1	{LNXT:23|24|-1}
+(*) BOOL
+084E455E  B8 00 00 00 00                mov eax, 00H
+084E4563  66 89 45 20                   mov 32[ebp], ax
+
+#31		
+#32			(* y1:= 0; *)
+#33			MOVE		0,y1	{LNXT:24|25|-1}
+(*) UINT
+084E4567  B8 00 00 00 00                mov eax, 00H
+084E456C  66 89 45 22                   mov 34[ebp], ax
+
+#34		
+#35			(* x2:= 239; *)
+#36			MOVE		239,x2	{LNXT:25|26|-1}
+(*) UINT
+084E4570  B8 EF 00 00 00                mov eax, EFH
+084E4575  66 89 45 24                   mov 36[ebp], ax
+
+#37		
+#38			(* y2:= 319; *)
+#39			MOVE		319,y2	{LNXT:26|29|-1}
+(*) UINT
+084E4579  B8 3F 01 00 00                mov eax, 013FH
+084E457E  66 89 45 26                   mov 38[ebp], ax
+
+#40		
+#41			(* res := Video_Unlock( res ); *)
+#42			LDP0		res	{LNXT:29|31|-1}
+(*) UINT
+#43			Video_Unlock	{LNXT:29|31|-1}
+(*) UINT
+084E4582  0F B6 4D 00                   movzx ecx, byte ptr [ebp]
+084E4586  51                            push ecx
+084E4587  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_Unlock
+084E458C  FF D1                         call ecx
+084E458E  81 C4 04 00 00 00             add esp, 4
+
+#44			ST		res	{LNXT:29|31|-1}
+(*) USINT
+084E4594  88 45 00                      mov [ebp], al
+
+#45		
+#46			(* WHILE TRUE *)
+#47		$label0:
+#48			LD		TRUE	{LNXT:31|-1|-1}
+(*) UNDEF
+084E4597  B8 01 00 00 00                mov eax, 01H
+
+#49			JMPCN		$label1	{LNXT:31|34|-1}
+(-) BOOL
+084E459C  84 C0                         test al, al
+084E459E  0F 84 C5 02 00 00             je 084E4869H
+
+#50		
+#51			(* DO *)
+#52				(* res := Video_Lock( res ); *)
+#53				LDP0		res	{LNXT:34|37|-1}
+(*) BOOL
+#54				Video_Lock	{LNXT:34|37|-1}
+(*) BOOL
+084E45A4  0F B6 4D 00                   movzx ecx, byte ptr [ebp]
+084E45A8  51                            push ecx
+084E45A9  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_Lock
+084E45AE  FF D1                         call ecx
+084E45B0  81 C4 04 00 00 00             add esp, 4
+
+#55				ST		res	{LNXT:34|37|-1}
+(*) USINT
+084E45B6  88 45 00                      mov [ebp], al
+
+#56		
+#57				(* res := Video_InitPage( 0, 0, 239, 319, ?' ', 16#0003 ); *)
+#58				ADR		' '	{LNXT:37|40|-1}
+(*) USINT
+084E45B9  B8 CC CC CC CC                mov eax, CCCCCCCCH ; $$CODE$$+16784
+
+#59				ST		$$TMP0	{LNXT:37|40|-1}
+(*) @STRING
+084E45BE  89 47 FC                      mov -4[edi], eax
+
+#60				LDP0		0	{LNXT:37|40|-1}
+(*) @STRING
+#61				Video_InitPage		0, 239, 319, $$TMP0, 16#0003	{LNXT:37|40|-1}
+(*) @STRING
+084E45C1  68 03 00 00 00                push 3
+084E45C6  8B 4F FC                      mov ecx, -4[edi]
+084E45C9  51                            push ecx
+084E45CA  68 3F 01 00 00                push 319
+084E45CF  68 EF 00 00 00                push 239
+084E45D4  68 00 00 00 00                push 0
+084E45D9  68 00 00 00 00                push 0
+084E45DE  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_InitPage
+084E45E3  FF D1                         call ecx
+084E45E5  81 C4 18 00 00 00             add esp, 24
+
+#62				ST		res	{LNXT:37|40|-1}
+(*) USINT
+084E45EB  88 45 00                      mov [ebp], al
+
+#63		
+#64				(* res := Video_SetPageColors( 0, 16777215 ); *)
+#65				LDP0		0	{LNXT:40|42|-1}
+(*) USINT
+#66				Video_SetPageColors		16777215	{LNXT:40|42|-1}
+(*) USINT
+084E45EE  68 FF FF FF 00                push 16777215
+084E45F3  68 00 00 00 00                push 0
+084E45F8  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_SetPageColors
+084E45FD  FF D1                         call ecx
+084E45FF  81 C4 08 00 00 00             add esp, 8
+
+#67				ST		res	{LNXT:40|42|-1}
+(*) USINT
+084E4605  88 45 00                      mov [ebp], al
+
+#68		
+#69		
+#70				(* IF bStatRedrw *)
+#71				LD		bStatRedrw	{LNXT:42|-1|-1}
+(*) UNDEF
+084E4608  33 C0                         xor eax, eax
+084E460A  8A 45 01                      mov al, 1[ebp]
+
+#72				JMPCN	$label2	{LNXT:42|45|49}
+(-) BOOL
+084E460D  84 C0                         test al, al
+084E460F  90 74 27 90 90 90             je 084E4639H
+
+#73		
+#74				(* THEN *)
+#75		
+#76					(* res := Video_ClrRect( x1, y1, x2, y2 ); *)
+#77					LDP0		x1	{LNXT:45|49|-1}
+(*) BOOL
+#78					Video_ClrRect		y1, x2, y2	{LNXT:45|49|-1}
+(*) BOOL
+084E4615  0F B7 4D 26                   movzx ecx, word ptr 38[ebp]
+084E4619  51                            push ecx
+084E461A  0F B7 4D 24                   movzx ecx, word ptr 36[ebp]
+084E461E  51                            push ecx
+084E461F  0F B7 4D 22                   movzx ecx, word ptr 34[ebp]
+084E4623  51                            push ecx
+084E4624  0F B7 4D 20                   movzx ecx, word ptr 32[ebp]
+084E4628  51                            push ecx
+084E4629  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_ClrRect
+084E462E  FF D1                         call ecx
+084E4630  81 C4 10 00 00 00             add esp, 16
+
+#79					ST		res	{LNXT:45|49|-1}
+(*) USINT
+084E4636  88 45 00                      mov [ebp], al
+
+#80		
+#81		$label2:
+#82				(* END_IF *)
+#83		
+#84		
+#85				(* IF bMapsReset *)
+#86				LD		bMapsReset	{LNXT:49|-1|-1}
+(*) UNDEF
+084E4639  33 C0                         xor eax, eax
+084E463B  8A 45 02                      mov al, 2[ebp]
+
+#87				JMPCN	$label3	{LNXT:49|52|87}
+(-) BOOL
+084E463E  84 C0                         test al, al
+084E4640  0F 84 6D 01 00 00             je 084E47B3H
+
+#88		
+#89				(* THEN *)
+#90		
+#91					(* res := Video_ResetMaps( 16#FF ); *)
+#92					LDP0		16#FF	{LNXT:52|59|-1}
+(*) BOOL
+#93					Video_ResetMaps	{LNXT:52|59|-1}
+(*) BOOL
+084E4646  68 FF 00 00 00                push 255
+084E464B  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_ResetMaps
+084E4650  FF D1                         call ecx
+084E4652  81 C4 04 00 00 00             add esp, 4
+
+#94					ST		res	{LNXT:52|59|-1}
+(*) USINT
+084E4658  88 45 00                      mov [ebp], al
+
+#95		
+#96					(* fbTouchScreenEdit_1.accMode := kACS_INIT; *)
+#97					MOVE		kACS_INIT,fbTouchScreenEdit_1.accMode	{LNXT:59|60|-1}
+(*) USINT
+084E465B  B8 01 00 00 00                mov eax, 01H
+084E4660  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+217
+
+#98		
+#99					(* fbTouchScreenEdit_1 *)
+#100					CAL		fbTouchScreenEdit_1	{LNXT:60|61|-1}
+(*) USINT
+084E4666  50                            push eax
+084E4667  BB CC CC CC CC                mov ebx, CCCCCCCCH ; $$DATA$$+140
+084E466C  53                            push ebx
+084E466D  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; EditBox03
+084E4672  FF D1                         call ecx
+084E4674  81 C4 04 00 00 00             add esp, 4
+084E467A  58                            pop eax
+
+#101		
+#102					(* fbTouchScreenEdit_1.accMode := kACS_PRINT; *)
+#103					MOVE		kACS_PRINT,fbTouchScreenEdit_1.accMode	{LNXT:61|62|-1}
+(*) USINT
+084E467B  B8 02 00 00 00                mov eax, 02H
+084E4680  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+217
+
+#104		
+#105					(* fbTouchScreenString_7.accMode := kACS_INIT; *)
+#106					MOVE		kACS_INIT,fbTouchScreenString_7.accMode	{LNXT:62|63|-1}
+(*) USINT
+084E4686  B8 01 00 00 00                mov eax, 01H
+084E468B  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+246
+
+#107		
+#108					(* fbTouchScreenString_7 *)
+#109					CAL		fbTouchScreenString_7	{LNXT:63|64|-1}
+(*) USINT
+084E4691  50                            push eax
+084E4692  BB CC CC CC CC                mov ebx, CCCCCCCCH ; $$DATA$$+235
+084E4697  53                            push ebx
+084E4698  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Static02
+084E469D  FF D1                         call ecx
+084E469F  81 C4 04 00 00 00             add esp, 4
+084E46A5  58                            pop eax
+
+#110		
+#111					(* fbTouchScreenString_7.accMode := kACS_PRINT; *)
+#112					MOVE		kACS_PRINT,fbTouchScreenString_7.accMode	{LNXT:64|65|-1}
+(*) USINT
+084E46A6  B8 02 00 00 00                mov eax, 02H
+084E46AB  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+246
+
+#113		
+#114					(* fbTouchScreenLine_9.accMode := kACS_INIT; *)
+#115					MOVE		kACS_INIT,fbTouchScreenLine_9.accMode	{LNXT:65|66|-1}
+(*) USINT
+084E46B1  B8 01 00 00 00                mov eax, 01H
+084E46B6  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+310
+
+#116		
+#117					(* fbTouchScreenLine_9 *)
+#118					CAL		fbTouchScreenLine_9	{LNXT:66|67|-1}
+(*) USINT
+084E46BC  50                            push eax
+084E46BD  BB CC CC CC CC                mov ebx, CCCCCCCCH ; $$DATA$$+302
+084E46C2  53                            push ebx
+084E46C3  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Line01
+084E46C8  FF D1                         call ecx
+084E46CA  81 C4 04 00 00 00             add esp, 4
+084E46D0  58                            pop eax
+
+#119		
+#120					(* fbTouchScreenLine_9.accMode := kACS_PRINT; *)
+#121					MOVE		kACS_PRINT,fbTouchScreenLine_9.accMode	{LNXT:67|68|-1}
+(*) USINT
+084E46D1  B8 02 00 00 00                mov eax, 02H
+084E46D6  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+310
+
+#122		
+#123					(* fbTouchScreenString_14.accMode := kACS_INIT; *)
+#124					MOVE		kACS_INIT,fbTouchScreenString_14.accMode	{LNXT:68|69|-1}
+(*) USINT
+084E46DC  B8 01 00 00 00                mov eax, 01H
+084E46E1  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+335
+
+#125		
+#126					(* fbTouchScreenString_14 *)
+#127					CAL		fbTouchScreenString_14	{LNXT:69|70|-1}
+(*) USINT
+084E46E7  50                            push eax
+084E46E8  BB CC CC CC CC                mov ebx, CCCCCCCCH ; $$DATA$$+324
+084E46ED  53                            push ebx
+084E46EE  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Static02
+084E46F3  FF D1                         call ecx
+084E46F5  81 C4 04 00 00 00             add esp, 4
+084E46FB  58                            pop eax
+
+#128		
+#129					(* fbTouchScreenString_14.accMode := kACS_PRINT; *)
+#130					MOVE		kACS_PRINT,fbTouchScreenString_14.accMode	{LNXT:70|71|-1}
+(*) USINT
+084E46FC  B8 02 00 00 00                mov eax, 02H
+084E4701  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+335
+
+#131		
+#132					(* fbTouchScreenEdit_15.accMode := kACS_INIT; *)
+#133					MOVE		kACS_INIT,fbTouchScreenEdit_15.accMode	{LNXT:71|72|-1}
+(*) USINT
+084E4707  B8 01 00 00 00                mov eax, 01H
+084E470C  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+468
+
+#134		
+#135					(* fbTouchScreenEdit_15 *)
+#136					CAL		fbTouchScreenEdit_15	{LNXT:72|73|-1}
+(*) USINT
+084E4712  50                            push eax
+084E4713  BB CC CC CC CC                mov ebx, CCCCCCCCH ; $$DATA$$+391
+084E4718  53                            push ebx
+084E4719  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; EditBox03
+084E471E  FF D1                         call ecx
+084E4720  81 C4 04 00 00 00             add esp, 4
+084E4726  58                            pop eax
+
+#137		
+#138					(* fbTouchScreenEdit_15.accMode := kACS_PRINT; *)
+#139					MOVE		kACS_PRINT,fbTouchScreenEdit_15.accMode	{LNXT:73|74|-1}
+(*) USINT
+084E4727  B8 02 00 00 00                mov eax, 02H
+084E472C  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+468
+
+#140		
+#141					(* fbTouchScreenLine_16.accMode := kACS_INIT; *)
+#142					MOVE		kACS_INIT,fbTouchScreenLine_16.accMode	{LNXT:74|75|-1}
+(*) USINT
+084E4732  B8 01 00 00 00                mov eax, 01H
+084E4737  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+494
+
+#143		
+#144					(* fbTouchScreenLine_16 *)
+#145					CAL		fbTouchScreenLine_16	{LNXT:75|76|-1}
+(*) USINT
+084E473D  50                            push eax
+084E473E  BB CC CC CC CC                mov ebx, CCCCCCCCH ; $$DATA$$+486
+084E4743  53                            push ebx
+084E4744  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Line01
+084E4749  FF D1                         call ecx
+084E474B  81 C4 04 00 00 00             add esp, 4
+084E4751  58                            pop eax
+
+#146		
+#147					(* fbTouchScreenLine_16.accMode := kACS_PRINT; *)
+#148					MOVE		kACS_PRINT,fbTouchScreenLine_16.accMode	{LNXT:76|77|-1}
+(*) USINT
+084E4752  B8 02 00 00 00                mov eax, 02H
+084E4757  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+494
+
+#149		
+#150					(* fbTouchScreenEdit_18.accMode := kACS_INIT; *)
+#151					MOVE		kACS_INIT,fbTouchScreenEdit_18.accMode	{LNXT:77|78|-1}
+(*) USINT
+084E475D  B8 01 00 00 00                mov eax, 01H
+084E4762  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+585
+
+#152		
+#153					(* fbTouchScreenEdit_18 *)
+#154					CAL		fbTouchScreenEdit_18	{LNXT:78|79|-1}
+(*) USINT
+084E4768  50                            push eax
+084E4769  BB CC CC CC CC                mov ebx, CCCCCCCCH ; $$DATA$$+508
+084E476E  53                            push ebx
+084E476F  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; EditBox03
+084E4774  FF D1                         call ecx
+084E4776  81 C4 04 00 00 00             add esp, 4
+084E477C  58                            pop eax
+
+#155		
+#156					(* fbTouchScreenEdit_18.accMode := kACS_PRINT; *)
+#157					MOVE		kACS_PRINT,fbTouchScreenEdit_18.accMode	{LNXT:79|80|-1}
+(*) USINT
+084E477D  B8 02 00 00 00                mov eax, 02H
+084E4782  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+585
+
+#158		
+#159					(* fbTouchScreenEdit_19.accMode := kACS_INIT; *)
+#160					MOVE		kACS_INIT,fbTouchScreenEdit_19.accMode	{LNXT:80|81|-1}
+(*) USINT
+084E4788  B8 01 00 00 00                mov eax, 01H
+084E478D  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+680
+
+#161		
+#162					(* fbTouchScreenEdit_19 *)
+#163					CAL		fbTouchScreenEdit_19	{LNXT:81|82|-1}
+(*) USINT
+084E4793  50                            push eax
+084E4794  BB CC CC CC CC                mov ebx, CCCCCCCCH ; $$DATA$$+603
+084E4799  53                            push ebx
+084E479A  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; EditBox03
+084E479F  FF D1                         call ecx
+084E47A1  81 C4 04 00 00 00             add esp, 4
+084E47A7  58                            pop eax
+
+#164		
+#165					(* fbTouchScreenEdit_19.accMode := kACS_PRINT; *)
+#166					MOVE		kACS_PRINT,fbTouchScreenEdit_19.accMode	{LNXT:82|87|-1}
+(*) USINT
+084E47A8  B8 02 00 00 00                mov eax, 02H
+084E47AD  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+680
+
+#167		
+#168		$label3:
+#169				(* END_IF *)
+#170		
+#171				(* res := Video_Unlock( res ); *)
+#172				LDP0		res	{LNXT:87|90|-1}
+(*) USINT
+#173				Video_Unlock	{LNXT:87|90|-1}
+(*) USINT
+084E47B3  0F B6 4D 00                   movzx ecx, byte ptr [ebp]
+084E47B7  51                            push ecx
+084E47B8  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_Unlock
+084E47BD  FF D1                         call ecx
+084E47BF  81 C4 04 00 00 00             add esp, 4
+
+#174				ST		res	{LNXT:87|90|-1}
+(*) USINT
+084E47C5  88 45 00                      mov [ebp], al
+
+#175		
+#176				(* bStatRedrw := FALSE; *)
+#177				MOVE		FALSE,bStatRedrw	{LNXT:90|91|-1}
+(*) USINT
+084E47C8  B8 00 00 00 00                mov eax, 00H
+084E47CD  84 C0                         test al, al
+084E47CF  0F 95 45 01                   setne 1[ebp]
+
+#178		
+#179				(* bMapsReset := FALSE; *)
+#180				MOVE		FALSE,bMapsReset	{LNXT:91|94|-1}
+(*) BOOL
+084E47D3  B8 00 00 00 00                mov eax, 00H
+084E47D8  84 C0                         test al, al
+084E47DA  0F 95 45 02                   setne 2[ebp]
+
+#181		
+#182				(* WHILE bStatRedrw *)
+#183		$label4:
+#184				LD		bStatRedrw	{LNXT:94|-1|-1}
+(*) UNDEF
+084E47DE  33 C0                         xor eax, eax
+084E47E0  8A 45 01                      mov al, 1[ebp]
+
+#185				NOT	{LNXT:94|-1|-1}
+(*) BOOL
+084E47E3  84 C0                         test al, al
+084E47E5  0F 94 C0                      sete al
+
+#186				JMPCN		$label5	{LNXT:94|97|31}
+(-) BOOL
+084E47E8  84 C0                         test al, al
+084E47EA  90 74 77 90 90 90             je 084E4864H
+
+#187		
+#188				(* DO *)
+#189		
+#190					(* IF $waitRefresh *)
+#191					LD		$waitRefresh	{LNXT:97|-1|-1}
+(*) UNDEF
+084E47F0  33 C0                         xor eax, eax
+084E47F2  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+117
+
+#192					JMPCN	$label6	{LNXT:97|98|102}
+(-) BOOL
+084E47F8  84 C0                         test al, al
+084E47FA  90 74 1D 90 90 90             je 084E481AH
+
+#193		
+#194					(* THEN *)
+#195		
+#196						(* res := Video_Sleep( 50 ); *)
+#197						LDP0		50	{LNXT:98|94|-1}
+(*) BOOL
+#198						Video_Sleep	{LNXT:98|94|-1}
+(*) BOOL
+084E4800  68 32 00 00 00                push 50
+084E4805  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_Sleep
+084E480A  FF D1                         call ecx
+084E480C  81 C4 04 00 00 00             add esp, 4
+
+#199						ST		res	{LNXT:98|94|-1}
+(*) USINT
+084E4812  88 45 00                      mov [ebp], al
+
+#200						JMP		$label7	{LNXT:97|98|102}
+(-) USINT
+084E4815  EB 48 90 90 90                jmp 084E485FH
+
+#201		$label6:
+#202		
+#203					(* ELSE *)
+#204		
+#205						(* udiev := Video_GetEvent( res ); *)
+#206						LDP0		res	{LNXT:102|104|-1}
+(*) USINT
+#207						Video_GetEvent	{LNXT:102|104|-1}
+(*) USINT
+084E481A  0F B6 4D 00                   movzx ecx, byte ptr [ebp]
+084E481E  51                            push ecx
+084E481F  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_GetEvent
+084E4824  FF D1                         call ecx
+084E4826  81 C4 04 00 00 00             add esp, 4
+
+#208						ST		udiev	{LNXT:102|104|-1}
+(*) UDINT
+084E482C  89 45 19                      mov 25[ebp], eax
+
+#209		
+#210						(* ev := TO_UINT(udiev); *)
+#211						LDP0		udiev	{LNXT:104|107|-1}
+(*) UDINT
+#212						TO_UINT	{LNXT:104|107|-1}
+(*) UDINT
+084E482F  8B 45 19                      mov eax, 25[ebp]
+
+#213						ST		ev	{LNXT:104|107|-1}
+(*) UINT
+084E4832  66 89 45 1D                   mov 29[ebp], ax
+
+#214		
+#215		
+#216						(* CASE ev OF *)
+#217		
+#218						(* kWM_KEY: *)
+#219						LD		ev	{LNXT:109|-1|-1}
+(*) UNDEF
+084E4836  33 C0                         xor eax, eax
+084E4838  66 8B 45 1D                   mov ax, 29[ebp]
+
+#220						EQ		kWM_KEY	{LNXT:109|-1|-1}
+(*) UINT
+084E483C  3D 01 00 00 00                cmp eax, 1
+084E4841  0F 94 C0                      sete al
+084E4844  25 FF 00 00 00                and eax, 0FFh
+
+#221						JMPC		$label9	{LNXT:109|111|94}
+(-) BOOL
+084E4849  84 C0                         test al, al
+084E484B  90 75 08 90 90 90             jne 084E4856H
+
+#222						JMP		$label8	{LNXT:109|111|94}
+(-) BOOL
+084E4851  EB 0C 90 90 90                jmp 084E485FH
+
+#223		
+#224						(* Istruzioni di ciascun CASE: *)
+#225		
+#226		$label9:
+#227							(* key := TO_USINT(SHR(udiev, 16)); *)
+#228							LDP0		udiev	{LNXT:111|94|-1}
+(*) BOOL
+#229							SHR		16	{LNXT:111|94|-1}
+(*) BOOL
+084E4856  8B 45 19                      mov eax, 25[ebp]
+084E4859  C1 E8 10                      shr eax, 16
+
+#230							TO_USINT	{LNXT:111|94|-1}
+(*) UDINT
+#231							ST		key	{LNXT:111|94|-1}
+(*) USINT
+084E485C  88 45 1F                      mov 31[ebp], al
+
+#232		
+#233		$label8:
+#234		
+#235						(* END_CASE *)
+#236		
+#237		$label7:
+#238					(* END_IF *)
+#239					JMP		$label4	{LNXT:94|97|31}
+(-) USINT
+084E485F  E9 7A FF FF FF                jmp 084E47DEH
+
+#240		
+#241		$label5:
+#242				(* END_WHILE *)
+#243				JMP		$label0	{LNXT:31|34|-1}
+(-) USINT
+084E4864  E9 2E FD FF FF                jmp 084E4597H
+
+084E4869  81 C4 04 00 00 00             add esp, 4
+084E486F  5F                            pop edi
+084E4870  5D                            pop ebp
+
+084E4871  C3                            ret
+
+
+Frame allocation:
+
+	0000       : VAR res
+	0001 bit  0: VAR bStatRedrw
+	0002 bit  0: VAR bMapsReset
+	0003       : VAR iNextSel
+	0005       : VAR $Set_IndexVisEl
+	0007       : VAR $Set_CycleRefresh
+	0009       : VAR $Set_PtrBoolVis
+	000D bit  0: VAR $Set_VisEl
+	000E       : VAR $Set_IndexPageInSet
+	0010 bit  0: VAR $Set_ForcePageReload
+	0011 bit  0: VAR $Set_NextPage
+	0012 bit  0: VAR $Set_PrevPage
+	0013       : VAR $Set_LocalSetPagNumber
+	0015       : VAR $Set_NumVisEl
+	0017       : VAR $Set_LastFirstEl
+	0019       : VAR udiev
+	001D       : VAR ev
+	001F       : VAR key
+	0020       : VAR x1
+	0022       : VAR y1
+	0024       : VAR x2
+	0026       : VAR y2
+	0028       : VAR wParam
+	002A       : VAR uiOutVar
+
+END_FUNCTION_BLOCK
+**************************************************
+	List program: main
+**************************************************
+
+PROGRAM main
+
+END_PROGRAM
+
+084E4880  55                            push ebp
+084E4881  8B EC                         mov ebp, esp
+084E4883  60                            pushad
+
+#0		{SRC:main}
+#1		(*$WAITSWITCH$*)
+#2		
+#3			(* cnt := cnt + 1; *)
+#4			LD		cnt	{LNXT:2|2|-1}
+(*) UNDEF
+084E4884  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+18
+
+#5			ADD		1	{LNXT:2|2|-1}
+(*) INT
+084E488B  05 01 00 00 00                add eax, 1
+
+#6			ST		cnt	{LNXT:2|2|-1}
+(*) INT
+084E4890  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+18
+
+084E4897  61                            popad
+084E4898  5D                            pop ebp
+
+084E4899  C3                            ret
+
+END_PROGRAM
+
+
+**************************************************
+	Target variable image generation
+**************************************************
+
+
+*** INPUT:
+084E489A  C3                            ret
+
+
+*** OUTPUT:
+084E489B  C3                            ret
+
+
+
+**************************************************
+	Task Background init code
+**************************************************
+
+084E489C  55                            push ebp
+084E489D  8B EC                         mov ebp, esp
+
+084E489F  8B E5                         mov esp, ebp
+084E48A1  5D                            pop ebp
+
+084E48A2  C3                            ret
+
+**************************************************
+	List program: PageDraw
+**************************************************
+
+PROGRAM PageDraw
+
+        VAR
+res : USINT;
+	END_VAR
+
+END_PROGRAM
+
+084E48B0  55                            push ebp
+084E48B1  8B EC                         mov ebp, esp
+084E48B3  60                            pushad
+
+#0		{SRC:PageDraw}
+#1		(*$WAITSWITCH$*)
+#2		
+#3			(* res := Video_Lock( res ); *)
+#4			LDP0		res	{LNXT:3|6|-1}
+(*) UDINT
+#5			Video_Lock	{LNXT:3|6|-1}
+(*) UDINT
+084E48B4  0F B6 0D CC CC CC CC          movzx ecx, byte ptr [CCCCCCCCH] ; $$DATA$$+17
+084E48BB  51                            push ecx
+084E48BC  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_Lock
+084E48C1  FF D1                         call ecx
+084E48C3  81 C4 04 00 00 00             add esp, 4
+
+#6			ST		res	{LNXT:3|6|-1}
+(*) USINT
+084E48C9  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#7		
+#8			(* res := Video_SetUseBitmapsColorDepth( TRUE ); *)
+#9			LDP0		TRUE	{LNXT:6|9|-1}
+(*) USINT
+#10			Video_SetUseBitmapsColorDepth	{LNXT:6|9|-1}
+(*) USINT
+084E48CF  68 01 00 00 00                push 1
+084E48D4  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_SetUseBitmapsColorDepth
+084E48D9  FF D1                         call ecx
+084E48DB  81 C4 04 00 00 00             add esp, 4
+
+#11			ST		res	{LNXT:6|9|-1}
+(*) BOOL
+084E48E1  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#12		
+#13			(* res := Video_InitHMI_ZOrder( TRUE ); *)
+#14			LDP0		TRUE	{LNXT:9|12|-1}
+(*) BOOL
+#15			Video_InitHMI_ZOrder	{LNXT:9|12|-1}
+(*) BOOL
+084E48E7  68 01 00 00 00                push 1
+084E48EC  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_InitHMI_ZOrder
+084E48F1  FF D1                         call ecx
+084E48F3  81 C4 04 00 00 00             add esp, 4
+
+#16			ST		res	{LNXT:9|12|-1}
+(*) BOOL
+084E48F9  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#17		
+#18			(* res := Video_Switch( TRUE ); *)
+#19			LDP0		TRUE	{LNXT:12|15|-1}
+(*) BOOL
+#20			Video_Switch	{LNXT:12|15|-1}
+(*) BOOL
+084E48FF  68 01 00 00 00                push 1
+084E4904  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_Switch
+084E4909  FF D1                         call ecx
+084E490B  81 C4 04 00 00 00             add esp, 4
+
+#21			ST		res	{LNXT:12|15|-1}
+(*) USINT
+084E4911  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#22		
+#23			(* giStackPtr := 0; *)
+#24			MOVE		0,giStackPtr	{LNXT:15|18|-1}
+(*) USINT
+084E4917  B8 00 00 00 00                mov eax, 00H
+084E491C  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+20
+
+#25		
+#26			(* $giBackBufferCurr := -1; *)
+#27			MOVE		-1,$giBackBufferCurr	{LNXT:18|19|-1}
+(*) INT
+084E4923  B8 FF FF FF FF                mov eax, -1
+084E4928  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+22
+
+#28		
+#29			(* $giBackBufferFirst := -1; *)
+#30			MOVE		-1,$giBackBufferFirst	{LNXT:19|20|-1}
+(*) INT
+084E492F  B8 FF FF FF FF                mov eax, -1
+084E4934  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+24
+
+#31		
+#32			(* $giBackBufferLast := -1; *)
+#33			MOVE		-1,$giBackBufferLast	{LNXT:20|23|-1}
+(*) INT
+084E493B  B8 FF FF FF FF                mov eax, -1
+084E4940  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+26
+
+#34		
+#35			(* res := Video_SetEditKey( 0, kKEY_Enter ); *)
+#36			LDP0		0	{LNXT:23|24|-1}
+(*) INT
+#37			Video_SetEditKey		kKEY_Enter	{LNXT:23|24|-1}
+(*) INT
+084E4947  68 0D 00 00 00                push 13
+084E494C  68 00 00 00 00                push 0
+084E4951  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_SetEditKey
+084E4956  FF D1                         call ecx
+084E4958  81 C4 08 00 00 00             add esp, 8
+
+#38			ST		res	{LNXT:23|24|-1}
+(*) USINT
+084E495E  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#39		
+#40			(* res := Video_SetEditKey( 1, kKEY_Esc ); *)
+#41			LDP0		1	{LNXT:24|25|-1}
+(*) USINT
+#42			Video_SetEditKey		kKEY_Esc	{LNXT:24|25|-1}
+(*) USINT
+084E4964  68 1B 00 00 00                push 27
+084E4969  68 01 00 00 00                push 1
+084E496E  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_SetEditKey
+084E4973  FF D1                         call ecx
+084E4975  81 C4 08 00 00 00             add esp, 8
+
+#43			ST		res	{LNXT:24|25|-1}
+(*) USINT
+084E497B  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#44		
+#45			(* res := Video_SetEditKey( 2, kKEY_Del ); *)
+#46			LDP0		2	{LNXT:25|26|-1}
+(*) USINT
+#47			Video_SetEditKey		kKEY_Del	{LNXT:25|26|-1}
+(*) USINT
+084E4981  68 7F 00 00 00                push 127
+084E4986  68 02 00 00 00                push 2
+084E498B  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_SetEditKey
+084E4990  FF D1                         call ecx
+084E4992  81 C4 08 00 00 00             add esp, 8
+
+#48			ST		res	{LNXT:25|26|-1}
+(*) USINT
+084E4998  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#49		
+#50			(* res := Video_SetEditKey( 3, kKEY_Left ); *)
+#51			LDP0		3	{LNXT:26|27|-1}
+(*) USINT
+#52			Video_SetEditKey		kKEY_Left	{LNXT:26|27|-1}
+(*) USINT
+084E499E  68 08 00 00 00                push 8
+084E49A3  68 03 00 00 00                push 3
+084E49A8  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_SetEditKey
+084E49AD  FF D1                         call ecx
+084E49AF  81 C4 08 00 00 00             add esp, 8
+
+#53			ST		res	{LNXT:26|27|-1}
+(*) USINT
+084E49B5  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#54		
+#55			(* res := Video_SetEditKey( 4, kKEY_Right ); *)
+#56			LDP0		4	{LNXT:27|28|-1}
+(*) USINT
+#57			Video_SetEditKey		kKEY_Right	{LNXT:27|28|-1}
+(*) USINT
+084E49BB  68 0C 00 00 00                push 12
+084E49C0  68 04 00 00 00                push 4
+084E49C5  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_SetEditKey
+084E49CA  FF D1                         call ecx
+084E49CC  81 C4 08 00 00 00             add esp, 8
+
+#58			ST		res	{LNXT:27|28|-1}
+(*) USINT
+084E49D2  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#59		
+#60			(* res := Video_SetEditKey( 5, kKEY_ArrowUp ); *)
+#61			LDP0		5	{LNXT:28|29|-1}
+(*) USINT
+#62			Video_SetEditKey		kKEY_ArrowUp	{LNXT:28|29|-1}
+(*) USINT
+084E49D8  68 0B 00 00 00                push 11
+084E49DD  68 05 00 00 00                push 5
+084E49E2  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_SetEditKey
+084E49E7  FF D1                         call ecx
+084E49E9  81 C4 08 00 00 00             add esp, 8
+
+#63			ST		res	{LNXT:28|29|-1}
+(*) USINT
+084E49EF  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#64		
+#65			(* res := Video_SetEditKey( 6, kKEY_ArrowDw ); *)
+#66			LDP0		6	{LNXT:29|30|-1}
+(*) USINT
+#67			Video_SetEditKey		kKEY_ArrowDw	{LNXT:29|30|-1}
+(*) USINT
+084E49F5  68 0A 00 00 00                push 10
+084E49FA  68 06 00 00 00                push 6
+084E49FF  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_SetEditKey
+084E4A04  FF D1                         call ecx
+084E4A06  81 C4 08 00 00 00             add esp, 8
+
+#68			ST		res	{LNXT:29|30|-1}
+(*) USINT
+084E4A0C  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#69		
+#70			(* res := Video_SetEditKey( 7, kKEY_Back ); *)
+#71			LDP0		7	{LNXT:30|31|-1}
+(*) USINT
+#72			Video_SetEditKey		kKEY_Back	{LNXT:30|31|-1}
+(*) USINT
+084E4A12  68 04 00 00 00                push 4
+084E4A17  68 07 00 00 00                push 7
+084E4A1C  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_SetEditKey
+084E4A21  FF D1                         call ecx
+084E4A23  81 C4 08 00 00 00             add esp, 8
+
+#73			ST		res	{LNXT:30|31|-1}
+(*) USINT
+084E4A29  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#74		
+#75			(* res := Video_SetEditKey( 8, kKEY_Tab ); *)
+#76			LDP0		8	{LNXT:31|32|-1}
+(*) USINT
+#77			Video_SetEditKey		kKEY_Tab	{LNXT:31|32|-1}
+(*) USINT
+084E4A2F  68 09 00 00 00                push 9
+084E4A34  68 08 00 00 00                push 8
+084E4A39  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_SetEditKey
+084E4A3E  FF D1                         call ecx
+084E4A40  81 C4 08 00 00 00             add esp, 8
+
+#78			ST		res	{LNXT:31|32|-1}
+(*) USINT
+084E4A46  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#79		
+#80			(* res := Video_SetEditKey( 9, kKEY_Shift ); *)
+#81			LDP0		9	{LNXT:32|33|-1}
+(*) USINT
+#82			Video_SetEditKey		kKEY_Shift	{LNXT:32|33|-1}
+(*) USINT
+084E4A4C  68 06 00 00 00                push 6
+084E4A51  68 09 00 00 00                push 9
+084E4A56  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_SetEditKey
+084E4A5B  FF D1                         call ecx
+084E4A5D  81 C4 08 00 00 00             add esp, 8
+
+#83			ST		res	{LNXT:32|33|-1}
+(*) USINT
+084E4A63  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#84		
+#85			(* res := Video_SetEditKey( 10, kKEY_Caps ); *)
+#86			LDP0		10	{LNXT:33|34|-1}
+(*) USINT
+#87			Video_SetEditKey		kKEY_Caps	{LNXT:33|34|-1}
+(*) USINT
+084E4A69  68 05 00 00 00                push 5
+084E4A6E  68 0A 00 00 00                push 10
+084E4A73  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_SetEditKey
+084E4A78  FF D1                         call ecx
+084E4A7A  81 C4 08 00 00 00             add esp, 8
+
+#88			ST		res	{LNXT:33|34|-1}
+(*) USINT
+084E4A80  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#89		
+#90			(* res := Video_SetEditKey( 11, kKEY_Confirm ); *)
+#91			LDP0		11	{LNXT:34|37|-1}
+(*) USINT
+#92			Video_SetEditKey		kKEY_Confirm	{LNXT:34|37|-1}
+(*) USINT
+084E4A86  68 0E 00 00 00                push 14
+084E4A8B  68 0B 00 00 00                push 11
+084E4A90  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_SetEditKey
+084E4A95  FF D1                         call ecx
+084E4A97  81 C4 08 00 00 00             add esp, 8
+
+#93			ST		res	{LNXT:34|37|-1}
+(*) USINT
+084E4A9D  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#94		
+#95			(* res := Video_LoadLanguage( 0, ?kbResEnums[0] ); *)
+#96			ADR		kbResEnums[0]	{LNXT:37|40|-1}
+(*) USINT
+084E4AA3  B8 CC CC CC CC                mov eax, CCCCCCCCH ; $$CODE$$+288
+
+#97			ST		$$TMP0	{LNXT:37|40|-1}
+(*) @BYTE
+084E4AA8  89 05 CC CC CC CC             mov [CCCCCCCCH], eax ; $$DATA$$+28
+
+#98			LDP0		0	{LNXT:37|40|-1}
+(*) @BYTE
+#99			Video_LoadLanguage		$$TMP0	{LNXT:37|40|-1}
+(*) @BYTE
+084E4AAE  8B 0D CC CC CC CC             mov ecx, [CCCCCCCCH] ; $$DATA$$+28
+084E4AB4  51                            push ecx
+084E4AB5  68 00 00 00 00                push 0
+084E4ABA  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_LoadLanguage
+084E4ABF  FF D1                         call ecx
+084E4AC1  81 C4 08 00 00 00             add esp, 8
+
+#100			ST		res	{LNXT:37|40|-1}
+(*) USINT
+084E4AC7  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#101		
+#102			(* res := Video_AddFontUnicode( ?EWP2_8x16, EWP2_8x16_len, EWP2_8x16_hei ); *)
+#103			ADR		EWP2_8x16	{LNXT:40|41|-1}
+(*) USINT
+084E4ACD  B8 A0 86 E1 5B                mov eax, 5BE186A0H
+
+#104			Video_AddFontUnicode		EWP2_8x16_len, EWP2_8x16_hei	{LNXT:40|41|-1}
+(*) @BYTE
+084E4AD2  68 10 00 00 00                push 16
+084E4AD7  68 08 00 00 00                push 8
+084E4ADC  8B C8                         mov ecx, eax
+084E4ADE  51                            push ecx
+084E4ADF  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_AddFontUnicode
+084E4AE4  FF D1                         call ecx
+084E4AE6  81 C4 0C 00 00 00             add esp, 12
+
+#105			ST		res	{LNXT:40|41|-1}
+(*) USINT
+084E4AEC  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#106		
+#107			(* res := Video_AddFontUnicode( ?DroidSansMono_12x24, DroidSansMono_12x24_len, DroidSansMono_12x24_hei ); *)
+#108			ADR		DroidSansMono_12x24	{LNXT:41|44|-1}
+(*) USINT
+084E4AF2  B8 A6 86 E1 5B                mov eax, 5BE186A6H
+
+#109			Video_AddFontUnicode		DroidSansMono_12x24_len, DroidSansMono_12x24_hei	{LNXT:41|44|-1}
+(*) @BYTE
+084E4AF7  68 18 00 00 00                push 24
+084E4AFC  68 0C 00 00 00                push 12
+084E4B01  8B C8                         mov ecx, eax
+084E4B03  51                            push ecx
+084E4B04  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_AddFontUnicode
+084E4B09  FF D1                         call ecx
+084E4B0B  81 C4 0C 00 00 00             add esp, 12
+
+#110			ST		res	{LNXT:41|44|-1}
+(*) USINT
+084E4B11  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#111		
+#112			(* res := Video_SetWndSysProps( ?EWP2_8x16, 12632256, 0 ); *)
+#113			ADR		EWP2_8x16	{LNXT:44|49|-1}
+(*) USINT
+084E4B17  B8 A0 86 E1 5B                mov eax, 5BE186A0H
+
+#114			Video_SetWndSysProps		12632256, 0	{LNXT:44|49|-1}
+(*) @BYTE
+084E4B1C  68 00 00 00 00                push 0
+084E4B21  68 C0 C0 C0 00                push 12632256
+084E4B26  8B C8                         mov ecx, eax
+084E4B28  51                            push ecx
+084E4B29  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_SetWndSysProps
+084E4B2E  FF D1                         call ecx
+084E4B30  81 C4 0C 00 00 00             add esp, 12
+
+#115			ST		res	{LNXT:44|49|-1}
+(*) USINT
+084E4B36  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+17
+
+#116		
+#117			(* guiCallStack[ giStackPtr ] := 0; *)
+#118			MOVE		0,guiCallStack[giStackPtr]	{LNXT:49|50|-1}
+(*) USINT
+084E4B3C  B8 00 00 00 00                mov eax, 00H
+084E4B41  0F BF 1D CC CC CC CC          movsx ebx, word ptr [CCCCCCCCH] ; $$DATA$$+20
+084E4B48  66 89 04 5D CC CC CC CC       mov CCCCCCCCH[ebx*2], ax ; $$DATA$$+32
+
+#119		
+#120			(* WHILE TRUE *)
+#121		$label0:
+#122			LD		TRUE	{LNXT:50|-1|-1}
+(*) UNDEF
+084E4B50  B8 01 00 00 00                mov eax, 01H
+
+#123			JMPCN		$label1	{LNXT:50|52|3}
+(-) BOOL
+084E4B55  84 C0                         test al, al
+084E4B57  90 74 3F 90 90 90             je 084E4B99H
+
+#124		
+#125			(* DO *)
+#126		
+#127				(* CASE guiCallStack[ giStackPtr ] OF *)
+#128		
+#129				(* 0: *)
+#130				LD		guiCallStack[giStackPtr]	{LNXT:53|-1|-1}
+(*) UNDEF
+084E4B5D  0F BF 1D CC CC CC CC          movsx ebx, word ptr [CCCCCCCCH] ; $$DATA$$+20
+084E4B64  33 C0                         xor eax, eax
+084E4B66  66 8B 04 5D CC CC CC CC       mov ax, CCCCCCCCH[ebx*2] ; $$DATA$$+32
+
+#131				EQ		0	{LNXT:53|-1|-1}
+(*) UINT
+084E4B6E  3D 00 00 00 00                cmp eax, 0
+084E4B73  0F 94 C0                      sete al
+084E4B76  25 FF 00 00 00                and eax, 0FFh
+
+#132				JMPC		$label3	{LNXT:53|54|50}
+(-) BOOL
+084E4B7B  84 C0                         test al, al
+084E4B7D  90 75 08 90 90 90             jne 084E4B88H
+
+#133				JMP		$label2	{LNXT:53|54|50}
+(-) BOOL
+084E4B83  EB 0F 90 90 90                jmp 084E4B94H
+
+#134		
+#135				(* Istruzioni di ciascun CASE: *)
+#136		
+#137		$label3:
+#138					(* fbTouchScreen *)
+#139					CAL		fbTouchScreen	{LNXT:54|50|-1}
+(*) BOOL
+084E4B88  50                            push eax
+084E4B89  BB CC CC CC CC                mov ebx, CCCCCCCCH ; $$DATA$$+52
+084E4B8E  E8 4C F9 FF FF                call 084E44DFH ; $$CODE$$+17631
+084E4B93  58                            pop eax
+
+#140		
+#141		$label2:
+#142		
+#143				(* END_CASE *)
+#144				JMP		$label0	{LNXT:50|52|3}
+(-) BOOL
+084E4B94  EB BA 90 90 90                jmp 084E4B50H
+
+084E4B99  61                            popad
+084E4B9A  5D                            pop ebp
+
+084E4B9B  C3                            ret
+
+END_PROGRAM
+
+
+**************************************************
+	Target variable image generation
+**************************************************
+
+
+*** INPUT:
+084E4B9C  C3                            ret
+
+
+*** OUTPUT:
+084E4B9D  C3                            ret
+
+
+
+**************************************************
+	Task Draw init code
+**************************************************
+
+084E4B9E  55                            push ebp
+084E4B9F  8B EC                         mov ebp, esp
+
+084E4BA1  8B E5                         mov esp, ebp
+084E4BA3  5D                            pop ebp
+
+084E4BA4  C3                            ret
+
+**************************************************
+	List program: InitParDB
+**************************************************
+
+PROGRAM InitParDB
+
+        VAR
+warningsKiller : USINT;
+dummyCrc32 : UDINT;
+	END_VAR
+
+END_PROGRAM
+
+084E4BB0  55                            push ebp
+084E4BB1  8B EC                         mov ebp, esp
+084E4BB3  60                            pushad
+
+#0		{SRC:InitParDB}
+#1		(*$WAITSWITCH$*)
+#2		
+#3			(* dummyCrc32 := 0; *)
+#4			MOVE		0,dummyCrc32	{LNXT:3|5|-1}
+(*) UDINT
+084E4BB4  B8 00 00 00 00                mov eax, 00H
+084E4BB9  89 05 CC CC CC CC             mov [CCCCCCCCH], eax ; $$DATA$$+12
+
+#5		
+#6			(* warningsKiller := sysDBase_SetExtTable( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ); *)
+#7			LDP0		0	{LNXT:5|3|-1}
+(*) UDINT
+#8			sysDBase_SetExtTable		0, 0, 0, 0, 0, 0, 0, 0, 0	{LNXT:5|3|-1}
+(*) UDINT
+084E4BBF  68 00 00 00 00                push 0
+084E4BC4  68 00 00 00 00                push 0
+084E4BC9  68 00 00 00 00                push 0
+084E4BCE  68 00 00 00 00                push 0
+084E4BD3  68 00 00 00 00                push 0
+084E4BD8  68 00 00 00 00                push 0
+084E4BDD  68 00 00 00 00                push 0
+084E4BE2  68 00 00 00 00                push 0
+084E4BE7  68 00 00 00 00                push 0
+084E4BEC  68 00 00 00 00                push 0
+084E4BF1  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; sysDBase_SetExtTable
+084E4BF6  FF D1                         call ecx
+084E4BF8  81 C4 28 00 00 00             add esp, 40
+
+#9			ST		warningsKiller	{LNXT:5|3|-1}
+(*) USINT
+084E4BFE  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+16
+
+084E4C04  61                            popad
+084E4C05  5D                            pop ebp
+
+084E4C06  C3                            ret
+
+END_PROGRAM
+
+
+**************************************************
+	Target variable image generation
+**************************************************
+
+
+*** INPUT:
+084E4C07  C3                            ret
+
+
+*** OUTPUT:
+084E4C08  C3                            ret
+
+
+
+**************************************************
+	Task Init init code
+**************************************************
+
+084E4C09  55                            push ebp
+084E4C0A  8B EC                         mov ebp, esp
+
+084E4C0C  8B E5                         mov esp, ebp
+084E4C0E  5D                            pop ebp
+
+084E4C0F  C3                            ret
+
+**************************************************
+	List program: PageRefresh
+**************************************************
+
+PROGRAM PageRefresh
+
+        VAR
+res : USINT;
+	END_VAR
+
+END_PROGRAM
+
+084E4C20  55                            push ebp
+084E4C21  8B EC                         mov ebp, esp
+084E4C23  60                            pushad
+
+#0		{SRC:PageRefresh}
+#1		(*$WAITSWITCH$*)
+#2		
+#3			(* WHILE giStackPtr < 0 *)
+#4		$label0:
+#5			LD		giStackPtr	{LNXT:3|-1|-1}
+(*) UNDEF
+084E4C24  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+20
+
+#6			LT		0	{LNXT:3|-1|-1}
+(*) INT
+084E4C2B  3D 00 00 00 00                cmp eax, 0
+084E4C30  0F 9C C0                      setl al
+084E4C33  25 FF 00 00 00                and eax, 0FFh
+
+#7			JMPCN		$label1	{LNXT:3|4|7}
+(-) BOOL
+084E4C38  84 C0                         test al, al
+084E4C3A  90 74 20 90 90 90             je 084E4C5DH
+
+#8		
+#9			(* DO *)
+#10				(* res := Video_Sleep(50); *)
+#11				LDP0		50	{LNXT:4|3|-1}
+(*) BOOL
+#12				Video_Sleep	{LNXT:4|3|-1}
+(*) BOOL
+084E4C40  68 32 00 00 00                push 50
+084E4C45  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_Sleep
+084E4C4A  FF D1                         call ecx
+084E4C4C  81 C4 04 00 00 00             add esp, 4
+
+#13				ST		res	{LNXT:4|3|-1}
+(*) USINT
+084E4C52  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+119
+
+#14				JMP		$label0	{LNXT:3|4|7}
+(-) USINT
+084E4C58  EB CA 90 90 90                jmp 084E4C24H
+
+#15		
+#16		$label1:
+#17			(* END_WHILE *)
+#18		
+#19			(* WHILE TRUE *)
+#20		$label2:
+#21			LD		TRUE	{LNXT:7|-1|-1}
+(*) UNDEF
+084E4C5D  B8 01 00 00 00                mov eax, 01H
+
+#22			JMPCN		$label3	{LNXT:7|9|3}
+(-) BOOL
+084E4C62  84 C0                         test al, al
+084E4C64  90 74 57 90 90 90             je 084E4CBEH
+
+#23		
+#24			(* DO *)
+#25		
+#26				(* CASE guiCallStack[ giStackPtr ] OF *)
+#27		
+#28				(* 0: *)
+#29				LD		guiCallStack[giStackPtr]	{LNXT:10|-1|-1}
+(*) UNDEF
+084E4C6A  0F BF 1D CC CC CC CC          movsx ebx, word ptr [CCCCCCCCH] ; $$DATA$$+20
+084E4C71  33 C0                         xor eax, eax
+084E4C73  66 8B 04 5D CC CC CC CC       mov ax, CCCCCCCCH[ebx*2] ; $$DATA$$+32
+
+#30				EQ		0	{LNXT:10|-1|-1}
+(*) UINT
+084E4C7B  3D 00 00 00 00                cmp eax, 0
+084E4C80  0F 94 C0                      sete al
+084E4C83  25 FF 00 00 00                and eax, 0FFh
+
+#31				JMPC		$label5	{LNXT:10|11|16}
+(-) BOOL
+084E4C88  84 C0                         test al, al
+084E4C8A  90 75 08 90 90 90             jne 084E4C95H
+
+#32				JMP		$label4	{LNXT:10|11|16}
+(-) BOOL
+084E4C90  EB 0F 90 90 90                jmp 084E4CA1H
+
+#33		
+#34				(* Istruzioni di ciascun CASE: *)
+#35		
+#36		$label5:
+#37					(* fbRefrTouchScreen *)
+#38					CAL		fbRefrTouchScreen	{LNXT:11|16|-1}
+(*) BOOL
+084E4C95  50                            push eax
+084E4C96  BB CC CC CC CC                mov ebx, CCCCCCCCH ; $$DATA$$+698
+084E4C9B  E8 80 F7 FF FF                call 084E4420H ; $$CODE$$+17440
+084E4CA0  58                            pop eax
+
+#39		
+#40		$label4:
+#41		
+#42				(* END_CASE *)
+#43		
+#44				(* res := Video_Sleep( 50 ); *)
+#45				LDP0		50	{LNXT:16|7|-1}
+(*) BOOL
+#46				Video_Sleep	{LNXT:16|7|-1}
+(*) BOOL
+084E4CA1  68 32 00 00 00                push 50
+084E4CA6  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; Video_Sleep
+084E4CAB  FF D1                         call ecx
+084E4CAD  81 C4 04 00 00 00             add esp, 4
+
+#47				ST		res	{LNXT:16|7|-1}
+(*) USINT
+084E4CB3  88 05 CC CC CC CC             mov [CCCCCCCCH], al ; $$DATA$$+119
+
+#48				JMP		$label2	{LNXT:7|9|3}
+(-) USINT
+084E4CB9  EB A2 90 90 90                jmp 084E4C5DH
+
+084E4CBE  61                            popad
+084E4CBF  5D                            pop ebp
+
+084E4CC0  C3                            ret
+
+END_PROGRAM
+
+
+**************************************************
+	Target variable image generation
+**************************************************
+
+
+*** INPUT:
+084E4CC1  C3                            ret
+
+
+*** OUTPUT:
+084E4CC2  C3                            ret
+
+
+
+**************************************************
+	Task Refresh init code
+**************************************************
+
+084E4CC3  55                            push ebp
+084E4CC4  8B EC                         mov ebp, esp
+
+084E4CC6  8B E5                         mov esp, ebp
+084E4CC8  5D                            pop ebp
+
+084E4CC9  C3                            ret
+
+
+
+**************************************************
+	Global init code
+**************************************************
+
+084E4CE0  55                            push ebp
+084E4CE1  8B EC                         mov ebp, esp
+
+Var init: V:HMI:GISTACKPTR = -1
+084E4CE3  66 C7 05 CC CC CC CC FF FF    mov word ptr [CCCCCCCCH], FFFFH ; $$DATA$$+20
+
+Var init: V:HMI:$GIBACKBUFFERCURR = -1
+084E4CEC  66 C7 05 CC CC CC CC FF FF    mov word ptr [CCCCCCCCH], FFFFH ; $$DATA$$+22
+
+Var init: V:HMI:$GIBACKBUFFERFIRST = -1
+084E4CF5  66 C7 05 CC CC CC CC FF FF    mov word ptr [CCCCCCCCH], FFFFH ; $$DATA$$+24
+
+Var init: V:HMI:$GIBACKBUFFERLAST = -1
+084E4CFE  66 C7 05 CC CC CC CC FF FF    mov word ptr [CCCCCCCCH], FFFFH ; $$DATA$$+26
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_1.WHND = 2
+084E4D07  66 C7 05 CC CC CC CC 02 00    mov word ptr [CCCCCCCCH], 0002H ; $$DATA$$+153
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_1.X1 = 174
+084E4D10  66 C7 05 CC CC CC CC AE 00    mov word ptr [CCCCCCCCH], 00AEH ; $$DATA$$+155
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_1.Y1 = 8
+084E4D19  66 C7 05 CC CC CC CC 08 00    mov word ptr [CCCCCCCCH], 0008H ; $$DATA$$+157
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_1.X2 = 221
+084E4D22  66 C7 05 CC CC CC CC DD 00    mov word ptr [CCCCCCCCH], 00DDH ; $$DATA$$+159
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_1.Y2 = 31
+084E4D2B  66 C7 05 CC CC CC CC 1F 00    mov word ptr [CCCCCCCCH], 001FH ; $$DATA$$+161
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_1.PFONT = 
+084E4D34  B9 A6 86 E1 5B                mov ecx, 5BE186A6H
+084E4D39  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+163
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_1.BCKCOL = 16777215
+084E4D3F  C7 05 CC CC CC CC FF FF FF 00 mov dword ptr [CCCCCCCCH], 00FFFFFFH ; $$DATA$$+172
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_1.FORESELCOL = 16777215
+084E4D49  C7 05 CC CC CC CC FF FF FF 00 mov dword ptr [CCCCCCCCH], 00FFFFFFH ; $$DATA$$+176
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_1.RW = 1
+084E4D53  C6 05 CC CC CC CC 01          mov byte ptr [CCCCCCCCH], 01H ; $$DATA$$+189
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_1.REFR = 1
+084E4D5A  C6 05 CC CC CC CC 01          mov byte ptr [CCCCCCCCH], 01H ; $$DATA$$+190
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_1.PVAR = 2101248
+084E4D61  C7 05 CC CC CC CC 00 10 20 00 mov dword ptr [CCCCCCCCH], 00201000H ; $$DATA$$+191
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_1.TYPE = 5
+084E4D6B  C6 05 CC CC CC CC 05          mov byte ptr [CCCCCCCCH], 05H ; $$DATA$$+195
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_1.FORMAT = 16777228
+084E4D72  C7 05 CC CC CC CC 0C 00 00 01 mov dword ptr [CCCCCCCCH], 0100000CH ; $$DATA$$+204
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_1.PVISVAR = 1
+084E4D7C  C7 05 CC CC CC CC 01 00 00 00 mov dword ptr [CCCCCCCCH], 00000001H ; $$DATA$$+208
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_1.ORDER = 1
+084E4D86  C6 05 CC CC CC CC 01          mov byte ptr [CCCCCCCCH], 01H ; $$DATA$$+216
+
+Var init: V:HMI:FBTOUCHSCREENSTRING_7.X = 7
+084E4D8D  66 C7 05 CC CC CC CC 07 00    mov word ptr [CCCCCCCCH], 0007H ; $$DATA$$+242
+
+Var init: V:HMI:FBTOUCHSCREENSTRING_7.Y = 8
+084E4D96  66 C7 05 CC CC CC CC 08 00    mov word ptr [CCCCCCCCH], 0008H ; $$DATA$$+244
+
+Var init: V:HMI:FBTOUCHSCREENSTRING_7.PSTRING = 
+084E4D9F  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; $$CODE$$+360
+084E4DA4  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+248
+
+Var init: V:HMI:FBTOUCHSCREENSTRING_7.PFONT = 
+084E4DAA  B9 A6 86 E1 5B                mov ecx, 5BE186A6H
+084E4DAF  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+252
+
+Var init: V:HMI:FBTOUCHSCREENSTRING_7.BCKCOL = 16777215
+084E4DB5  C7 05 CC CC CC CC FF FF FF 00 mov dword ptr [CCCCCCCCH], 00FFFFFFH ; $$DATA$$+260
+
+Var init: V:HMI:FBTOUCHSCREENSTRING_7.PVISVAR = 1
+084E4DBF  C7 05 CC CC CC CC 01 00 00 00 mov dword ptr [CCCCCCCCH], 00000001H ; $$DATA$$+264
+
+Var init: V:HMI:FBTOUCHSCREENSTRING_7.FORMAT = 32
+084E4DC9  66 C7 05 CC CC CC CC 20 00    mov word ptr [CCCCCCCCH], 0020H ; $$DATA$$+268
+
+Var init: V:HMI:FBTOUCHSCREENSTRING_7.SELFORECOL = 16777215
+084E4DD2  C7 05 CC CC CC CC FF FF FF 00 mov dword ptr [CCCCCCCCH], 00FFFFFFH ; $$DATA$$+280
+
+Var init: V:HMI:FBTOUCHSCREENLINE_9.X1 = 7
+084E4DDC  66 C7 05 CC CC CC CC 07 00    mov word ptr [CCCCCCCCH], 0007H ; $$DATA$$+302
+
+Var init: V:HMI:FBTOUCHSCREENLINE_9.Y1 = 40
+084E4DE5  66 C7 05 CC CC CC CC 28 00    mov word ptr [CCCCCCCCH], 0028H ; $$DATA$$+304
+
+Var init: V:HMI:FBTOUCHSCREENLINE_9.X2 = 230
+084E4DEE  66 C7 05 CC CC CC CC E6 00    mov word ptr [CCCCCCCCH], 00E6H ; $$DATA$$+306
+
+Var init: V:HMI:FBTOUCHSCREENLINE_9.Y2 = 40
+084E4DF7  66 C7 05 CC CC CC CC 28 00    mov word ptr [CCCCCCCCH], 0028H ; $$DATA$$+308
+
+Var init: V:HMI:FBTOUCHSCREENLINE_9.BORDPTS = 1
+084E4E00  C6 05 CC CC CC CC 01          mov byte ptr [CCCCCCCCH], 01H ; $$DATA$$+311
+
+Var init: V:HMI:FBTOUCHSCREENSTRING_14.WHND = 1
+084E4E07  66 C7 05 CC CC CC CC 01 00    mov word ptr [CCCCCCCCH], 0001H ; $$DATA$$+329
+
+Var init: V:HMI:FBTOUCHSCREENSTRING_14.X = 7
+084E4E10  66 C7 05 CC CC CC CC 07 00    mov word ptr [CCCCCCCCH], 0007H ; $$DATA$$+331
+
+Var init: V:HMI:FBTOUCHSCREENSTRING_14.Y = 51
+084E4E19  66 C7 05 CC CC CC CC 33 00    mov word ptr [CCCCCCCCH], 0033H ; $$DATA$$+333
+
+Var init: V:HMI:FBTOUCHSCREENSTRING_14.PSTRING = 
+084E4E22  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; $$CODE$$+374
+084E4E27  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+337
+
+Var init: V:HMI:FBTOUCHSCREENSTRING_14.PFONT = 
+084E4E2D  B9 A6 86 E1 5B                mov ecx, 5BE186A6H
+084E4E32  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+341
+
+Var init: V:HMI:FBTOUCHSCREENSTRING_14.BCKCOL = 16777215
+084E4E38  C7 05 CC CC CC CC FF FF FF 00 mov dword ptr [CCCCCCCCH], 00FFFFFFH ; $$DATA$$+349
+
+Var init: V:HMI:FBTOUCHSCREENSTRING_14.PVISVAR = 1
+084E4E42  C7 05 CC CC CC CC 01 00 00 00 mov dword ptr [CCCCCCCCH], 00000001H ; $$DATA$$+353
+
+Var init: V:HMI:FBTOUCHSCREENSTRING_14.FORMAT = 32
+084E4E4C  66 C7 05 CC CC CC CC 20 00    mov word ptr [CCCCCCCCH], 0020H ; $$DATA$$+357
+
+Var init: V:HMI:FBTOUCHSCREENSTRING_14.SELFORECOL = 16777215
+084E4E55  C7 05 CC CC CC CC FF FF FF 00 mov dword ptr [CCCCCCCCH], 00FFFFFFH ; $$DATA$$+369
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_15.WHND = 3
+084E4E5F  66 C7 05 CC CC CC CC 03 00    mov word ptr [CCCCCCCCH], 0003H ; $$DATA$$+404
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_15.X1 = 174
+084E4E68  66 C7 05 CC CC CC CC AE 00    mov word ptr [CCCCCCCCH], 00AEH ; $$DATA$$+406
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_15.Y1 = 51
+084E4E71  66 C7 05 CC CC CC CC 33 00    mov word ptr [CCCCCCCCH], 0033H ; $$DATA$$+408
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_15.X2 = 221
+084E4E7A  66 C7 05 CC CC CC CC DD 00    mov word ptr [CCCCCCCCH], 00DDH ; $$DATA$$+410
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_15.Y2 = 74
+084E4E83  66 C7 05 CC CC CC CC 4A 00    mov word ptr [CCCCCCCCH], 004AH ; $$DATA$$+412
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_15.PFONT = 
+084E4E8C  B9 A6 86 E1 5B                mov ecx, 5BE186A6H
+084E4E91  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+414
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_15.BCKCOL = 16777215
+084E4E97  C7 05 CC CC CC CC FF FF FF 00 mov dword ptr [CCCCCCCCH], 00FFFFFFH ; $$DATA$$+423
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_15.FORESELCOL = 16777215
+084E4EA1  C7 05 CC CC CC CC FF FF FF 00 mov dword ptr [CCCCCCCCH], 00FFFFFFH ; $$DATA$$+427
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_15.RW = 1
+084E4EAB  C6 05 CC CC CC CC 01          mov byte ptr [CCCCCCCCH], 01H ; $$DATA$$+440
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_15.REFR = 1
+084E4EB2  C6 05 CC CC CC CC 01          mov byte ptr [CCCCCCCCH], 01H ; $$DATA$$+441
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_15.PVAR = 2101504
+084E4EB9  C7 05 CC CC CC CC 00 11 20 00 mov dword ptr [CCCCCCCCH], 00201100H ; $$DATA$$+442
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_15.TYPE = 5
+084E4EC3  C6 05 CC CC CC CC 05          mov byte ptr [CCCCCCCCH], 05H ; $$DATA$$+446
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_15.FORMAT = 16777228
+084E4ECA  C7 05 CC CC CC CC 0C 00 00 01 mov dword ptr [CCCCCCCCH], 0100000CH ; $$DATA$$+455
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_15.PVISVAR = 1
+084E4ED4  C7 05 CC CC CC CC 01 00 00 00 mov dword ptr [CCCCCCCCH], 00000001H ; $$DATA$$+459
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_15.ORDER = 6
+084E4EDE  C6 05 CC CC CC CC 06          mov byte ptr [CCCCCCCCH], 06H ; $$DATA$$+467
+
+Var init: V:HMI:FBTOUCHSCREENLINE_16.X1 = 8
+084E4EE5  66 C7 05 CC CC CC CC 08 00    mov word ptr [CCCCCCCCH], 0008H ; $$DATA$$+486
+
+Var init: V:HMI:FBTOUCHSCREENLINE_16.Y1 = 85
+084E4EEE  66 C7 05 CC CC CC CC 55 00    mov word ptr [CCCCCCCCH], 0055H ; $$DATA$$+488
+
+Var init: V:HMI:FBTOUCHSCREENLINE_16.X2 = 231
+084E4EF7  66 C7 05 CC CC CC CC E7 00    mov word ptr [CCCCCCCCH], 00E7H ; $$DATA$$+490
+
+Var init: V:HMI:FBTOUCHSCREENLINE_16.Y2 = 85
+084E4F00  66 C7 05 CC CC CC CC 55 00    mov word ptr [CCCCCCCCH], 0055H ; $$DATA$$+492
+
+Var init: V:HMI:FBTOUCHSCREENLINE_16.BORDPTS = 1
+084E4F09  C6 05 CC CC CC CC 01          mov byte ptr [CCCCCCCCH], 01H ; $$DATA$$+495
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_18.WHND = 4
+084E4F10  66 C7 05 CC CC CC CC 04 00    mov word ptr [CCCCCCCCH], 0004H ; $$DATA$$+521
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_18.X1 = 45
+084E4F19  66 C7 05 CC CC CC CC 2D 00    mov word ptr [CCCCCCCCH], 002DH ; $$DATA$$+523
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_18.Y1 = 107
+084E4F22  66 C7 05 CC CC CC CC 6B 00    mov word ptr [CCCCCCCCH], 006BH ; $$DATA$$+525
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_18.X2 = 188
+084E4F2B  66 C7 05 CC CC CC CC BC 00    mov word ptr [CCCCCCCCH], 00BCH ; $$DATA$$+527
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_18.Y2 = 130
+084E4F34  66 C7 05 CC CC CC CC 82 00    mov word ptr [CCCCCCCCH], 0082H ; $$DATA$$+529
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_18.PFONT = 
+084E4F3D  B9 A6 86 E1 5B                mov ecx, 5BE186A6H
+084E4F42  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+531
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_18.BCKCOL = 16777215
+084E4F48  C7 05 CC CC CC CC FF FF FF 00 mov dword ptr [CCCCCCCCH], 00FFFFFFH ; $$DATA$$+540
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_18.FORESELCOL = 16777215
+084E4F52  C7 05 CC CC CC CC FF FF FF 00 mov dword ptr [CCCCCCCCH], 00FFFFFFH ; $$DATA$$+544
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_18.RW = 1
+084E4F5C  C6 05 CC CC CC CC 01          mov byte ptr [CCCCCCCCH], 01H ; $$DATA$$+557
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_18.REFR = 1
+084E4F63  C6 05 CC CC CC CC 01          mov byte ptr [CCCCCCCCH], 01H ; $$DATA$$+558
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_18.PVAR = 2101760
+084E4F6A  C7 05 CC CC CC CC 00 12 20 00 mov dword ptr [CCCCCCCCH], 00201200H ; $$DATA$$+559
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_18.TYPE = 5
+084E4F74  C6 05 CC CC CC CC 05          mov byte ptr [CCCCCCCCH], 05H ; $$DATA$$+563
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_18.FORMAT = 20
+084E4F7B  C7 05 CC CC CC CC 14 00 00 00 mov dword ptr [CCCCCCCCH], 00000014H ; $$DATA$$+572
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_18.PVISVAR = 1
+084E4F85  C7 05 CC CC CC CC 01 00 00 00 mov dword ptr [CCCCCCCCH], 00000001H ; $$DATA$$+576
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_18.ORDER = 7
+084E4F8F  C6 05 CC CC CC CC 07          mov byte ptr [CCCCCCCCH], 07H ; $$DATA$$+584
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_18.PENUMID = 1
+084E4F96  C7 05 CC CC CC CC 01 00 00 00 mov dword ptr [CCCCCCCCH], 00000001H ; $$DATA$$+590
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_19.WHND = 5
+084E4FA0  66 C7 05 CC CC CC CC 05 00    mov word ptr [CCCCCCCCH], 0005H ; $$DATA$$+616
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_19.X1 = 46
+084E4FA9  66 C7 05 CC CC CC CC 2E 00    mov word ptr [CCCCCCCCH], 002EH ; $$DATA$$+618
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_19.Y1 = 141
+084E4FB2  66 C7 05 CC CC CC CC 8D 00    mov word ptr [CCCCCCCCH], 008DH ; $$DATA$$+620
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_19.X2 = 189
+084E4FBB  66 C7 05 CC CC CC CC BD 00    mov word ptr [CCCCCCCCH], 00BDH ; $$DATA$$+622
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_19.Y2 = 164
+084E4FC4  66 C7 05 CC CC CC CC A4 00    mov word ptr [CCCCCCCCH], 00A4H ; $$DATA$$+624
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_19.PFONT = 
+084E4FCD  B9 A6 86 E1 5B                mov ecx, 5BE186A6H
+084E4FD2  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+626
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_19.BCKCOL = 16777215
+084E4FD8  C7 05 CC CC CC CC FF FF FF 00 mov dword ptr [CCCCCCCCH], 00FFFFFFH ; $$DATA$$+635
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_19.FORESELCOL = 16777215
+084E4FE2  C7 05 CC CC CC CC FF FF FF 00 mov dword ptr [CCCCCCCCH], 00FFFFFFH ; $$DATA$$+639
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_19.RW = 1
+084E4FEC  C6 05 CC CC CC CC 01          mov byte ptr [CCCCCCCCH], 01H ; $$DATA$$+652
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_19.REFR = 1
+084E4FF3  C6 05 CC CC CC CC 01          mov byte ptr [CCCCCCCCH], 01H ; $$DATA$$+653
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_19.PVAR = 2101760
+084E4FFA  C7 05 CC CC CC CC 00 12 20 00 mov dword ptr [CCCCCCCCH], 00201200H ; $$DATA$$+654
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_19.TYPE = 5
+084E5004  C6 05 CC CC CC CC 05          mov byte ptr [CCCCCCCCH], 05H ; $$DATA$$+658
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_19.FORMAT = 20
+084E500B  C7 05 CC CC CC CC 14 00 00 00 mov dword ptr [CCCCCCCCH], 00000014H ; $$DATA$$+667
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_19.PVISVAR = 1
+084E5015  C7 05 CC CC CC CC 01 00 00 00 mov dword ptr [CCCCCCCCH], 00000001H ; $$DATA$$+671
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_19.ORDER = 8
+084E501F  C6 05 CC CC CC CC 08          mov byte ptr [CCCCCCCCH], 08H ; $$DATA$$+679
+
+Var init: V:HMI:FBTOUCHSCREENEDIT_19.PENUMID = 2
+084E5026  C7 05 CC CC CC CC 02 00 00 00 mov dword ptr [CCCCCCCCH], 00000002H ; $$DATA$$+685
+
+Var init: V:EMBEDDEDELEMENTS:$$POUCBARRAY$$BACKGROUND = 0
+084E5030  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; $$DATA$$+756
+084E5035  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+724
+
+Var init: V:EMBEDDEDELEMENTS:$$POUCBARRAY$$DRAW = 0
+084E503B  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; $$DATA$$+762
+084E5040  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+732
+
+Var init: V:EMBEDDEDELEMENTS:$$POUCBARRAY$$INIT = 0
+084E5046  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; $$DATA$$+768
+084E504B  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+740
+
+Var init: V:EMBEDDEDELEMENTS:$$POUCBARRAY$$REFRESH = 0
+084E5051  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; $$DATA$$+774
+084E5056  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+748
+
+084E505C  8B E5                         mov esp, ebp
+084E505E  5D                            pop ebp
+
+084E505F  C3                            ret
+
+
+
+********************************************
+MEMORY MAP
+********************************************
+
+Code area type:          		       main code
+Start code area:          		00000000084E0000h
+End code area:            		00000000084E5BB0h
+Code size:                		00005BB0h
+
+Code area type:          		       auxiliary
+Start code area:          		000000005BE186A0h
+End code area:            		000000005BE19642h
+Code size:                		00000FA2h
+
+Start local data area:    		00000000084C0000h
+End local data area:      		00000000084C030Ch
+Local data size:          		0000030Ch
+
+Start retentive data area:		0000000000000000h
+End retentive data area:  		0000000000000000h
+Retentive data size:      		00000000h
+
+Start bit data area:      		0000000000000000h
+End bit data area:        		0000000000000000h
+Bit data size:            		00000000h
+
+
+
+********************************************
+CODE ID:                                FC4D690F
+DEBUG MEMO ID:                          0000289B
+FULL MEMO ID:                           00006DBF
+RELOCATION ADDR:                        00000000084E0000
+********************************************

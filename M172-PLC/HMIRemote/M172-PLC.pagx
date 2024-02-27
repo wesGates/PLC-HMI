@@ -27,7 +27,7 @@
 		<FONTS useOnTarget="false" downloadUsedChars="false"/>
 	</RESOURCES>
 	<PAGES>
-		<PAGE name="page1">
+		<PAGE name="DemoHMI">
 			<ATTRIBUTES>
 				<MSGID>0</MSGID>
 				<WNDMODE>0</WNDMODE>

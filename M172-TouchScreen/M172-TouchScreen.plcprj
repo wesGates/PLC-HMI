@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <plcProject caseSensitive="false" useCustomWorkspace="true" debugMode="false" extcheck="true" SFCControl="false" strictPointerCheck="false" verboseWarningMode="false" PNContactsOnEachNetwork="false" LocalVarsFBAccess="false" strictEnumsCheck="false" copyWarningThreshold="200" version="2.9" useLD2="true" useXPLCFiles="false" useFBMethods="false" customSortOfProjectTree="false" autoDerefPointers="false">
 	<image>M172-TouchScreen.imgx</image>
-	<commSettings>Modbus:1,1000,M#COM:10,38400,N,8,1,H</commSettings>
+	<commSettings>Modbus:1,1000,M#COM:5,38400,N,8,1,H</commSettings>
 	<sources>
 		<main>
 			<resources>
@@ -6618,7 +6618,7 @@ END_PROGRAM
 			</src>
 		</aux>
 		<workspace>
-			<root name="M172-TouchScreen" nextID="15">
+			<root name="M172-TouchScreen" nextID="17">
 				<GlobalVars name="Global_vars" id="11"/>
 				<Pou name="main" id="2"/>
 			</root>
@@ -6633,7 +6633,9 @@ END_PROGRAM
 		</disabledWarnings>
 		<applicationDataBlocks/>
 	</codegen>
-	<simWorkspaces/>
+	<simWorkspaces>
+		<simWorkspace>PLC-HMI-SimulatedDisplay.WKSX</simWorkspace>
+	</simWorkspaces>
 	<debug watchRefresh="20" watchVarRefresh="0" watchMaxArray="20" autoSaveWatchList="false" watchFBLocalVars="false"/>
 	<editor useOldGridSize="false"/>
 	<userDef>
@@ -6657,7 +6659,7 @@ END_PROGRAM
 					<persistentVariables/>
 				</project_config>
 				<TM172DC-P_659p9 template="TM172DC\TM172DC-P_659p9.pct" version="4" uniqueID="0" name="M172DCL Portrait" caption="M172DCL Portrait">
-					<devConfig HMIProject="HMI\M172-TouchScreen.pajx" HMIProjectCRC="-756342970">
+					<devConfig HMIProject="HMI\M172-TouchScreen.pajx" HMIProjectCRC="-44051988">
 						<params/>
 						<paramsRO/>
 						<enums nextID="0"/>
@@ -6697,7 +6699,7 @@ END_PROGRAM
 					<RS485_OnBoard address="1" mode="0" baudRate="38400" serialMode="1"/>
 					<cfgConfig>
 						<config>
-							<commstring>Modbus:1,1000,M#COM:10,38400,N,8,1,H</commstring>
+							<commstring>Modbus:1,1000,M#COM:5,38400,N,8,1,H</commstring>
 							<values stopNodeParsing="true">
 								<value ipa="8192" subidx="0">0</value>
 								<value ipa="8193" subidx="0">2063</value>
