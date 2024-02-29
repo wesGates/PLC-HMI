@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<parx><deviceconfig><parameters><par ipa="8192" name="Par_TAB" descr="Tab (map code)" defval="0" min="0" max="65535" um="num" typepar="unsignedShort" typetarg="unsignedShort">
+<parx><deviceconfig><parameters><par ipa="5000" name="TempSend" descr="" typetarg="unsignedShort" typepar="unsignedShort" scale="1" form="" offs="0" um="" readonly="false" defval="8" accesslevel="0"><protocol name="Modbus" commaddr="8961" commsubindex="0"/><option dataBlock="%MW201.0" typeIEC="INT" parType="status"/><option name="typeIEC">INT</option><option name="softscope">0</option></par><par ipa="8192" name="Par_TAB" descr="Tab (map code)" defval="0" min="0" max="65535" um="num" typepar="unsignedShort" typetarg="unsignedShort">
 				<protocol name="Modbus" commaddr="8192" commsubindex="0"/>
 				<menu id="01"/>
 			</par>

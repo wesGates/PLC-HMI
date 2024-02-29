@@ -4,3 +4,10 @@
 	(*                            *)
 	(******************************)
 
+        VAR_GLOBAL
+	{G:"Status_variables"}
+TempSend AT %MW201.0 : INT := 8;
+	{G:"IO_Mapping"}
+TempSensor AT %IW1.0 : INT;	{ DE:"RH humidity sensor" }
+	END_VAR
+

@@ -4,6 +4,7 @@
 ; Configuration for Modbus Master RTU
 MbMRtu_OpenChn,0,0,38400,27
 MbMRtu_SlaveAssign,0,1
+MbMRtu_SetMessage,0,0,3,8961,1,0,10,1000,110,1,0
 MbMRtu_Start
 
 ;Ethernet_presence:0

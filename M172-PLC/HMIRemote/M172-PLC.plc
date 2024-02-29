@@ -24,19 +24,19 @@ VAR_GLOBAL
 	$PagNumber : UINT;
 	$waitRefresh : BOOL;
 
-	{G:"page1_vars"}
-	fbpage1 : Drawpage1;
-	fbRefrpage1 : Refrpage1;
-	fbpage1String_1 : Static01 := (x:=2, y:=2, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00001, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
-	fbpage1String_4 : Static01 := (wHnd:=1, x:=2, y:=14, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00002, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
-	fbpage1String_6 : Static01 := (wHnd:=2, x:=2, y:=23, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00003, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
-	fbpage1String_8 : Static01 := (wHnd:=3, x:=2, y:=32, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00004, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
-	fbpage1String_11 : Static01 := (wHnd:=4, x:=2, y:=45, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00005, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
-	fbpage1Edit_3 : EditBox01 := (wHnd:=5, x1:=99, y1:=2, x2:=122, y2:=9, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00230100, order:=1, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#0100000C);
-	fbpage1Edit_5 : EditBox01 := (wHnd:=6, x1:=99, y1:=14, x2:=122, y2:=21, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00400000, order:=2, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, pVarMin:=200, pVarMax:=350, format:=16#0101400C, pCanSel:=1);
-	fbpage1Edit_7 : EditBox01 := (wHnd:=7, x1:=99, y1:=23, x2:=122, y2:=30, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00400100, order:=3, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, pVarMax:=50, format:=16#0101400C, pCanSel:=1);
-	fbpage1Edit_9 : EditBox01 := (wHnd:=8, x1:=99, y1:=32, x2:=122, y2:=39, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00400200, order:=4, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyUInt, pVarMin:=1, pVarMax:=30, format:=16#0001400C, pCanSel:=1);
-	fbpage1Edit_12 : EditBox01 := (wHnd:=9, x1:=94, y1:=45, x2:=123, y2:=52, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00230000, order:=5, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyBool, enumId:=1, format:=16#0000000C);
+	{G:"DemoHMI_vars"}
+	fbDemoHMI : DrawDemoHMI;
+	fbRefrDemoHMI : RefrDemoHMI;
+	fbDemoHMIString_1 : Static01 := (x:=2, y:=2, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00001, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
+	fbDemoHMIString_4 : Static01 := (wHnd:=1, x:=2, y:=14, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00002, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
+	fbDemoHMIString_6 : Static01 := (wHnd:=2, x:=2, y:=23, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00003, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
+	fbDemoHMIString_8 : Static01 := (wHnd:=3, x:=2, y:=32, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00004, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
+	fbDemoHMIString_11 : Static01 := (wHnd:=4, x:=2, y:=45, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00005, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
+	fbDemoHMIEdit_3 : EditBox01 := (wHnd:=5, x1:=99, y1:=2, x2:=122, y2:=9, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00230100, order:=1, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#0000000C);
+	fbDemoHMIEdit_5 : EditBox01 := (wHnd:=6, x1:=99, y1:=14, x2:=122, y2:=21, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00400000, order:=2, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, pVarMin:=200, pVarMax:=350, format:=16#0101400C, pCanSel:=1);
+	fbDemoHMIEdit_7 : EditBox01 := (wHnd:=7, x1:=99, y1:=23, x2:=122, y2:=30, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00400100, order:=3, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, pVarMax:=50, format:=16#0101400C, pCanSel:=1);
+	fbDemoHMIEdit_9 : EditBox01 := (wHnd:=8, x1:=99, y1:=32, x2:=122, y2:=39, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00400200, order:=4, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyUInt, pVarMin:=1, pVarMax:=30, format:=16#0001400C, pCanSel:=1);
+	fbDemoHMIEdit_12 : EditBox01 := (wHnd:=9, x1:=94, y1:=45, x2:=123, y2:=52, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00230000, order:=5, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyBool, enumId:=1, format:=16#0000000C);
 
 	{G:"Back page manager"}
 	fbBackPage : DrawBackPage;
@@ -308,7 +308,7 @@ PROGRAM PageDraw
 	(* Declaring the system attributes of windows *)
 	res := Video_SetWndSysProps( ?EWP2_6x8, 16777215, 0 );
 
-	(* *** INITIALIZING THE OBJECTS OF PAGE 'page1' *** *)
+	(* *** INITIALIZING THE OBJECTS OF PAGE 'DemoHMI' *** *)
 
 	(* Init the set elements *)
 	guiCallStack[ giStackPtr ] := 0;
@@ -316,7 +316,7 @@ PROGRAM PageDraw
 		CASE guiCallStack[ giStackPtr ] OF
 
 			0:
-				fbpage1();
+				fbDemoHMI();
 
 
 		END_CASE;
@@ -343,7 +343,7 @@ END_VAR
 		CASE guiCallStack[ giStackPtr ] OF
 
 			0:
-				fbRefrpage1();
+				fbRefrDemoHMI();
 
 
 		END_CASE;
@@ -441,7 +441,7 @@ FUNCTION_BLOCK DrawBackPage
 	(*                         *)
 	(***************************)
 
-FUNCTION_BLOCK Drawpage1
+FUNCTION_BLOCK DrawDemoHMI
 
 	VAR_OUTPUT
 	uiOutVar : UINT;
@@ -451,16 +451,16 @@ FUNCTION_BLOCK Drawpage1
 	guiCallStack : ARRAY[ 0..9 ] OF UINT;
 	giStackPtr : INT;
 	fbBackPage : DrawBackPage;
-	fbpage1String_1 : Static01;
-	fbpage1String_4 : Static01;
-	fbpage1String_6 : Static01;
-	fbpage1String_8 : Static01;
-	fbpage1String_11 : Static01;
-	fbpage1Edit_3 : EditBox01;
-	fbpage1Edit_5 : EditBox01;
-	fbpage1Edit_7 : EditBox01;
-	fbpage1Edit_9 : EditBox01;
-	fbpage1Edit_12 : EditBox01;
+	fbDemoHMIString_1 : Static01;
+	fbDemoHMIString_4 : Static01;
+	fbDemoHMIString_6 : Static01;
+	fbDemoHMIString_8 : Static01;
+	fbDemoHMIString_11 : Static01;
+	fbDemoHMIEdit_3 : EditBox01;
+	fbDemoHMIEdit_5 : EditBox01;
+	fbDemoHMIEdit_7 : EditBox01;
+	fbDemoHMIEdit_9 : EditBox01;
+	fbDemoHMIEdit_12 : EditBox01;
 	$waitRefresh : BOOL;
 	END_VAR
 
@@ -548,38 +548,38 @@ FUNCTION_BLOCK Drawpage1
 			(* *** PAGE SECTION *** *)
 
 			(* *** DRAW CONTROLS *** *)
-			fbpage1String_1.accMode := kACS_INIT;
-			fbpage1String_1();
-			fbpage1String_1.accMode := kACS_PRINT;
+			fbDemoHMIString_1.accMode := kACS_INIT;
+			fbDemoHMIString_1();
+			fbDemoHMIString_1.accMode := kACS_PRINT;
 			res := Video_Line( 1, 11, 123, 11, 1, 0 );
-			fbpage1Edit_3.accMode := kACS_INIT;
-			fbpage1Edit_3();
-			fbpage1Edit_3.accMode := kACS_PRINT;
-			fbpage1String_4.accMode := kACS_INIT;
-			fbpage1String_4();
-			fbpage1String_4.accMode := kACS_PRINT;
-			fbpage1Edit_5.accMode := kACS_INIT;
-			fbpage1Edit_5();
-			fbpage1Edit_5.accMode := kACS_PRINT;
-			fbpage1String_6.accMode := kACS_INIT;
-			fbpage1String_6();
-			fbpage1String_6.accMode := kACS_PRINT;
-			fbpage1Edit_7.accMode := kACS_INIT;
-			fbpage1Edit_7();
-			fbpage1Edit_7.accMode := kACS_PRINT;
-			fbpage1String_8.accMode := kACS_INIT;
-			fbpage1String_8();
-			fbpage1String_8.accMode := kACS_PRINT;
-			fbpage1Edit_9.accMode := kACS_INIT;
-			fbpage1Edit_9();
-			fbpage1Edit_9.accMode := kACS_PRINT;
+			fbDemoHMIEdit_3.accMode := kACS_INIT;
+			fbDemoHMIEdit_3();
+			fbDemoHMIEdit_3.accMode := kACS_PRINT;
+			fbDemoHMIString_4.accMode := kACS_INIT;
+			fbDemoHMIString_4();
+			fbDemoHMIString_4.accMode := kACS_PRINT;
+			fbDemoHMIEdit_5.accMode := kACS_INIT;
+			fbDemoHMIEdit_5();
+			fbDemoHMIEdit_5.accMode := kACS_PRINT;
+			fbDemoHMIString_6.accMode := kACS_INIT;
+			fbDemoHMIString_6();
+			fbDemoHMIString_6.accMode := kACS_PRINT;
+			fbDemoHMIEdit_7.accMode := kACS_INIT;
+			fbDemoHMIEdit_7();
+			fbDemoHMIEdit_7.accMode := kACS_PRINT;
+			fbDemoHMIString_8.accMode := kACS_INIT;
+			fbDemoHMIString_8();
+			fbDemoHMIString_8.accMode := kACS_PRINT;
+			fbDemoHMIEdit_9.accMode := kACS_INIT;
+			fbDemoHMIEdit_9();
+			fbDemoHMIEdit_9.accMode := kACS_PRINT;
 			res := Video_Line( 1, 42, 123, 42, 1, 0 );
-			fbpage1String_11.accMode := kACS_INIT;
-			fbpage1String_11();
-			fbpage1String_11.accMode := kACS_PRINT;
-			fbpage1Edit_12.accMode := kACS_INIT;
-			fbpage1Edit_12();
-			fbpage1Edit_12.accMode := kACS_PRINT;
+			fbDemoHMIString_11.accMode := kACS_INIT;
+			fbDemoHMIString_11();
+			fbDemoHMIString_11.accMode := kACS_PRINT;
+			fbDemoHMIEdit_12.accMode := kACS_INIT;
+			fbDemoHMIEdit_12();
+			fbDemoHMIEdit_12.accMode := kACS_PRINT;
 
 			(* Select the first selectable control *)
 			iNextSel := Video_FirstLastEdit( TRUE, FALSE );
@@ -683,21 +683,21 @@ FUNCTION_BLOCK Drawpage1
 	(*                         *)
 	(***************************)
 
-FUNCTION_BLOCK Refrpage1
+FUNCTION_BLOCK RefrDemoHMI
 
 	VAR_EXTERNAL
 	guiCallStack : ARRAY[ 0..9 ] OF UINT;
 	giStackPtr : INT;
-	fbpage1String_1 : Static01;
-	fbpage1String_4 : Static01;
-	fbpage1String_6 : Static01;
-	fbpage1String_8 : Static01;
-	fbpage1String_11 : Static01;
-	fbpage1Edit_3 : EditBox01;
-	fbpage1Edit_5 : EditBox01;
-	fbpage1Edit_7 : EditBox01;
-	fbpage1Edit_9 : EditBox01;
-	fbpage1Edit_12 : EditBox01;
+	fbDemoHMIString_1 : Static01;
+	fbDemoHMIString_4 : Static01;
+	fbDemoHMIString_6 : Static01;
+	fbDemoHMIString_8 : Static01;
+	fbDemoHMIString_11 : Static01;
+	fbDemoHMIEdit_3 : EditBox01;
+	fbDemoHMIEdit_5 : EditBox01;
+	fbDemoHMIEdit_7 : EditBox01;
+	fbDemoHMIEdit_9 : EditBox01;
+	fbDemoHMIEdit_12 : EditBox01;
 	$waitRefresh : BOOL;
 	END_VAR
 
@@ -729,20 +729,20 @@ FUNCTION_BLOCK Refrpage1
 			$waitRefresh := FALSE;
 
 			(* *** REFRESH PAGE CONTROLS *** *)
-			IF fbpage1Edit_3.accMode <> kACS_MODIFY THEN
-				fbpage1Edit_3();
+			IF fbDemoHMIEdit_3.accMode <> kACS_MODIFY THEN
+				fbDemoHMIEdit_3();
 			END_IF;
-			IF fbpage1Edit_5.accMode <> kACS_MODIFY THEN
-				fbpage1Edit_5();
+			IF fbDemoHMIEdit_5.accMode <> kACS_MODIFY THEN
+				fbDemoHMIEdit_5();
 			END_IF;
-			IF fbpage1Edit_7.accMode <> kACS_MODIFY THEN
-				fbpage1Edit_7();
+			IF fbDemoHMIEdit_7.accMode <> kACS_MODIFY THEN
+				fbDemoHMIEdit_7();
 			END_IF;
-			IF fbpage1Edit_9.accMode <> kACS_MODIFY THEN
-				fbpage1Edit_9();
+			IF fbDemoHMIEdit_9.accMode <> kACS_MODIFY THEN
+				fbDemoHMIEdit_9();
 			END_IF;
-			IF fbpage1Edit_12.accMode <> kACS_MODIFY THEN
-				fbpage1Edit_12();
+			IF fbDemoHMIEdit_12.accMode <> kACS_MODIFY THEN
+				fbDemoHMIEdit_12();
 			END_IF;
 
 			(* *** REFRESHING BACKGROUND ITEMS *** *)
