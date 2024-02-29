@@ -10,9 +10,10 @@ iSetpointCooling AT %MW101.0 : INT;
 iDifferential AT %MW101.1 : INT;
 uiDelay AT %MW101.2 : UINT;
 	{G:"Status_variables"}
-xOutputCooling AT %MW110.0 : BOOL;
-iAmbTemp AT %MW110.1 : INT;
-xForceCooling AT %MW110.2 : BOOL := 0;
+iAmbTemp AT %MW110.0 : INT;
+iTempSetPoint AT %MW110.1 : INT := 0;
+iHmd AT %MW110.2 : INT;
+xClimateControlStatus AT %MW110.3 : BOOL;
 	{G:"IO_Mapping"}
 iTempProbe AT %IW1.0 : INT;	{ DE:"AIL1 analogue input" }
 xForceRemote AT %IX0.0 : BOOL;	{ DE:"DIL1 digital input" }
