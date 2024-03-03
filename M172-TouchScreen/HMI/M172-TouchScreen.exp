@@ -9,6 +9,7 @@
 iTempSend AT %MW201.0 : INT := 0;
 iHmdSend AT %MW201.1 : INT := 0;
 iTempSetPoint AT %MW201.2 : INT := 0;
+uiSystemStatus AT %MW201.3 : INT := 0;
 	{G:"IO_Mapping"}
 iTempSensor AT %IW0.0 : INT;	{ DE:"NTC thermistor sensor" }
 iHmdSensor AT %IW1.0 : INT;	{ DE:"RH humidity sensor" }

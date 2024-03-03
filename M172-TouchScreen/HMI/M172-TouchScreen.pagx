@@ -11,6 +11,11 @@
 					<VAL id="0">...</VAL>
 					<VAL id="1">Hello!</VAL>
 				</ENUM>
+				<ENUM id="3" name="SystemStatus" descr="SystemStatus">
+					<VAL id="0">Off</VAL>
+					<VAL id="1">Cooling</VAL>
+					<VAL id="2">Heating</VAL>
+				</ENUM>
 			</ENUMS>
 			<STRINGTABLE/>
 		</LANG>
@@ -190,7 +195,7 @@
 					<EDIT name="Edit_1">
 						<FONT>DroidSansMono_12x24</FONT>
 						<COLOR type="RGBColor">0</COLOR>
-						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
+						<BCKCOLOR type="RGBColor">12632256</BCKCOLOR>
 						<SELBCK type="RGBColor">0</SELBCK>
 						<SELCOL type="RGBColor">16777215</SELCOL>
 						<STYLE>Flat</STYLE>
@@ -228,7 +233,7 @@
 					<EDIT name="Edit_15">
 						<FONT>DroidSansMono_12x24</FONT>
 						<COLOR type="RGBColor">0</COLOR>
-						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
+						<BCKCOLOR type="RGBColor">12632256</BCKCOLOR>
 						<SELBCK type="RGBColor">0</SELBCK>
 						<SELCOL type="RGBColor">16777215</SELCOL>
 						<STYLE>Flat</STYLE>
@@ -364,6 +369,44 @@
 						<REFRESH>TRUE</REFRESH>
 						<VISIBLE>TRUE</VISIBLE>
 						<SELECT>TRUE</SELECT>
+						<LABEL/>
+						<VARMIN>*</VARMIN>
+						<VARMAX>*</VARMAX>
+						<EVENTS>
+							<EVENT name="BeforeUpdate"/>
+							<EVENT name="AfterUpdate"/>
+							<EVENT name="OnGotFocus"/>
+							<EVENT name="OnLostFocus"/>
+							<EVENT name="OnClick"/>
+							<EVENT name="OnEnter"/>
+							<EVENT name="OnChange"/>
+						</EVENTS>
+					</EDIT>
+					<EDIT name="Edit_24">
+						<FONT>DroidSansMono_12x24</FONT>
+						<COLOR type="RGBColor">0</COLOR>
+						<BCKCOLOR type="RGBColor">12632256</BCKCOLOR>
+						<SELBCK type="RGBColor">0</SELBCK>
+						<SELCOL type="RGBColor">16777215</SELCOL>
+						<STYLE>Flat</STYLE>
+						<BORDCOL type="RGBColor">0</BORDCOL>
+						<BORDPTS>1</BORDPTS>
+						<XPOS>148</XPOS>
+						<YPOS>160</YPOS>
+						<XDIM>84</XDIM>
+						<YDIM>24</YDIM>
+						<NUMCHAR>7</NUMCHAR>
+						<ORDER>10</ORDER>
+						<FORMAT>SystemStatus</FORMAT>
+						<ALIGN>Right</ALIGN>
+						<ACCESS>RW</ACCESS>
+						<DESC/>
+						<ZORDER>24</ZORDER>
+						<VAR type="INT">uiSystemStatus</VAR>
+						<TYPE>INT</TYPE>
+						<REFRESH>TRUE</REFRESH>
+						<VISIBLE>TRUE</VISIBLE>
+						<SELECT>FALSE</SELECT>
 						<LABEL/>
 						<VARMIN>*</VARMIN>
 						<VARMAX>*</VARMAX>

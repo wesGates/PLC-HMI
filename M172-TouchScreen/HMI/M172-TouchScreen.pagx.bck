@@ -11,6 +11,11 @@
 					<VAL id="0">...</VAL>
 					<VAL id="1">Hello!</VAL>
 				</ENUM>
+				<ENUM id="3" name="SystemStatus" descr="SystemStatus">
+					<VAL id="0">Off</VAL>
+					<VAL id="1">Cooling</VAL>
+					<VAL id="2">Heating</VAL>
+				</ENUM>
 			</ENUMS>
 			<STRINGTABLE/>
 		</LANG>
@@ -61,8 +66,8 @@
 						<TEXT>
 							<![CDATA[Temperature]]>
 						</TEXT>
-						<XPOS>7</XPOS>
-						<YPOS>8</YPOS>
+						<XPOS>10</XPOS>
+						<YPOS>20</YPOS>
 						<XDIM>132</XDIM>
 						<YDIM>24</YDIM>
 						<VISIBLE>TRUE</VISIBLE>
@@ -88,8 +93,8 @@
 						<TEXT>
 							<![CDATA[Humidity]]>
 						</TEXT>
-						<XPOS>7</XPOS>
-						<YPOS>51</YPOS>
+						<XPOS>10</XPOS>
+						<YPOS>60</YPOS>
 						<XDIM>96</XDIM>
 						<YDIM>24</YDIM>
 						<VISIBLE>TRUE</VISIBLE>
@@ -115,8 +120,8 @@
 						<TEXT>
 							<![CDATA[Set Temp.]]>
 						</TEXT>
-						<XPOS>11</XPOS>
-						<YPOS>99</YPOS>
+						<XPOS>10</XPOS>
+						<YPOS>120</YPOS>
 						<XDIM>108</XDIM>
 						<YDIM>24</YDIM>
 						<VISIBLE>TRUE</VISIBLE>
@@ -135,26 +140,53 @@
 							<EVENT name="AfterUpdate"/>
 						</EVENTS>
 					</STRING>
+					<STRING name="String_23">
+						<FONT>DroidSansMono_12x24</FONT>
+						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
+						<COLOR type="RGBColor">0</COLOR>
+						<TEXT>
+							<![CDATA[Status]]>
+						</TEXT>
+						<XPOS>10</XPOS>
+						<YPOS>160</YPOS>
+						<XDIM>72</XDIM>
+						<YDIM>24</YDIM>
+						<VISIBLE>TRUE</VISIBLE>
+						<ZORDER>23</ZORDER>
+						<STYLE>Flat</STYLE>
+						<BORDCOL type="RGBColor">0</BORDCOL>
+						<BORDPTS>0</BORDPTS>
+						<SELBCK type="RGBColor">0</SELBCK>
+						<SELCOL type="RGBColor">16777215</SELCOL>
+						<NUMCHAR>0</NUMCHAR>
+						<ALIGN>Left</ALIGN>
+						<REFRESH>FALSE</REFRESH>
+						<SELECT>FALSE</SELECT>
+						<EVENTS>
+							<EVENT name="BeforeUpdate"/>
+							<EVENT name="AfterUpdate"/>
+						</EVENTS>
+					</STRING>
 				</STRINGS>
 				<IMGS/>
 				<LINES>
-					<LINE name="Line_9">
-						<BORDPTS>1</BORDPTS>
-						<BORDCOL type="RGBColor">0</BORDCOL>
-						<XPOS>7</XPOS>
-						<YPOS>40</YPOS>
-						<XPOS2>230</XPOS2>
-						<YPOS2>40</YPOS2>
-						<ZORDER>9</ZORDER>
-					</LINE>
 					<LINE name="Line_16">
 						<BORDPTS>1</BORDPTS>
 						<BORDCOL type="RGBColor">0</BORDCOL>
-						<XPOS>8</XPOS>
-						<YPOS>85</YPOS>
-						<XPOS2>231</XPOS2>
-						<YPOS2>85</YPOS2>
+						<XPOS>6</XPOS>
+						<YPOS>100</YPOS>
+						<XPOS2>235</XPOS2>
+						<YPOS2>100</YPOS2>
 						<ZORDER>16</ZORDER>
+					</LINE>
+					<LINE name="Line_22">
+						<BORDPTS>1</BORDPTS>
+						<BORDCOL type="RGBColor">0</BORDCOL>
+						<XPOS>6</XPOS>
+						<YPOS>200</YPOS>
+						<XPOS2>235</XPOS2>
+						<YPOS2>200</YPOS2>
+						<ZORDER>22</ZORDER>
 					</LINE>
 				</LINES>
 				<RECTS/>
@@ -163,14 +195,14 @@
 					<EDIT name="Edit_1">
 						<FONT>DroidSansMono_12x24</FONT>
 						<COLOR type="RGBColor">0</COLOR>
-						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
+						<BCKCOLOR type="RGBColor">12632256</BCKCOLOR>
 						<SELBCK type="RGBColor">0</SELBCK>
 						<SELCOL type="RGBColor">16777215</SELCOL>
 						<STYLE>Flat</STYLE>
 						<BORDCOL type="RGBColor">0</BORDCOL>
 						<BORDPTS>0</BORDPTS>
-						<XPOS>174</XPOS>
-						<YPOS>8</YPOS>
+						<XPOS>170</XPOS>
+						<YPOS>20</YPOS>
 						<XDIM>60</XDIM>
 						<YDIM>24</YDIM>
 						<NUMCHAR>5</NUMCHAR>
@@ -201,14 +233,14 @@
 					<EDIT name="Edit_15">
 						<FONT>DroidSansMono_12x24</FONT>
 						<COLOR type="RGBColor">0</COLOR>
-						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
+						<BCKCOLOR type="RGBColor">12632256</BCKCOLOR>
 						<SELBCK type="RGBColor">0</SELBCK>
 						<SELCOL type="RGBColor">16777215</SELCOL>
 						<STYLE>Flat</STYLE>
 						<BORDCOL type="RGBColor">0</BORDCOL>
 						<BORDPTS>0</BORDPTS>
-						<XPOS>174</XPOS>
-						<YPOS>51</YPOS>
+						<XPOS>170</XPOS>
+						<YPOS>60</YPOS>
 						<XDIM>60</XDIM>
 						<YDIM>24</YDIM>
 						<NUMCHAR>5</NUMCHAR>
@@ -245,8 +277,8 @@
 						<STYLE>Flat</STYLE>
 						<BORDCOL type="RGBColor">0</BORDCOL>
 						<BORDPTS>0</BORDPTS>
-						<XPOS>41</XPOS>
-						<YPOS>202</YPOS>
+						<XPOS>37</XPOS>
+						<YPOS>220</YPOS>
 						<XDIM>168</XDIM>
 						<YDIM>24</YDIM>
 						<NUMCHAR>14</NUMCHAR>
@@ -283,8 +315,8 @@
 						<STYLE>Flat</STYLE>
 						<BORDCOL type="RGBColor">0</BORDCOL>
 						<BORDPTS>0</BORDPTS>
-						<XPOS>39</XPOS>
-						<YPOS>246</YPOS>
+						<XPOS>38</XPOS>
+						<YPOS>260</YPOS>
 						<XDIM>168</XDIM>
 						<YDIM>24</YDIM>
 						<NUMCHAR>14</NUMCHAR>
@@ -321,8 +353,8 @@
 						<STYLE>Raised</STYLE>
 						<BORDCOL type="RGBColor">0</BORDCOL>
 						<BORDPTS>1</BORDPTS>
-						<XPOS>164</XPOS>
-						<YPOS>97</YPOS>
+						<XPOS>170</XPOS>
+						<YPOS>120</YPOS>
 						<XDIM>60</XDIM>
 						<YDIM>24</YDIM>
 						<NUMCHAR>5</NUMCHAR>
@@ -333,6 +365,82 @@
 						<DESC/>
 						<ZORDER>20</ZORDER>
 						<VAR type="INT">iTempSetPoint</VAR>
+						<TYPE>INT</TYPE>
+						<REFRESH>TRUE</REFRESH>
+						<VISIBLE>TRUE</VISIBLE>
+						<SELECT>TRUE</SELECT>
+						<LABEL/>
+						<VARMIN>*</VARMIN>
+						<VARMAX>*</VARMAX>
+						<EVENTS>
+							<EVENT name="BeforeUpdate"/>
+							<EVENT name="AfterUpdate"/>
+							<EVENT name="OnGotFocus"/>
+							<EVENT name="OnLostFocus"/>
+							<EVENT name="OnClick"/>
+							<EVENT name="OnEnter"/>
+							<EVENT name="OnChange"/>
+						</EVENTS>
+					</EDIT>
+					<EDIT name="Edit_24">
+						<FONT>DroidSansMono_12x24</FONT>
+						<COLOR type="RGBColor">0</COLOR>
+						<BCKCOLOR type="RGBColor">12632256</BCKCOLOR>
+						<SELBCK type="RGBColor">0</SELBCK>
+						<SELCOL type="RGBColor">16777215</SELCOL>
+						<STYLE>Flat</STYLE>
+						<BORDCOL type="RGBColor">0</BORDCOL>
+						<BORDPTS>1</BORDPTS>
+						<XPOS>148</XPOS>
+						<YPOS>160</YPOS>
+						<XDIM>84</XDIM>
+						<YDIM>24</YDIM>
+						<NUMCHAR>7</NUMCHAR>
+						<ORDER>10</ORDER>
+						<FORMAT>SystemStatus</FORMAT>
+						<ALIGN>Right</ALIGN>
+						<ACCESS>RW</ACCESS>
+						<DESC/>
+						<ZORDER>24</ZORDER>
+						<VAR type="INT">uiSystemStatus</VAR>
+						<TYPE>INT</TYPE>
+						<REFRESH>TRUE</REFRESH>
+						<VISIBLE>TRUE</VISIBLE>
+						<SELECT>FALSE</SELECT>
+						<LABEL/>
+						<VARMIN>*</VARMIN>
+						<VARMAX>*</VARMAX>
+						<EVENTS>
+							<EVENT name="BeforeUpdate"/>
+							<EVENT name="AfterUpdate"/>
+							<EVENT name="OnGotFocus"/>
+							<EVENT name="OnLostFocus"/>
+							<EVENT name="OnClick"/>
+							<EVENT name="OnEnter"/>
+							<EVENT name="OnChange"/>
+						</EVENTS>
+					</EDIT>
+					<EDIT name="Edit_25">
+						<FONT>EWP2_8x16</FONT>
+						<COLOR type="RGBColor">0</COLOR>
+						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
+						<SELBCK type="RGBColor">0</SELBCK>
+						<SELCOL type="RGBColor">16777215</SELCOL>
+						<STYLE>Flat</STYLE>
+						<BORDCOL type="RGBColor">0</BORDCOL>
+						<BORDPTS>1</BORDPTS>
+						<XPOS>101</XPOS>
+						<YPOS>167</YPOS>
+						<XDIM>24</XDIM>
+						<YDIM>16</YDIM>
+						<NUMCHAR>3</NUMCHAR>
+						<ORDER>11</ORDER>
+						<FORMAT>%d</FORMAT>
+						<ALIGN>Right</ALIGN>
+						<ACCESS>RW</ACCESS>
+						<DESC/>
+						<ZORDER>25</ZORDER>
+						<VAR type="INT">uiSystemStatus</VAR>
 						<TYPE>INT</TYPE>
 						<REFRESH>TRUE</REFRESH>
 						<VISIBLE>TRUE</VISIBLE>
