@@ -6,8 +6,12 @@
 
         VAR_GLOBAL
 	{G:"Status_variables"}
-TempSend AT %MW201.0 : INT := 8;
+iTempSend AT %MW201.0 : INT := 0;
+iHmdSend AT %MW201.1 : INT := 0;
+iTempSetPoint AT %MW201.2 : INT := 0;
 	{G:"IO_Mapping"}
-TempSensor AT %IW1.0 : INT;	{ DE:"RH humidity sensor" }
+iTempSensor AT %IW0.0 : INT;	{ DE:"NTC thermistor sensor" }
+iHmdSensor AT %IW1.0 : INT;	{ DE:"RH humidity sensor" }
+iProxSensor AT %IW2.0 : INT;	{ DE:"PIR proximity sensor" }
 	END_VAR
 

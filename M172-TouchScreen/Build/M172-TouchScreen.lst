@@ -10,16 +10,16 @@
 **************************************************
 
 $$MOD:
-0800C1B0  FB90 F3F1		sdiv r3, r0, r1
-0800C1B4  4359     		mul r1, r1, r3
-0800C1B6  EBC1 0000		rsb r0, r1, r0
-0800C1BA  4770     		bx lr
+0800C200  FB90 F3F1		sdiv r3, r0, r1
+0800C204  4359     		mul r1, r1, r3
+0800C206  EBC1 0000		rsb r0, r1, r0
+0800C20A  4770     		bx lr
 
 $$MOD_U:
-0800C1BC  FBB0 F3F1		udiv r3, r0, r1
-0800C1C0  4359     		mul r1, r1, r3
-0800C1C2  EBC1 0000		rsb r0, r1, r0
-0800C1C6  4770     		bx lr
+0800C20C  FBB0 F3F1		udiv r3, r0, r1
+0800C210  4359     		mul r1, r1, r3
+0800C212  EBC1 0000		rsb r0, r1, r0
+0800C216  4770     		bx lr
 
 **************************************************
 	List function block: DrawBackPage
@@ -46,8 +46,8 @@ $guiBackBuffer : ARRAY[0..9] OF UINT;
 
 END_FUNCTION_BLOCK
 
-0800C1C8  E92D 4040		stmdb sp!, { r6, lr }
-0800C1CC  462E     		mov r6, r5
+0800C218  E92D 4040		stmdb sp!, { r6, lr }
+0800C21C  462E     		mov r6, r5
 
 #0		{SRC:DrawBackPage}
 #1		(*$WAITSWITCH$*)
@@ -56,12 +56,12 @@ END_FUNCTION_BLOCK
 #4			(* IF IsOpening *)
 #5			LD		IsOpening	{LNXT:3|-1|-1}
 (-) UNDEF
-0800C1CE  7830     		ldrb r0, [r6]
+0800C21E  7830     		ldrb r0, [r6]
 
 #6			JMPCN	$label0	{LNXT:3|8|41}
 (-) BOOL
-0800C1D0  2800     		cmp r0, #0
-0800C1D2  F000 80F2		beq #484 ; 0x0800C3BA
+0800C220  2800     		cmp r0, #0
+0800C222  F000 80F2		beq #484 ; 0x0800C40A
 
 
 #7		
@@ -70,36 +70,36 @@ END_FUNCTION_BLOCK
 #10				(* $giBackBufferCurr := $giBackBufferCurr + 1; *)
 #11				LD		$giBackBufferCurr	{LNXT:8|9|-1}
 (*) UNDEF
-0800C1D6  F8DF 7254		ldr r7, [pc, #+596] ; 0x2000C81C
-0800C1DA  F9B7 0000		ldrsh r0, [r7]
+0800C226  F8DF 7254		ldr r7, [pc, #+596] ; 0x2000C820
+0800C22A  F9B7 0000		ldrsh r0, [r7]
 
 #12				ADD		1	{LNXT:8|9|-1}
 (-) INT
-0800C1DE  1C40     		add r0, r0, #1
+0800C22E  1C40     		add r0, r0, #1
 
 #13				ST		$giBackBufferCurr	{LNXT:8|9|-1}
 (*) INT
-0800C1E0  F8DF 7248		ldr r7, [pc, #+584] ; 0x2000C81C
-0800C1E4  8038     		strh r0, [r7]
+0800C230  F8DF 7248		ldr r7, [pc, #+584] ; 0x2000C820
+0800C234  8038     		strh r0, [r7]
 
 #14		
 #15		
 #16				(* IF $giBackBufferCurr >= 10 *)
 #17				LD		$giBackBufferCurr	{LNXT:9|-1|-1}
 (*) UNDEF
-0800C1E6  F8DF 7244		ldr r7, [pc, #+580] ; 0x2000C81C
-0800C1EA  F9B7 0000		ldrsh r0, [r7]
+0800C236  F8DF 7244		ldr r7, [pc, #+580] ; 0x2000C820
+0800C23A  F9B7 0000		ldrsh r0, [r7]
 
 #18				GE		10	{LNXT:9|-1|-1}
 (*) INT
-0800C1EE  280A     		cmp r0, #10
-0800C1F0  BFB8 2000		ltmov r0, #0
-0800C1F4  BFA8 2001		gemov r0, #1
+0800C23E  280A     		cmp r0, #10
+0800C240  BFB8 2000		ltmov r0, #0
+0800C244  BFA8 2001		gemov r0, #1
 
 #19				JMPCN	$label2	{LNXT:9|10|12}
 (-) BOOL
-0800C1F8  2800     		cmp r0, #0
-0800C1FA  D004     		beq #8 ; 0x0800C206
+0800C248  2800     		cmp r0, #0
+0800C24A  D004     		beq #8 ; 0x0800C256
 
 
 #20		
@@ -108,9 +108,9 @@ END_FUNCTION_BLOCK
 #23					(* $giBackBufferCurr := 0; *)
 #24					MOVE		0,$giBackBufferCurr	{LNXT:10|12|-1}
 (*) BOOL
-0800C1FE  2000     		mov r0, #0 ; 0
-0800C200  F8DF 7228		ldr r7, [pc, #+552] ; 0x2000C81C
-0800C204  8038     		strh r0, [r7]
+0800C24E  2000     		mov r0, #0 ; 0
+0800C250  F8DF 7228		ldr r7, [pc, #+552] ; 0x2000C820
+0800C254  8038     		strh r0, [r7]
 
 #25		
 #26		$label2:
@@ -119,33 +119,33 @@ END_FUNCTION_BLOCK
 #29				(* $guiBackBuffer[ $giBackBufferCurr ] := CurrPageId; *)
 #30				MOVE		CurrPageId,$guiBackBuffer[$giBackBufferCurr]	{LNXT:12|13|-1}
 (*) INT
-0800C206  F8DF 7218		ldr r7, [pc, #+536] ; 0x2
-0800C20A  5BF0     		ldrh r0, [r6, +r7]
-0800C20C  F8DF 721C		ldr r7, [pc, #+540] ; 0x2000C81C
-0800C210  F9B7 5000		ldrsh r5, [r7]
-0800C214  F8DF 7220		ldr r7, [pc, #+544] ; 0x2000C8A0
-0800C218  EB07 0745		add r7, r7, r5, lsl #1
-0800C21C  8038     		strh r0, [r7]
+0800C256  F8DF 7218		ldr r7, [pc, #+536] ; 0x2
+0800C25A  5BF0     		ldrh r0, [r6, +r7]
+0800C25C  F8DF 721C		ldr r7, [pc, #+540] ; 0x2000C820
+0800C260  F9B7 5000		ldrsh r5, [r7]
+0800C264  F8DF 7220		ldr r7, [pc, #+544] ; 0x2000C8A0
+0800C268  EB07 0745		add r7, r7, r5, lsl #1
+0800C26C  8038     		strh r0, [r7]
 
 #31		
 #32		
 #33				(* IF $giBackBufferFirst = -1 *)
 #34				LD		$giBackBufferFirst	{LNXT:13|-1|-1}
 (*) UNDEF
-0800C21E  F8DF 7210		ldr r7, [pc, #+528] ; 0x2000C81E
-0800C222  F9B7 0000		ldrsh r0, [r7]
+0800C26E  F8DF 7210		ldr r7, [pc, #+528] ; 0x2000C822
+0800C272  F9B7 0000		ldrsh r0, [r7]
 
 #35				EQ		-1	{LNXT:13|-1|-1}
 (*) INT
-0800C226  F04F 37FF		mov r7, #4294967295 ; 4294967295
-0800C22A  42B8     		cmp r0, r7
-0800C22C  BF18 2000		nemov r0, #0
-0800C230  BF08 2001		eqmov r0, #1
+0800C276  F04F 37FF		mov r7, #4294967295 ; 4294967295
+0800C27A  42B8     		cmp r0, r7
+0800C27C  BF18 2000		nemov r0, #0
+0800C280  BF08 2001		eqmov r0, #1
 
 #36				JMPCN	$label3	{LNXT:13|14|15}
 (-) BOOL
-0800C234  2800     		cmp r0, #0
-0800C236  D006     		beq #12 ; 0x0800C246
+0800C284  2800     		cmp r0, #0
+0800C286  D006     		beq #12 ; 0x0800C296
 
 
 #37		
@@ -154,13 +154,13 @@ END_FUNCTION_BLOCK
 #40					(* $giBackBufferFirst := 0; *)
 #41					MOVE		0,$giBackBufferFirst	{LNXT:14|23|-1}
 (*) BOOL
-0800C23A  2000     		mov r0, #0 ; 0
-0800C23C  F8DF 71F0		ldr r7, [pc, #+496] ; 0x2000C81E
-0800C240  8038     		strh r0, [r7]
+0800C28A  2000     		mov r0, #0 ; 0
+0800C28C  F8DF 71F0		ldr r7, [pc, #+496] ; 0x2000C822
+0800C290  8038     		strh r0, [r7]
 
 #42					JMP		$label4	{LNXT:13|14|15}
 (-) INT
-0800C242  E03D     		b #122 ; 0x0800C2C0
+0800C292  E03D     		b #122 ; 0x0800C310
 
 
 #43		$label3:
@@ -168,43 +168,43 @@ END_FUNCTION_BLOCK
 #45				(* ELSIF $giBackBufferCurr = $giBackBufferFirst AND $giBackBufferFirst <> $giBackBufferLast *)
 #46				LD		$giBackBufferFirst	{LNXT:15|-1|-1}
 (*) UNDEF
-0800C246  F8DF 71E8		ldr r7, [pc, #+488] ; 0x2000C81E
-0800C24A  F9B7 0000		ldrsh r0, [r7]
+0800C296  F8DF 71E8		ldr r7, [pc, #+488] ; 0x2000C822
+0800C29A  F9B7 0000		ldrsh r0, [r7]
 
 #47				NE		$giBackBufferLast	{LNXT:15|-1|-1}
 (*) INT
-0800C24E  F8DF 71E4		ldr r7, [pc, #+484] ; 0x2000C820
-0800C252  F9B7 7000		ldrsh r7, [r7]
-0800C256  42B8     		cmp r0, r7
-0800C258  BF08 2000		eqmov r0, #0
-0800C25C  BF18 2001		nemov r0, #1
+0800C29E  F8DF 71E4		ldr r7, [pc, #+484] ; 0x2000C824
+0800C2A2  F9B7 7000		ldrsh r7, [r7]
+0800C2A6  42B8     		cmp r0, r7
+0800C2A8  BF08 2000		eqmov r0, #0
+0800C2AC  BF18 2001		nemov r0, #1
 
 #48				AND(		$giBackBufferCurr	{LNXT:15|-1|-1}
 (*) BOOL
-0800C260  B082     		sub sp, sp, #8
-0800C262  F8CD 0000		str r0, [sp]
-0800C266  F8DF 71C4		ldr r7, [pc, #+452] ; 0x2000C81C
-0800C26A  F9B7 0000		ldrsh r0, [r7]
+0800C2B0  B082     		sub sp, sp, #8
+0800C2B2  F8CD 0000		str r0, [sp]
+0800C2B6  F8DF 71C4		ldr r7, [pc, #+452] ; 0x2000C820
+0800C2BA  F9B7 0000		ldrsh r0, [r7]
 
 #49				EQ		$giBackBufferFirst	{LNXT:15|-1|-1}
 (*) INT
-0800C26E  F8DF 71C0		ldr r7, [pc, #+448] ; 0x2000C81E
-0800C272  F9B7 7000		ldrsh r7, [r7]
-0800C276  42B8     		cmp r0, r7
-0800C278  BF18 2000		nemov r0, #0
-0800C27C  BF08 2001		eqmov r0, #1
+0800C2BE  F8DF 71C0		ldr r7, [pc, #+448] ; 0x2000C822
+0800C2C2  F9B7 7000		ldrsh r7, [r7]
+0800C2C6  42B8     		cmp r0, r7
+0800C2C8  BF18 2000		nemov r0, #0
+0800C2CC  BF08 2001		eqmov r0, #1
 
 #50				)	{LNXT:15|-1|-1}
 (*) BOOL
-0800C280  4607     		mov r7, r0
-0800C282  F8DD 0000		ldr r0, [sp]
-0800C286  B002     		add sp, sp, #8
-0800C288  4038     		and r0, r0, r7
+0800C2D0  4607     		mov r7, r0
+0800C2D2  F8DD 0000		ldr r0, [sp]
+0800C2D6  B002     		add sp, sp, #8
+0800C2D8  4038     		and r0, r0, r7
 
 #51				JMPCN	$label4	{LNXT:15|16|23}
 (-) BOOL
-0800C28A  2800     		cmp r0, #0
-0800C28C  D018     		beq #48 ; 0x0800C2C0
+0800C2DA  2800     		cmp r0, #0
+0800C2DC  D018     		beq #48 ; 0x0800C310
 
 
 #52		
@@ -213,36 +213,36 @@ END_FUNCTION_BLOCK
 #55					(* $giBackBufferFirst := $giBackBufferFirst + 1; *)
 #56					LD		$giBackBufferFirst	{LNXT:16|17|-1}
 (*) UNDEF
-0800C290  F8DF 719C		ldr r7, [pc, #+412] ; 0x2000C81E
-0800C294  F9B7 0000		ldrsh r0, [r7]
+0800C2E0  F8DF 719C		ldr r7, [pc, #+412] ; 0x2000C822
+0800C2E4  F9B7 0000		ldrsh r0, [r7]
 
 #57					ADD		1	{LNXT:16|17|-1}
 (-) INT
-0800C298  1C40     		add r0, r0, #1
+0800C2E8  1C40     		add r0, r0, #1
 
 #58					ST		$giBackBufferFirst	{LNXT:16|17|-1}
 (*) INT
-0800C29A  F8DF 7194		ldr r7, [pc, #+404] ; 0x2000C81E
-0800C29E  8038     		strh r0, [r7]
+0800C2EA  F8DF 7194		ldr r7, [pc, #+404] ; 0x2000C822
+0800C2EE  8038     		strh r0, [r7]
 
 #59		
 #60		
 #61					(* IF $giBackBufferFirst = 10 *)
 #62					LD		$giBackBufferFirst	{LNXT:17|-1|-1}
 (*) UNDEF
-0800C2A0  F8DF 718C		ldr r7, [pc, #+396] ; 0x2000C81E
-0800C2A4  F9B7 0000		ldrsh r0, [r7]
+0800C2F0  F8DF 718C		ldr r7, [pc, #+396] ; 0x2000C822
+0800C2F4  F9B7 0000		ldrsh r0, [r7]
 
 #63					EQ		10	{LNXT:17|-1|-1}
 (*) INT
-0800C2A8  280A     		cmp r0, #10
-0800C2AA  BF18 2000		nemov r0, #0
-0800C2AE  BF08 2001		eqmov r0, #1
+0800C2F8  280A     		cmp r0, #10
+0800C2FA  BF18 2000		nemov r0, #0
+0800C2FE  BF08 2001		eqmov r0, #1
 
 #64					JMPCN	$label5	{LNXT:17|18|23}
 (-) BOOL
-0800C2B2  2800     		cmp r0, #0
-0800C2B4  D004     		beq #8 ; 0x0800C2C0
+0800C302  2800     		cmp r0, #0
+0800C304  D004     		beq #8 ; 0x0800C310
 
 
 #65		
@@ -251,9 +251,9 @@ END_FUNCTION_BLOCK
 #68						(* $giBackBufferFirst := 0; *)
 #69						MOVE		0,$giBackBufferFirst	{LNXT:18|23|-1}
 (*) BOOL
-0800C2B8  2000     		mov r0, #0 ; 0
-0800C2BA  F8DF 7174		ldr r7, [pc, #+372] ; 0x2000C81E
-0800C2BE  8038     		strh r0, [r7]
+0800C308  2000     		mov r0, #0 ; 0
+0800C30A  F8DF 7174		ldr r7, [pc, #+372] ; 0x2000C822
+0800C30E  8038     		strh r0, [r7]
 
 #70		
 #71		$label5:
@@ -266,21 +266,21 @@ END_FUNCTION_BLOCK
 #78				(* IF $giBackBufferCurr = $giBackBufferFirst *)
 #79				LD		$giBackBufferCurr	{LNXT:23|-1|-1}
 (*) UNDEF
-0800C2C0  F8DF 7168		ldr r7, [pc, #+360] ; 0x2000C81C
-0800C2C4  F9B7 0000		ldrsh r0, [r7]
+0800C310  F8DF 7168		ldr r7, [pc, #+360] ; 0x2000C820
+0800C314  F9B7 0000		ldrsh r0, [r7]
 
 #80				EQ		$giBackBufferFirst	{LNXT:23|-1|-1}
 (*) INT
-0800C2C8  F8DF 7164		ldr r7, [pc, #+356] ; 0x2000C81E
-0800C2CC  F9B7 7000		ldrsh r7, [r7]
-0800C2D0  42B8     		cmp r0, r7
-0800C2D2  BF18 2000		nemov r0, #0
-0800C2D6  BF08 2001		eqmov r0, #1
+0800C318  F8DF 7164		ldr r7, [pc, #+356] ; 0x2000C822
+0800C31C  F9B7 7000		ldrsh r7, [r7]
+0800C320  42B8     		cmp r0, r7
+0800C322  BF18 2000		nemov r0, #0
+0800C326  BF08 2001		eqmov r0, #1
 
 #81				JMPCN	$label6	{LNXT:23|24|25}
 (-) BOOL
-0800C2DA  2800     		cmp r0, #0
-0800C2DC  D007     		beq #14 ; 0x0800C2EE
+0800C32A  2800     		cmp r0, #0
+0800C32C  D007     		beq #14 ; 0x0800C33E
 
 
 #82		
@@ -289,13 +289,13 @@ END_FUNCTION_BLOCK
 #85					(* $giBackBufferLast := -1; *)
 #86					MOVE		-1,$giBackBufferLast	{LNXT:24|32|-1}
 (*) BOOL
-0800C2E0  F04F 30FF		mov r0, #4294967295 ; 4294967295
-0800C2E4  F8DF 714C		ldr r7, [pc, #+332] ; 0x2000C820
-0800C2E8  8038     		strh r0, [r7]
+0800C330  F04F 30FF		mov r0, #4294967295 ; 4294967295
+0800C334  F8DF 714C		ldr r7, [pc, #+332] ; 0x2000C824
+0800C338  8038     		strh r0, [r7]
 
 #87					JMP		$label9	{LNXT:23|24|25}
 (-) INT
-0800C2EA  E042     		b #132 ; 0x0800C372
+0800C33A  E042     		b #132 ; 0x0800C3C2
 
 
 #88		$label6:
@@ -303,39 +303,39 @@ END_FUNCTION_BLOCK
 #90				(* ELSIF $giBackBufferCurr = 0 AND $giBackBufferFirst <> 9 *)
 #91				LD		$giBackBufferFirst	{LNXT:25|-1|-1}
 (*) UNDEF
-0800C2EE  F8DF 7140		ldr r7, [pc, #+320] ; 0x2000C81E
-0800C2F2  F9B7 0000		ldrsh r0, [r7]
+0800C33E  F8DF 7140		ldr r7, [pc, #+320] ; 0x2000C822
+0800C342  F9B7 0000		ldrsh r0, [r7]
 
 #92				NE		9	{LNXT:25|-1|-1}
 (*) INT
-0800C2F6  2809     		cmp r0, #9
-0800C2F8  BF08 2000		eqmov r0, #0
-0800C2FC  BF18 2001		nemov r0, #1
+0800C346  2809     		cmp r0, #9
+0800C348  BF08 2000		eqmov r0, #0
+0800C34C  BF18 2001		nemov r0, #1
 
 #93				AND(		$giBackBufferCurr	{LNXT:25|-1|-1}
 (*) BOOL
-0800C300  B082     		sub sp, sp, #8
-0800C302  F8CD 0000		str r0, [sp]
-0800C306  F8DF 7124		ldr r7, [pc, #+292] ; 0x2000C81C
-0800C30A  F9B7 0000		ldrsh r0, [r7]
+0800C350  B082     		sub sp, sp, #8
+0800C352  F8CD 0000		str r0, [sp]
+0800C356  F8DF 7124		ldr r7, [pc, #+292] ; 0x2000C820
+0800C35A  F9B7 0000		ldrsh r0, [r7]
 
 #94				EQ		0	{LNXT:25|-1|-1}
 (*) INT
-0800C30E  2800     		cmp r0, #0
-0800C310  BF18 2000		nemov r0, #0
-0800C314  BF08 2001		eqmov r0, #1
+0800C35E  2800     		cmp r0, #0
+0800C360  BF18 2000		nemov r0, #0
+0800C364  BF08 2001		eqmov r0, #1
 
 #95				)	{LNXT:25|-1|-1}
 (*) BOOL
-0800C318  4607     		mov r7, r0
-0800C31A  F8DD 0000		ldr r0, [sp]
-0800C31E  B002     		add sp, sp, #8
-0800C320  4038     		and r0, r0, r7
+0800C368  4607     		mov r7, r0
+0800C36A  F8DD 0000		ldr r0, [sp]
+0800C36E  B002     		add sp, sp, #8
+0800C370  4038     		and r0, r0, r7
 
 #96				JMPCN	$label7	{LNXT:25|26|27}
 (-) BOOL
-0800C322  2800     		cmp r0, #0
-0800C324  D006     		beq #12 ; 0x0800C334
+0800C372  2800     		cmp r0, #0
+0800C374  D006     		beq #12 ; 0x0800C384
 
 
 #97		
@@ -344,13 +344,13 @@ END_FUNCTION_BLOCK
 #100					(* $giBackBufferLast := 9; *)
 #101					MOVE		9,$giBackBufferLast	{LNXT:26|32|-1}
 (*) BOOL
-0800C328  2009     		mov r0, #9 ; 9
-0800C32A  F8DF 7108		ldr r7, [pc, #+264] ; 0x2000C820
-0800C32E  8038     		strh r0, [r7]
+0800C378  2009     		mov r0, #9 ; 9
+0800C37A  F8DF 7108		ldr r7, [pc, #+264] ; 0x2000C824
+0800C37E  8038     		strh r0, [r7]
 
 #102					JMP		$label9	{LNXT:25|26|27}
 (-) INT
-0800C330  E01F     		b #62 ; 0x0800C372
+0800C380  E01F     		b #62 ; 0x0800C3C2
 
 
 #103		$label7:
@@ -358,21 +358,21 @@ END_FUNCTION_BLOCK
 #105				(* ELSIF $giBackBufferCurr <> $giBackBufferFirst *)
 #106				LD		$giBackBufferCurr	{LNXT:27|-1|-1}
 (*) UNDEF
-0800C334  F8DF 70F4		ldr r7, [pc, #+244] ; 0x2000C81C
-0800C338  F9B7 0000		ldrsh r0, [r7]
+0800C384  F8DF 70F4		ldr r7, [pc, #+244] ; 0x2000C820
+0800C388  F9B7 0000		ldrsh r0, [r7]
 
 #107				NE		$giBackBufferFirst	{LNXT:27|-1|-1}
 (*) INT
-0800C33C  F8DF 70F0		ldr r7, [pc, #+240] ; 0x2000C81E
-0800C340  F9B7 7000		ldrsh r7, [r7]
-0800C344  42B8     		cmp r0, r7
-0800C346  BF08 2000		eqmov r0, #0
-0800C34A  BF18 2001		nemov r0, #1
+0800C38C  F8DF 70F0		ldr r7, [pc, #+240] ; 0x2000C822
+0800C390  F9B7 7000		ldrsh r7, [r7]
+0800C394  42B8     		cmp r0, r7
+0800C396  BF08 2000		eqmov r0, #0
+0800C39A  BF18 2001		nemov r0, #1
 
 #108				JMPCN	$label8	{LNXT:27|28|30}
 (-) BOOL
-0800C34E  2800     		cmp r0, #0
-0800C350  D00A     		beq #20 ; 0x0800C368
+0800C39E  2800     		cmp r0, #0
+0800C3A0  D00A     		beq #20 ; 0x0800C3B8
 
 
 #109		
@@ -381,21 +381,21 @@ END_FUNCTION_BLOCK
 #112					(* $giBackBufferLast := $giBackBufferCurr - 1; *)
 #113					LD		$giBackBufferCurr	{LNXT:28|32|-1}
 (*) UNDEF
-0800C354  F8DF 70D4		ldr r7, [pc, #+212] ; 0x2000C81C
-0800C358  F9B7 0000		ldrsh r0, [r7]
+0800C3A4  F8DF 70D4		ldr r7, [pc, #+212] ; 0x2000C820
+0800C3A8  F9B7 0000		ldrsh r0, [r7]
 
 #114					SUB		1	{LNXT:28|32|-1}
 (-) INT
-0800C35C  1E40     		sub r0, r0, #1
+0800C3AC  1E40     		sub r0, r0, #1
 
 #115					ST		$giBackBufferLast	{LNXT:28|32|-1}
 (*) INT
-0800C35E  F8DF 70D4		ldr r7, [pc, #+212] ; 0x2000C820
-0800C362  8038     		strh r0, [r7]
+0800C3AE  F8DF 70D4		ldr r7, [pc, #+212] ; 0x2000C824
+0800C3B2  8038     		strh r0, [r7]
 
 #116					JMP		$label9	{LNXT:27|28|30}
 (-) INT
-0800C364  E005     		b #10 ; 0x0800C372
+0800C3B4  E005     		b #10 ; 0x0800C3C2
 
 
 #117		$label8:
@@ -405,9 +405,9 @@ END_FUNCTION_BLOCK
 #121					(* $giBackBufferLast := -1; *)
 #122					MOVE		-1,$giBackBufferLast	{LNXT:30|32|-1}
 (*) INT
-0800C368  F04F 30FF		mov r0, #4294967295 ; 4294967295
-0800C36C  F8DF 70C4		ldr r7, [pc, #+196] ; 0x2000C820
-0800C370  8038     		strh r0, [r7]
+0800C3B8  F04F 30FF		mov r0, #4294967295 ; 4294967295
+0800C3BC  F8DF 70C4		ldr r7, [pc, #+196] ; 0x2000C824
+0800C3C0  8038     		strh r0, [r7]
 
 #123		
 #124		$label9:
@@ -417,20 +417,20 @@ END_FUNCTION_BLOCK
 #128				(* IF $giBackBufferLast <> -1 *)
 #129				LD		$giBackBufferLast	{LNXT:32|-1|-1}
 (*) UNDEF
-0800C372  F8DF 70C0		ldr r7, [pc, #+192] ; 0x2000C820
-0800C376  F9B7 0000		ldrsh r0, [r7]
+0800C3C2  F8DF 70C0		ldr r7, [pc, #+192] ; 0x2000C824
+0800C3C6  F9B7 0000		ldrsh r0, [r7]
 
 #130				NE		-1	{LNXT:32|-1|-1}
 (*) INT
-0800C37A  F04F 37FF		mov r7, #4294967295 ; 4294967295
-0800C37E  42B8     		cmp r0, r7
-0800C380  BF08 2000		eqmov r0, #0
-0800C384  BF18 2001		nemov r0, #1
+0800C3CA  F04F 37FF		mov r7, #4294967295 ; 4294967295
+0800C3CE  42B8     		cmp r0, r7
+0800C3D0  BF08 2000		eqmov r0, #0
+0800C3D4  BF18 2001		nemov r0, #1
 
 #131				JMPCN	$label10	{LNXT:32|33|35}
 (-) BOOL
-0800C388  2800     		cmp r0, #0
-0800C38A  D00E     		beq #28 ; 0x0800C3AA
+0800C3D8  2800     		cmp r0, #0
+0800C3DA  D00E     		beq #28 ; 0x0800C3FA
 
 
 #132		
@@ -439,17 +439,17 @@ END_FUNCTION_BLOCK
 #135					(* BackPageId := $guiBackBuffer[$giBackBufferLast]; *)
 #136					MOVE		$guiBackBuffer[$giBackBufferLast],BackPageId	{LNXT:33|-1|-1}
 (*) BOOL
-0800C38E  F8DF 70A4		ldr r7, [pc, #+164] ; 0x2000C820
-0800C392  F9B7 5000		ldrsh r5, [r7]
-0800C396  F8DF 70A0		ldr r7, [pc, #+160] ; 0x2000C8A0
-0800C39A  EB07 0745		add r7, r7, r5, lsl #1
-0800C39E  8838     		ldrh r0, [r7]
-0800C3A0  F8DF 7080		ldr r7, [pc, #+128] ; 0x4
-0800C3A4  53F0     		strh r0, [r6, +r7]
+0800C3DE  F8DF 70A4		ldr r7, [pc, #+164] ; 0x2000C824
+0800C3E2  F9B7 5000		ldrsh r5, [r7]
+0800C3E6  F8DF 70A0		ldr r7, [pc, #+160] ; 0x2000C8A0
+0800C3EA  EB07 0745		add r7, r7, r5, lsl #1
+0800C3EE  8838     		ldrh r0, [r7]
+0800C3F0  F8DF 7080		ldr r7, [pc, #+128] ; 0x4
+0800C3F4  53F0     		strh r0, [r6, +r7]
 
 #137					JMP		$label11	{LNXT:32|33|35}
 (-) UINT
-0800C3A6  E006     		b #12 ; 0x0800C3B6
+0800C3F6  E006     		b #12 ; 0x0800C406
 
 
 #138		$label10:
@@ -459,17 +459,17 @@ END_FUNCTION_BLOCK
 #142					(* BackPageId := 16#FFFF; *)
 #143					MOVE		16#FFFF,BackPageId	{LNXT:35|-1|-1}
 (*) UINT
-0800C3AA  F8DF 707C		ldr r7, [pc, #+124] ; 0xFFFF
-0800C3AE  4638     		mov r0, r7
-0800C3B0  F8DF 7070		ldr r7, [pc, #+112] ; 0x4
-0800C3B4  53F0     		strh r0, [r6, +r7]
+0800C3FA  F8DF 707C		ldr r7, [pc, #+124] ; 0xFFFF
+0800C3FE  4638     		mov r0, r7
+0800C400  F8DF 7070		ldr r7, [pc, #+112] ; 0x4
+0800C404  53F0     		strh r0, [r6, +r7]
 
 #144		
 #145		$label11:
 #146				(* END_IF *)
 #147				JMP		$label1	{LNXT:3|8|41}
 (-) UINT
-0800C3B6  E030     		b #96 ; 0x0800C41A
+0800C406  E030     		b #96 ; 0x0800C46A
 
 
 #148		$label0:
@@ -479,36 +479,36 @@ END_FUNCTION_BLOCK
 #152				(* $giBackBufferCurr := $giBackBufferCurr - 1; *)
 #153				LD		$giBackBufferCurr	{LNXT:41|42|-1}
 (*) UNDEF
-0800C3BA  F8DF 7070		ldr r7, [pc, #+112] ; 0x2000C81C
-0800C3BE  F9B7 0000		ldrsh r0, [r7]
+0800C40A  F8DF 7070		ldr r7, [pc, #+112] ; 0x2000C820
+0800C40E  F9B7 0000		ldrsh r0, [r7]
 
 #154				SUB		1	{LNXT:41|42|-1}
 (-) INT
-0800C3C2  1E40     		sub r0, r0, #1
+0800C412  1E40     		sub r0, r0, #1
 
 #155				ST		$giBackBufferCurr	{LNXT:41|42|-1}
 (*) INT
-0800C3C4  F8DF 7064		ldr r7, [pc, #+100] ; 0x2000C81C
-0800C3C8  8038     		strh r0, [r7]
+0800C414  F8DF 7064		ldr r7, [pc, #+100] ; 0x2000C820
+0800C418  8038     		strh r0, [r7]
 
 #156		
 #157		
 #158				(* IF $giBackBufferCurr < 0 *)
 #159				LD		$giBackBufferCurr	{LNXT:42|-1|-1}
 (*) UNDEF
-0800C3CA  F8DF 7060		ldr r7, [pc, #+96] ; 0x2000C81C
-0800C3CE  F9B7 0000		ldrsh r0, [r7]
+0800C41A  F8DF 7060		ldr r7, [pc, #+96] ; 0x2000C820
+0800C41E  F9B7 0000		ldrsh r0, [r7]
 
 #160				LT		0	{LNXT:42|-1|-1}
 (*) INT
-0800C3D2  2800     		cmp r0, #0
-0800C3D4  BFA8 2000		gemov r0, #0
-0800C3D8  BFB8 2001		ltmov r0, #1
+0800C422  2800     		cmp r0, #0
+0800C424  BFA8 2000		gemov r0, #0
+0800C428  BFB8 2001		ltmov r0, #1
 
 #161				JMPCN	$label12	{LNXT:42|43|45}
 (-) BOOL
-0800C3DC  2800     		cmp r0, #0
-0800C3DE  D004     		beq #8 ; 0x0800C3EA
+0800C42C  2800     		cmp r0, #0
+0800C42E  D004     		beq #8 ; 0x0800C43A
 
 
 #162		
@@ -517,9 +517,9 @@ END_FUNCTION_BLOCK
 #165					(* $giBackBufferCurr := 9; *)
 #166					MOVE		9,$giBackBufferCurr	{LNXT:43|45|-1}
 (*) BOOL
-0800C3E2  2009     		mov r0, #9 ; 9
-0800C3E4  F8DF 7044		ldr r7, [pc, #+68] ; 0x2000C81C
-0800C3E8  8038     		strh r0, [r7]
+0800C432  2009     		mov r0, #9 ; 9
+0800C434  F8DF 7044		ldr r7, [pc, #+68] ; 0x2000C820
+0800C438  8038     		strh r0, [r7]
 
 #167		
 #168		$label12:
@@ -528,36 +528,36 @@ END_FUNCTION_BLOCK
 #171				(* $giBackBufferCurr := $giBackBufferCurr - 1; *)
 #172				LD		$giBackBufferCurr	{LNXT:45|46|-1}
 (*) UNDEF
-0800C3EA  F8DF 7040		ldr r7, [pc, #+64] ; 0x2000C81C
-0800C3EE  F9B7 0000		ldrsh r0, [r7]
+0800C43A  F8DF 7040		ldr r7, [pc, #+64] ; 0x2000C820
+0800C43E  F9B7 0000		ldrsh r0, [r7]
 
 #173				SUB		1	{LNXT:45|46|-1}
 (-) INT
-0800C3F2  1E40     		sub r0, r0, #1
+0800C442  1E40     		sub r0, r0, #1
 
 #174				ST		$giBackBufferCurr	{LNXT:45|46|-1}
 (*) INT
-0800C3F4  F8DF 7034		ldr r7, [pc, #+52] ; 0x2000C81C
-0800C3F8  8038     		strh r0, [r7]
+0800C444  F8DF 7034		ldr r7, [pc, #+52] ; 0x2000C820
+0800C448  8038     		strh r0, [r7]
 
 #175		
 #176		
 #177				(* IF $giBackBufferCurr < 0 *)
 #178				LD		$giBackBufferCurr	{LNXT:46|-1|-1}
 (*) UNDEF
-0800C3FA  F8DF 7030		ldr r7, [pc, #+48] ; 0x2000C81C
-0800C3FE  F9B7 0000		ldrsh r0, [r7]
+0800C44A  F8DF 7030		ldr r7, [pc, #+48] ; 0x2000C820
+0800C44E  F9B7 0000		ldrsh r0, [r7]
 
 #179				LT		0	{LNXT:46|-1|-1}
 (*) INT
-0800C402  2800     		cmp r0, #0
-0800C404  BFA8 2000		gemov r0, #0
-0800C408  BFB8 2001		ltmov r0, #1
+0800C452  2800     		cmp r0, #0
+0800C454  BFA8 2000		gemov r0, #0
+0800C458  BFB8 2001		ltmov r0, #1
 
 #180				JMPCN	$label13	{LNXT:46|47|-1}
 (-) BOOL
-0800C40C  2800     		cmp r0, #0
-0800C40E  D004     		beq #8 ; 0x0800C41A
+0800C45C  2800     		cmp r0, #0
+0800C45E  D004     		beq #8 ; 0x0800C46A
 
 
 #181		
@@ -566,21 +566,21 @@ END_FUNCTION_BLOCK
 #184					(* $giBackBufferCurr := 9; *)
 #185					MOVE		9,$giBackBufferCurr	{LNXT:47|-1|-1}
 (*) BOOL
-0800C412  2009     		mov r0, #9 ; 9
-0800C414  F8DF 7014		ldr r7, [pc, #+20] ; 0x2000C81C
-0800C418  8038     		strh r0, [r7]
+0800C462  2009     		mov r0, #9 ; 9
+0800C464  F8DF 7014		ldr r7, [pc, #+20] ; 0x2000C820
+0800C468  8038     		strh r0, [r7]
 
-0800C41A  E8BD 4040		ldmia sp!, { r6, lr }
+0800C46A  E8BD 4040		ldmia sp!, { r6, lr }
 
-0800C41E  4770     		bx lr
+0800C46E  4770     		bx lr
 
-0800C420  00000002		; 0x00000002
-0800C424  00000004		; 0x00000004
-0800C428  0000FFFF		; 0x0000FFFF
-0800C42C  2000C81C		; 0x2000C81C
-0800C430  2000C81E		; 0x2000C81E
-0800C434  2000C820		; 0x2000C820
-0800C438  2000C8A0		; 0x2000C8A0
+0800C470  00000002		; 0x00000002
+0800C474  00000004		; 0x00000004
+0800C478  0000FFFF		; 0x0000FFFF
+0800C47C  2000C820		; 0x2000C820
+0800C480  2000C822		; 0x2000C822
+0800C484  2000C824		; 0x2000C824
+0800C488  2000C8A0		; 0x2000C8A0
 
 
 Frame allocation:
@@ -605,11 +605,10 @@ fbTouchScreenString_7 : Static02 := (x:=7, y:=8, pFont:=?DroidSansMono_12x24, bc
 fbTouchScreenString_14 : Static02 := (wHnd:=1, x:=7, y:=51, pFont:=?DroidSansMono_12x24, bckCol:=16777215, pString:=?kStr00002, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
 fbTouchScreenLine_9 : Line01 := (x1:=7, y1:=40, x2:=230, y2:=40, bordPts:=1);
 fbTouchScreenLine_16 : Line01 := (x1:=8, y1:=85, x2:=231, y2:=85, bordPts:=1);
-fbTouchScreenEdit_1 : EditBox03 := (wHnd:=2, x1:=174, y1:=8, x2:=221, y2:=31, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201000, order:=1, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#0100000C, pEnumId:=0);
-fbTouchScreenEdit_15 : EditBox03 := (wHnd:=3, x1:=174, y1:=51, x2:=221, y2:=74, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201100, order:=6, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#0100000C, pEnumId:=0);
+fbTouchScreenEdit_1 : EditBox03 := (wHnd:=2, x1:=174, y1:=8, x2:=233, y2:=31, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=?iTempSensor, order:=1, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#01000008, pEnumId:=0);
+fbTouchScreenEdit_15 : EditBox03 := (wHnd:=3, x1:=174, y1:=51, x2:=233, y2:=74, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=?iHmdSensor, order:=6, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#01000008, pEnumId:=0);
 fbTouchScreenEdit_18 : EditBox03 := (wHnd:=4, x1:=33, y1:=107, x2:=200, y2:=130, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201200, order:=7, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#00000014, pEnumId:=1);
 fbTouchScreenEdit_19 : EditBox03 := (wHnd:=5, x1:=34, y1:=141, x2:=201, y2:=164, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201200, order:=8, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#00000014, pEnumId:=2);
-fbTouchScreenEdit_20 : EditBox03 := (wHnd:=6, x1:=88, y1:=192, x2:=147, y2:=215, pFont:=?DroidSansMono_12x24, bckCol:=16777215, bordPts:=1, rw:=TRUE, pVar:=?TempSend, order:=9, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#00000010, pCanSel:=1, pEnumId:=0);
 	{G:"Sets"}
 $waitRefresh : BOOL;
 	END_VAR
@@ -628,8 +627,8 @@ ry2 : UINT;
 
 END_FUNCTION_BLOCK
 
-0800C43C  E92D 4040		stmdb sp!, { r6, lr }
-0800C440  462E     		mov r6, r5
+0800C48C  E92D 4040		stmdb sp!, { r6, lr }
+0800C490  462E     		mov r6, r5
 
 #0		{SRC:RefrTouchScreen}
 #1		(*$WAITSWITCH$*)
@@ -642,45 +641,45 @@ END_FUNCTION_BLOCK
 (-) UNDEF
 #8				Video_Lock	{LNXT:6|9|-1}
 (*) UNDEF
-0800C442  7830     		ldrb r0, [r6]
-0800C444  F8DF 40A0		ldr r4, [pc, #+160] ; 0x80C82C5
-0800C448  F044 0401		orr r4, r4, #1
-0800C44C  47A0     		blx r4
+0800C492  7830     		ldrb r0, [r6]
+0800C494  F8DF 40A0		ldr r4, [pc, #+160] ; 0x80C82C5
+0800C498  F044 0401		orr r4, r4, #1
+0800C49C  47A0     		blx r4
 
 #9				ST		res	{LNXT:6|9|-1}
 (-) USINT
-0800C44E  7030     		strb r0, [r6]
+0800C49E  7030     		strb r0, [r6]
 
 #10		
 #11				(* pagID := guiCallStack[ giStackPtr ]; *)
 #12				MOVE		guiCallStack[giStackPtr],pagID	{LNXT:9|11|-1}
 (*) USINT
-0800C450  F8DF 70A0		ldr r7, [pc, #+160] ; 0x2000C81A
-0800C454  F9B7 5000		ldrsh r5, [r7]
-0800C458  F8DF 70A0		ldr r7, [pc, #+160] ; 0x2000C828
-0800C45C  EB07 0745		add r7, r7, r5, lsl #1
-0800C460  8838     		ldrh r0, [r7]
-0800C462  F8DF 7078		ldr r7, [pc, #+120] ; 0x2
-0800C466  53F0     		strh r0, [r6, +r7]
+0800C4A0  F8DF 70A0		ldr r7, [pc, #+160] ; 0x2000C81E
+0800C4A4  F9B7 5000		ldrsh r5, [r7]
+0800C4A8  F8DF 70A0		ldr r7, [pc, #+160] ; 0x2000C82C
+0800C4AC  EB07 0745		add r7, r7, r5, lsl #1
+0800C4B0  8838     		ldrh r0, [r7]
+0800C4B2  F8DF 7078		ldr r7, [pc, #+120] ; 0x2
+0800C4B6  53F0     		strh r0, [r6, +r7]
 
 #13		
 #14		
 #15				(* IF pagID = 16#00 *)
 #16				LD		pagID	{LNXT:11|-1|-1}
 (*) UNDEF
-0800C468  F8DF 7070		ldr r7, [pc, #+112] ; 0x2
-0800C46C  5BF0     		ldrh r0, [r6, +r7]
+0800C4B8  F8DF 7070		ldr r7, [pc, #+112] ; 0x2
+0800C4BC  5BF0     		ldrh r0, [r6, +r7]
 
 #17				EQ		16#00	{LNXT:11|-1|-1}
 (*) UINT
-0800C46E  2800     		cmp r0, #0
-0800C470  BF18 2000		nemov r0, #0
-0800C474  BF08 2001		eqmov r0, #1
+0800C4BE  2800     		cmp r0, #0
+0800C4C0  BF18 2000		nemov r0, #0
+0800C4C4  BF08 2001		eqmov r0, #1
 
 #18				JMPCN	$label2	{LNXT:11|14|32}
 (-) BOOL
-0800C478  2800     		cmp r0, #0
-0800C47A  D012     		beq #36 ; 0x0800C4A2
+0800C4C8  2800     		cmp r0, #0
+0800C4CA  D012     		beq #36 ; 0x0800C4F2
 
 
 #19		
@@ -689,9 +688,9 @@ END_FUNCTION_BLOCK
 #22					(* $waitRefresh := FALSE; *)
 #23					MOVE		FALSE,$waitRefresh	{LNXT:14|19|-1}
 (*) BOOL
-0800C47E  2000     		mov r0, #0 ; 0
-0800C480  F8DF 7074		ldr r7, [pc, #+116] ; 0x2000C823
-0800C484  7038     		strb r0, [r7]
+0800C4CE  2000     		mov r0, #0 ; 0
+0800C4D0  F8DF 7074		ldr r7, [pc, #+116] ; 0x2000C827
+0800C4D4  7038     		strb r0, [r7]
 
 #24		
 #25					(* res := Video_UpdatePageControls( TRUE ); *)
@@ -699,23 +698,23 @@ END_FUNCTION_BLOCK
 (-) BOOL
 #27					Video_UpdatePageControls	{LNXT:19|24|-1}
 (*) BOOL
-0800C486  2001     		mov r0, #1 ; 1
-0800C488  F8DF 4058		ldr r4, [pc, #+88] ; 0x80C0921
-0800C48C  F044 0401		orr r4, r4, #1
-0800C490  47A0     		blx r4
+0800C4D6  2001     		mov r0, #1 ; 1
+0800C4D8  F8DF 4058		ldr r4, [pc, #+88] ; 0x80C0921
+0800C4DC  F044 0401		orr r4, r4, #1
+0800C4E0  47A0     		blx r4
 
 #28					ST		res	{LNXT:19|24|-1}
 (-) BOOL
-0800C492  7030     		strb r0, [r6]
+0800C4E2  7030     		strb r0, [r6]
 
 #29		
 #30					(* iSP := giStackPtr; *)
 #31					MOVE		giStackPtr,iSP	{LNXT:24|32|-1}
 (*) USINT
-0800C494  F8DF 705C		ldr r7, [pc, #+92] ; 0x2000C81A
-0800C498  F9B7 0000		ldrsh r0, [r7]
-0800C49C  F8DF 7040		ldr r7, [pc, #+64] ; 0x6
-0800C4A0  53F0     		strh r0, [r6, +r7]
+0800C4E4  F8DF 705C		ldr r7, [pc, #+92] ; 0x2000C81E
+0800C4E8  F9B7 0000		ldrsh r0, [r7]
+0800C4EC  F8DF 7040		ldr r7, [pc, #+64] ; 0x6
+0800C4F0  53F0     		strh r0, [r6, +r7]
 
 #32		
 #33		$label2:
@@ -726,14 +725,14 @@ END_FUNCTION_BLOCK
 (-) INT
 #38				Video_Unlock	{LNXT:32|35|-1}
 (*) INT
-0800C4A2  7830     		ldrb r0, [r6]
-0800C4A4  F8DF 4044		ldr r4, [pc, #+68] ; 0x80C82D5
-0800C4A8  F044 0401		orr r4, r4, #1
-0800C4AC  47A0     		blx r4
+0800C4F2  7830     		ldrb r0, [r6]
+0800C4F4  F8DF 4044		ldr r4, [pc, #+68] ; 0x80C82D5
+0800C4F8  F044 0401		orr r4, r4, #1
+0800C4FC  47A0     		blx r4
 
 #39				ST		res	{LNXT:32|35|-1}
 (-) USINT
-0800C4AE  7030     		strb r0, [r6]
+0800C4FE  7030     		strb r0, [r6]
 
 #40		
 #41				(* res := Video_Sleep( 50 ); *)
@@ -741,15 +740,15 @@ END_FUNCTION_BLOCK
 (-) USINT
 #43				Video_Sleep	{LNXT:35|37|-1}
 (*) USINT
-0800C4B0  2732     		mov r7, #50 ; 50
-0800C4B2  4638     		mov r0, r7
-0800C4B4  F8DF 4038		ldr r4, [pc, #+56] ; 0x80C82E9
-0800C4B8  F044 0401		orr r4, r4, #1
-0800C4BC  47A0     		blx r4
+0800C500  2732     		mov r7, #50 ; 50
+0800C502  4638     		mov r0, r7
+0800C504  F8DF 4038		ldr r4, [pc, #+56] ; 0x80C82E9
+0800C508  F044 0401		orr r4, r4, #1
+0800C50C  47A0     		blx r4
 
 #44				ST		res	{LNXT:35|37|-1}
 (-) USINT
-0800C4BE  7030     		strb r0, [r6]
+0800C50E  7030     		strb r0, [r6]
 
 #45		
 #46			(* UNTIL pagID <> 16#00 *)
@@ -757,33 +756,33 @@ END_FUNCTION_BLOCK
 #48			(*  *)
 #49			LD		pagID	{LNXT:37|-1|-1}
 (*) UNDEF
-0800C4C0  F8DF 7018		ldr r7, [pc, #+24] ; 0x2
-0800C4C4  5BF0     		ldrh r0, [r6, +r7]
+0800C510  F8DF 7018		ldr r7, [pc, #+24] ; 0x2
+0800C514  5BF0     		ldrh r0, [r6, +r7]
 
 #50			NE		16#00	{LNXT:37|-1|-1}
 (*) UINT
-0800C4C6  2800     		cmp r0, #0
-0800C4C8  BF08 2000		eqmov r0, #0
-0800C4CC  BF18 2001		nemov r0, #1
+0800C516  2800     		cmp r0, #0
+0800C518  BF08 2000		eqmov r0, #0
+0800C51C  BF18 2001		nemov r0, #1
 
 #51				JMPCN	$label0	{LNXT:37|6|-1}
 (-) BOOL
-0800C4D0  2800     		cmp r0, #0
-0800C4D2  D0B6     		beq #-148 ; 0x0800C442
+0800C520  2800     		cmp r0, #0
+0800C522  D0B6     		beq #-148 ; 0x0800C492
 
-0800C4D4  E8BD 4040		ldmia sp!, { r6, lr }
+0800C524  E8BD 4040		ldmia sp!, { r6, lr }
 
-0800C4D8  4770     		bx lr
+0800C528  4770     		bx lr
 
-0800C4DC  00000002		; 0x00000002
-0800C4E0  00000006		; 0x00000006
-0800C4E4  080C0921		; 0x080C0921
-0800C4E8  080C82C5		; 0x080C82C5
-0800C4EC  080C82D5		; 0x080C82D5
-0800C4F0  080C82E9		; 0x080C82E9
-0800C4F4  2000C81A		; 0x2000C81A
-0800C4F8  2000C823		; 0x2000C823
-0800C4FC  2000C828		; 0x2000C828
+0800C52C  00000002		; 0x00000002
+0800C530  00000006		; 0x00000006
+0800C534  080C0921		; 0x080C0921
+0800C538  080C82C5		; 0x080C82C5
+0800C53C  080C82D5		; 0x080C82D5
+0800C540  080C82E9		; 0x080C82E9
+0800C544  2000C81E		; 0x2000C81E
+0800C548  2000C827		; 0x2000C827
+0800C54C  2000C82C		; 0x2000C82C
 
 
 Frame allocation:
@@ -822,11 +821,10 @@ fbTouchScreenString_7 : Static02 := (x:=7, y:=8, pFont:=?DroidSansMono_12x24, bc
 fbTouchScreenString_14 : Static02 := (wHnd:=1, x:=7, y:=51, pFont:=?DroidSansMono_12x24, bckCol:=16777215, pString:=?kStr00002, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
 fbTouchScreenLine_9 : Line01 := (x1:=7, y1:=40, x2:=230, y2:=40, bordPts:=1);
 fbTouchScreenLine_16 : Line01 := (x1:=8, y1:=85, x2:=231, y2:=85, bordPts:=1);
-fbTouchScreenEdit_1 : EditBox03 := (wHnd:=2, x1:=174, y1:=8, x2:=221, y2:=31, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201000, order:=1, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#0100000C, pEnumId:=0);
-fbTouchScreenEdit_15 : EditBox03 := (wHnd:=3, x1:=174, y1:=51, x2:=221, y2:=74, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201100, order:=6, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#0100000C, pEnumId:=0);
+fbTouchScreenEdit_1 : EditBox03 := (wHnd:=2, x1:=174, y1:=8, x2:=233, y2:=31, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=?iTempSensor, order:=1, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#01000008, pEnumId:=0);
+fbTouchScreenEdit_15 : EditBox03 := (wHnd:=3, x1:=174, y1:=51, x2:=233, y2:=74, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=?iHmdSensor, order:=6, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#01000008, pEnumId:=0);
 fbTouchScreenEdit_18 : EditBox03 := (wHnd:=4, x1:=33, y1:=107, x2:=200, y2:=130, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201200, order:=7, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#00000014, pEnumId:=1);
 fbTouchScreenEdit_19 : EditBox03 := (wHnd:=5, x1:=34, y1:=141, x2:=201, y2:=164, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201200, order:=8, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#00000014, pEnumId:=2);
-fbTouchScreenEdit_20 : EditBox03 := (wHnd:=6, x1:=88, y1:=192, x2:=147, y2:=215, pFont:=?DroidSansMono_12x24, bckCol:=16777215, bordPts:=1, rw:=TRUE, pVar:=?TempSend, order:=9, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#00000010, pCanSel:=1, pEnumId:=0);
 	{G:"Sets"}
 $waitRefresh : BOOL;
 	END_VAR
@@ -859,8 +857,8 @@ wParam : UINT;
 
 END_FUNCTION_BLOCK
 
-0800C500  E92D 4040		stmdb sp!, { r6, lr }
-0800C504  462E     		mov r6, r5
+0800C550  E92D 4040		stmdb sp!, { r6, lr }
+0800C554  462E     		mov r6, r5
 
 #0		{SRC:DrawTouchScreen}
 #1		(*$WAITSWITCH$*)
@@ -868,66 +866,66 @@ END_FUNCTION_BLOCK
 #3			(* TouchScreen_user_detected_str := '"User Detected"'; *)
 #4			MOVE		'"User Detected"',TouchScreen_user_detected_str	{LNXT:4|8|-1}
 (*) UNDEF
-0800C506  F8DF 75B0		ldr r7, [pc, #+1456] ; 0x800C180
-0800C50A  4638     		mov r0, r7
-0800C50C  B082     		sub sp, sp, #8
-0800C50E  F8CD 0000		str r0, [sp]
-0800C512  E92D 0006		stmdb sp!, { r1, r2 }
-0800C516  2220     		mov r2, #32 ; 32
-0800C518  F8DF 15F4		ldr r1, [pc, #+1524] ; 0x2000C878
-0800C51C  F8DF 45E0		ldr r4, [pc, #+1504] ; 0x80DE799
-0800C520  F044 0401		orr r4, r4, #1
-0800C524  47A0     		blx r4
-0800C526  E8BD 0006		ldmia sp!, { r1, r2 }
-0800C52A  F8DD 0000		ldr r0, [sp]
-0800C52E  B002     		add sp, sp, #8
+0800C556  F8DF 7384		ldr r7, [pc, #+900] ; 0x800C1D0
+0800C55A  4638     		mov r0, r7
+0800C55C  B082     		sub sp, sp, #8
+0800C55E  F8CD 0000		str r0, [sp]
+0800C562  E92D 0006		stmdb sp!, { r1, r2 }
+0800C566  2220     		mov r2, #32 ; 32
+0800C568  F8DF 13B8		ldr r1, [pc, #+952] ; 0x2000C878
+0800C56C  F8DF 43A4		ldr r4, [pc, #+932] ; 0x80DE799
+0800C570  F044 0401		orr r4, r4, #1
+0800C574  47A0     		blx r4
+0800C576  E8BD 0006		ldmia sp!, { r1, r2 }
+0800C57A  F8DD 0000		ldr r0, [sp]
+0800C57E  B002     		add sp, sp, #8
 
 #5		
 #6			(* guiCallStack[ giStackPtr ] := 16#00; *)
 #7			MOVE		16#00,guiCallStack[giStackPtr]	{LNXT:8|11|-1}
 (*) STRING
-0800C530  2000     		mov r0, #0 ; 0
-0800C532  F8DF 75D0		ldr r7, [pc, #+1488] ; 0x2000C81A
-0800C536  F9B7 5000		ldrsh r5, [r7]
-0800C53A  F8DF 75D0		ldr r7, [pc, #+1488] ; 0x2000C828
-0800C53E  EB07 0745		add r7, r7, r5, lsl #1
-0800C542  8038     		strh r0, [r7]
+0800C580  2000     		mov r0, #0 ; 0
+0800C582  F8DF 7394		ldr r7, [pc, #+916] ; 0x2000C81E
+0800C586  F9B7 5000		ldrsh r5, [r7]
+0800C58A  F8DF 7394		ldr r7, [pc, #+916] ; 0x2000C82C
+0800C58E  EB07 0745		add r7, r7, r5, lsl #1
+0800C592  8038     		strh r0, [r7]
 
 #8		
 #9			(* fbBackPage.IsOpening := TRUE; *)
 #10			MOVE		TRUE,fbBackPage.IsOpening	{LNXT:11|12|-1}
 (*) UINT
-0800C544  2001     		mov r0, #1 ; 1
-0800C546  F8DF 75CC		ldr r7, [pc, #+1484] ; 0x2000C898
-0800C54A  7038     		strb r0, [r7]
+0800C594  2001     		mov r0, #1 ; 1
+0800C596  F8DF 7390		ldr r7, [pc, #+912] ; 0x2000C898
+0800C59A  7038     		strb r0, [r7]
 
 #11		
 #12			(* fbBackPage.CurrPageId := 16#00; *)
 #13			MOVE		16#00,fbBackPage.CurrPageId	{LNXT:12|13|-1}
 (*) BOOL
-0800C54C  2000     		mov r0, #0 ; 0
-0800C54E  F8DF 75C8		ldr r7, [pc, #+1480] ; 0x2000C89A
-0800C552  8038     		strh r0, [r7]
+0800C59C  2000     		mov r0, #0 ; 0
+0800C59E  F8DF 738C		ldr r7, [pc, #+908] ; 0x2000C89A
+0800C5A2  8038     		strh r0, [r7]
 
 #14		
 #15			(* fbBackPage *)
 #16			CAL		fbBackPage	{LNXT:13|17|-1}
 (*) UINT
-0800C554  E92D 0021		stmdb sp!, { r0, r5 }
-0800C558  F8DF 75B8		ldr r7, [pc, #+1464] ; 0x2000C898
-0800C55C  463D     		mov r5, r7
-0800C55E  F8DF 4560		ldr r4, [pc, #+1376] ; 0x800C1C8
-0800C562  F044 0401		orr r4, r4, #1
-0800C566  47A0     		blx r4
-0800C568  E8BD 0021		ldmia sp!, { r0, r5 }
+0800C5A4  E92D 0021		stmdb sp!, { r0, r5 }
+0800C5A8  F8DF 737C		ldr r7, [pc, #+892] ; 0x2000C898
+0800C5AC  463D     		mov r5, r7
+0800C5AE  F8DF 4334		ldr r4, [pc, #+820] ; 0x800C218
+0800C5B2  F044 0401		orr r4, r4, #1
+0800C5B6  47A0     		blx r4
+0800C5B8  E8BD 0021		ldmia sp!, { r0, r5 }
 
 #17		
 #18			(* $waitRefresh := TRUE; *)
 #19			MOVE		TRUE,$waitRefresh	{LNXT:17|20|-1}
 (*) UINT
-0800C56C  2001     		mov r0, #1 ; 1
-0800C56E  F8DF 7598		ldr r7, [pc, #+1432] ; 0x2000C823
-0800C572  7038     		strb r0, [r7]
+0800C5BC  2001     		mov r0, #1 ; 1
+0800C5BE  F8DF 735C		ldr r7, [pc, #+860] ; 0x2000C827
+0800C5C2  7038     		strb r0, [r7]
 
 #20		
 #21			(* res := Video_ResetMaps( 16#00 ); *)
@@ -935,63 +933,63 @@ END_FUNCTION_BLOCK
 (-) BOOL
 #23			Video_ResetMaps	{LNXT:20|23|-1}
 (*) BOOL
-0800C574  2000     		mov r0, #0 ; 0
-0800C576  F8DF 4578		ldr r4, [pc, #+1400] ; 0x80C82F7
-0800C57A  F044 0401		orr r4, r4, #1
-0800C57E  47A0     		blx r4
+0800C5C4  2000     		mov r0, #0 ; 0
+0800C5C6  F8DF 433C		ldr r4, [pc, #+828] ; 0x80C82F7
+0800C5CA  F044 0401		orr r4, r4, #1
+0800C5CE  47A0     		blx r4
 
 #24			ST		res	{LNXT:20|23|-1}
 (-) USINT
-0800C580  7030     		strb r0, [r6]
+0800C5D0  7030     		strb r0, [r6]
 
 #25		
 #26			(* bStatRedrw := TRUE; *)
 #27			MOVE		TRUE,bStatRedrw	{LNXT:23|24|-1}
 (*) USINT
-0800C582  2001     		mov r0, #1 ; 1
-0800C584  F8DF 74F8		ldr r7, [pc, #+1272] ; 0x1
-0800C588  55F0     		strb r0, [r6, +r7]
+0800C5D2  2001     		mov r0, #1 ; 1
+0800C5D4  F8DF 72D4		ldr r7, [pc, #+724] ; 0x1
+0800C5D8  55F0     		strb r0, [r6, +r7]
 
 #28		
 #29			(* bMapsReset := TRUE; *)
 #30			MOVE		TRUE,bMapsReset	{LNXT:24|27|-1}
 (*) BOOL
-0800C58A  2001     		mov r0, #1 ; 1
-0800C58C  F8DF 74F4		ldr r7, [pc, #+1268] ; 0x2
-0800C590  55F0     		strb r0, [r6, +r7]
+0800C5DA  2001     		mov r0, #1 ; 1
+0800C5DC  F8DF 72D0		ldr r7, [pc, #+720] ; 0x2
+0800C5E0  55F0     		strb r0, [r6, +r7]
 
 #31		
 #32			(* x1:= 0; *)
 #33			MOVE		0,x1	{LNXT:27|28|-1}
 (*) BOOL
-0800C592  2000     		mov r0, #0 ; 0
-0800C594  F8DF 7500		ldr r7, [pc, #+1280] ; 0x28
-0800C598  53F0     		strh r0, [r6, +r7]
+0800C5E2  2000     		mov r0, #0 ; 0
+0800C5E4  F8DF 72D8		ldr r7, [pc, #+728] ; 0x28
+0800C5E8  53F0     		strh r0, [r6, +r7]
 
 #34		
 #35			(* y1:= 0; *)
 #36			MOVE		0,y1	{LNXT:28|29|-1}
 (*) UINT
-0800C59A  2000     		mov r0, #0 ; 0
-0800C59C  F8DF 74FC		ldr r7, [pc, #+1276] ; 0x2A
-0800C5A0  53F0     		strh r0, [r6, +r7]
+0800C5EA  2000     		mov r0, #0 ; 0
+0800C5EC  F8DF 72D4		ldr r7, [pc, #+724] ; 0x2A
+0800C5F0  53F0     		strh r0, [r6, +r7]
 
 #37		
 #38			(* x2:= 239; *)
 #39			MOVE		239,x2	{LNXT:29|30|-1}
 (*) UINT
-0800C5A2  20EF     		mov r0, #239 ; 239
-0800C5A4  F8DF 74F8		ldr r7, [pc, #+1272] ; 0x2C
-0800C5A8  53F0     		strh r0, [r6, +r7]
+0800C5F2  20EF     		mov r0, #239 ; 239
+0800C5F4  F8DF 72D0		ldr r7, [pc, #+720] ; 0x2C
+0800C5F8  53F0     		strh r0, [r6, +r7]
 
 #40		
 #41			(* y2:= 319; *)
 #42			MOVE		319,y2	{LNXT:30|33|-1}
 (*) UINT
-0800C5AA  F8DF 7504		ldr r7, [pc, #+1284] ; 0x13F
-0800C5AE  4638     		mov r0, r7
-0800C5B0  F8DF 74F0		ldr r7, [pc, #+1264] ; 0x2E
-0800C5B4  53F0     		strh r0, [r6, +r7]
+0800C5FA  F8DF 72D8		ldr r7, [pc, #+728] ; 0x13F
+0800C5FE  4638     		mov r0, r7
+0800C600  F8DF 72C8		ldr r7, [pc, #+712] ; 0x2E
+0800C604  53F0     		strh r0, [r6, +r7]
 
 #43		
 #44			(* res := Video_Unlock( res ); *)
@@ -999,26 +997,26 @@ END_FUNCTION_BLOCK
 (-) UINT
 #46			Video_Unlock	{LNXT:33|35|-1}
 (*) UINT
-0800C5B6  7830     		ldrb r0, [r6]
-0800C5B8  F8DF 452C		ldr r4, [pc, #+1324] ; 0x80C82D5
-0800C5BC  F044 0401		orr r4, r4, #1
-0800C5C0  47A0     		blx r4
+0800C606  7830     		ldrb r0, [r6]
+0800C608  F8DF 42F0		ldr r4, [pc, #+752] ; 0x80C82D5
+0800C60C  F044 0401		orr r4, r4, #1
+0800C610  47A0     		blx r4
 
 #47			ST		res	{LNXT:33|35|-1}
 (-) USINT
-0800C5C2  7030     		strb r0, [r6]
+0800C612  7030     		strb r0, [r6]
 
 #48		
 #49			(* WHILE TRUE *)
 #50		$label0:
 #51			LD		TRUE	{LNXT:35|-1|-1}
 (-) UNDEF
-0800C5C4  2001     		mov r0, #1 ; 1
+0800C614  2001     		mov r0, #1 ; 1
 
 #52			JMPCN		$label1	{LNXT:35|38|-1}
 (-) BOOL
-0800C5C6  2800     		cmp r0, #0
-0800C5C8  F000 8256		beq #1196 ; 0x0800CA78
+0800C616  2800     		cmp r0, #0
+0800C618  F000 8145		beq #650 ; 0x0800C8A6
 
 
 #53		
@@ -1028,52 +1026,52 @@ END_FUNCTION_BLOCK
 (-) BOOL
 #57				Video_Lock	{LNXT:38|41|-1}
 (*) BOOL
-0800C5CC  7830     		ldrb r0, [r6]
-0800C5CE  F8DF 4514		ldr r4, [pc, #+1300] ; 0x80C82C5
-0800C5D2  F044 0401		orr r4, r4, #1
-0800C5D6  47A0     		blx r4
+0800C61C  7830     		ldrb r0, [r6]
+0800C61E  F8DF 42D8		ldr r4, [pc, #+728] ; 0x80C82C5
+0800C622  F044 0401		orr r4, r4, #1
+0800C626  47A0     		blx r4
 
 #58				ST		res	{LNXT:38|41|-1}
 (-) USINT
-0800C5D8  7030     		strb r0, [r6]
+0800C628  7030     		strb r0, [r6]
 
 #59		
 #60				(* res := Video_InitPage( 0, 0, 239, 319, ?' ', 16#0003 ); *)
 #61				ADR		' '	{LNXT:41|44|-1}
 (*) USINT
-0800C5DA  F8DF 04E0		ldr r0, [pc, #+1248] ; 0x800C194
+0800C62A  F8DF 02B4		ldr r0, [pc, #+692] ; 0x800C1E4
 
 #62				ST		$$TMP0	{LNXT:41|44|-1}
 (*) @STRING
-0800C5DE  F8DF 74C8		ldr r7, [pc, #+1224] ; 0x34
-0800C5E2  51F0     		str r0, [r6, +r7]
+0800C62E  F8DF 72A0		ldr r7, [pc, #+672] ; 0x34
+0800C632  51F0     		str r0, [r6, +r7]
 
 #63				LDP0		0	{LNXT:41|44|-1}
 (-) @STRING
 #64				Video_InitPage		0, 239, 319, $$TMP0, 16#0003	{LNXT:41|44|-1}
 (*) @STRING
-0800C5E4  B082     		sub sp, sp, #8
-0800C5E6  2700     		mov r7, #0 ; 0
-0800C5E8  4638     		mov r0, r7
-0800C5EA  2700     		mov r7, #0 ; 0
-0800C5EC  4639     		mov r1, r7
-0800C5EE  27EF     		mov r7, #239 ; 239
-0800C5F0  463A     		mov r2, r7
-0800C5F2  F8DF 74BC		ldr r7, [pc, #+1212] ; 0x13F
-0800C5F6  463B     		mov r3, r7
-0800C5F8  F8DF 74AC		ldr r7, [pc, #+1196] ; 0x34
-0800C5FC  59F7     		ldr r7, [r6, +r7]
-0800C5FE  F8CD 7000		str r7, [sp]
-0800C602  2703     		mov r7, #3 ; 3
-0800C604  F8CD 7004		str r7, [sp, #+4]
-0800C608  F8DF 44B8		ldr r4, [pc, #+1208] ; 0x80C5C1D
-0800C60C  F044 0401		orr r4, r4, #1
-0800C610  47A0     		blx r4
-0800C612  B002     		add sp, sp, #8
+0800C634  B082     		sub sp, sp, #8
+0800C636  2700     		mov r7, #0 ; 0
+0800C638  4638     		mov r0, r7
+0800C63A  2700     		mov r7, #0 ; 0
+0800C63C  4639     		mov r1, r7
+0800C63E  27EF     		mov r7, #239 ; 239
+0800C640  463A     		mov r2, r7
+0800C642  F8DF 7290		ldr r7, [pc, #+656] ; 0x13F
+0800C646  463B     		mov r3, r7
+0800C648  F8DF 7284		ldr r7, [pc, #+644] ; 0x34
+0800C64C  59F7     		ldr r7, [r6, +r7]
+0800C64E  F8CD 7000		str r7, [sp]
+0800C652  2703     		mov r7, #3 ; 3
+0800C654  F8CD 7004		str r7, [sp, #+4]
+0800C658  F8DF 428C		ldr r4, [pc, #+652] ; 0x80C5C1D
+0800C65C  F044 0401		orr r4, r4, #1
+0800C660  47A0     		blx r4
+0800C662  B002     		add sp, sp, #8
 
 #65				ST		res	{LNXT:41|44|-1}
 (-) USINT
-0800C614  7030     		strb r0, [r6]
+0800C664  7030     		strb r0, [r6]
 
 #66		
 #67				(* res := Video_SetPageColors( 0, 16777215 ); *)
@@ -1081,30 +1079,30 @@ END_FUNCTION_BLOCK
 (-) USINT
 #69				Video_SetPageColors		16777215	{LNXT:44|46|-1}
 (*) USINT
-0800C616  2700     		mov r7, #0 ; 0
-0800C618  4638     		mov r0, r7
-0800C61A  F8DF 7498		ldr r7, [pc, #+1176] ; 0xFFFFFF
-0800C61E  4639     		mov r1, r7
-0800C620  F8DF 44A8		ldr r4, [pc, #+1192] ; 0x80C6521
-0800C624  F044 0401		orr r4, r4, #1
-0800C628  47A0     		blx r4
+0800C666  2700     		mov r7, #0 ; 0
+0800C668  4638     		mov r0, r7
+0800C66A  F8DF 726C		ldr r7, [pc, #+620] ; 0xFFFFFF
+0800C66E  4639     		mov r1, r7
+0800C670  F8DF 427C		ldr r4, [pc, #+636] ; 0x80C6521
+0800C674  F044 0401		orr r4, r4, #1
+0800C678  47A0     		blx r4
 
 #70				ST		res	{LNXT:44|46|-1}
 (-) USINT
-0800C62A  7030     		strb r0, [r6]
+0800C67A  7030     		strb r0, [r6]
 
 #71		
 #72		
 #73				(* IF bStatRedrw *)
 #74				LD		bStatRedrw	{LNXT:46|-1|-1}
 (*) UNDEF
-0800C62C  F8DF 7450		ldr r7, [pc, #+1104] ; 0x1
-0800C630  5DF0     		ldrb r0, [r6, +r7]
+0800C67C  F8DF 722C		ldr r7, [pc, #+556] ; 0x1
+0800C680  5DF0     		ldrb r0, [r6, +r7]
 
 #75				JMPCN	$label2	{LNXT:46|49|53}
 (-) BOOL
-0800C632  2800     		cmp r0, #0
-0800C634  D012     		beq #36 ; 0x0800C65C
+0800C682  2800     		cmp r0, #0
+0800C684  D012     		beq #36 ; 0x0800C6AC
 
 
 #76		
@@ -1115,21 +1113,21 @@ END_FUNCTION_BLOCK
 (-) BOOL
 #81					Video_ClrRect		y1, x2, y2	{LNXT:49|53|-1}
 (*) BOOL
-0800C638  F8DF 745C		ldr r7, [pc, #+1116] ; 0x28
-0800C63C  5BF0     		ldrh r0, [r6, +r7]
-0800C63E  F8DF 745C		ldr r7, [pc, #+1116] ; 0x2A
-0800C642  5BF1     		ldrh r1, [r6, +r7]
-0800C644  F8DF 7458		ldr r7, [pc, #+1112] ; 0x2C
-0800C648  5BF2     		ldrh r2, [r6, +r7]
-0800C64A  F8DF 7458		ldr r7, [pc, #+1112] ; 0x2E
-0800C64E  5BF3     		ldrh r3, [r6, +r7]
-0800C650  F8DF 4474		ldr r4, [pc, #+1140] ; 0x80C6483
-0800C654  F044 0401		orr r4, r4, #1
-0800C658  47A0     		blx r4
+0800C688  F8DF 7234		ldr r7, [pc, #+564] ; 0x28
+0800C68C  5BF0     		ldrh r0, [r6, +r7]
+0800C68E  F8DF 7234		ldr r7, [pc, #+564] ; 0x2A
+0800C692  5BF1     		ldrh r1, [r6, +r7]
+0800C694  F8DF 7230		ldr r7, [pc, #+560] ; 0x2C
+0800C698  5BF2     		ldrh r2, [r6, +r7]
+0800C69A  F8DF 7230		ldr r7, [pc, #+560] ; 0x2E
+0800C69E  5BF3     		ldrh r3, [r6, +r7]
+0800C6A0  F8DF 4248		ldr r4, [pc, #+584] ; 0x80C6483
+0800C6A4  F044 0401		orr r4, r4, #1
+0800C6A8  47A0     		blx r4
 
 #82					ST		res	{LNXT:49|53|-1}
 (-) USINT
-0800C65A  7030     		strb r0, [r6]
+0800C6AA  7030     		strb r0, [r6]
 
 #83		
 #84		$label2:
@@ -1139,13 +1137,13 @@ END_FUNCTION_BLOCK
 #88				(* IF bMapsReset *)
 #89				LD		bMapsReset	{LNXT:53|-1|-1}
 (*) UNDEF
-0800C65C  F8DF 7424		ldr r7, [pc, #+1060] ; 0x2
-0800C660  5DF0     		ldrb r0, [r6, +r7]
+0800C6AC  F8DF 7200		ldr r7, [pc, #+512] ; 0x2
+0800C6B0  5DF0     		ldrb r0, [r6, +r7]
 
-#90				JMPCN	$label3	{LNXT:53|56|94}
+#90				JMPCN	$label3	{LNXT:53|56|91}
 (-) BOOL
-0800C662  2800     		cmp r0, #0
-0800C664  F000 80BB		beq #374 ; 0x0800C7DE
+0800C6B2  2800     		cmp r0, #0
+0800C6B4  F000 80A7		beq #334 ; 0x0800C806
 
 
 #91		
@@ -1156,1051 +1154,483 @@ END_FUNCTION_BLOCK
 (-) BOOL
 #96					Video_ResetMaps	{LNXT:56|63|-1}
 (*) BOOL
-0800C668  20FF     		mov r0, #255 ; 255
-0800C66A  F8DF 4484		ldr r4, [pc, #+1156] ; 0x80C82F7
-0800C66E  F044 0401		orr r4, r4, #1
-0800C672  47A0     		blx r4
+0800C6B8  20FF     		mov r0, #255 ; 255
+0800C6BA  F8DF 4248		ldr r4, [pc, #+584] ; 0x80C82F7
+0800C6BE  F044 0401		orr r4, r4, #1
+0800C6C2  47A0     		blx r4
 
 #97					ST		res	{LNXT:56|63|-1}
 (-) USINT
-0800C674  7030     		strb r0, [r6]
+0800C6C4  7030     		strb r0, [r6]
 
 #98		
 #99					(* fbTouchScreenEdit_1.accMode := kACS_INIT; *)
 #100					MOVE		kACS_INIT,fbTouchScreenEdit_1.accMode	{LNXT:63|64|-1}
 (*) USINT
-0800C676  2001     		mov r0, #1 ; 1
-0800C678  F8DF 74A4		ldr r7, [pc, #+1188] ; 0x2000C911
-0800C67C  7038     		strb r0, [r7]
+0800C6C6  2001     		mov r0, #1 ; 1
+0800C6C8  F8DF 7268		ldr r7, [pc, #+616] ; 0x2000C911
+0800C6CC  7038     		strb r0, [r7]
 
 #101		
 #102					(* fbTouchScreenEdit_1 *)
 #103					CAL		fbTouchScreenEdit_1	{LNXT:64|65|-1}
 (*) USINT
-0800C67E  E92D 0021		stmdb sp!, { r0, r5 }
-0800C682  F8DF 7498		ldr r7, [pc, #+1176] ; 0x2000C8B4
-0800C686  4638     		mov r0, r7
-0800C688  F8DF 4468		ldr r4, [pc, #+1128] ; 0x80CA081
-0800C68C  F044 0401		orr r4, r4, #1
-0800C690  47A0     		blx r4
-0800C692  E8BD 0021		ldmia sp!, { r0, r5 }
+0800C6CE  E92D 0021		stmdb sp!, { r0, r5 }
+0800C6D2  F8DF 725C		ldr r7, [pc, #+604] ; 0x2000C8B4
+0800C6D6  4638     		mov r0, r7
+0800C6D8  F8DF 422C		ldr r4, [pc, #+556] ; 0x80CA081
+0800C6DC  F044 0401		orr r4, r4, #1
+0800C6E0  47A0     		blx r4
+0800C6E2  E8BD 0021		ldmia sp!, { r0, r5 }
 
 #104		
 #105					(* fbTouchScreenEdit_1.accMode := kACS_PRINT; *)
 #106					MOVE		kACS_PRINT,fbTouchScreenEdit_1.accMode	{LNXT:65|66|-1}
 (*) USINT
-0800C696  2002     		mov r0, #2 ; 2
-0800C698  F8DF 7484		ldr r7, [pc, #+1156] ; 0x2000C911
-0800C69C  7038     		strb r0, [r7]
+0800C6E6  2002     		mov r0, #2 ; 2
+0800C6E8  F8DF 7248		ldr r7, [pc, #+584] ; 0x2000C911
+0800C6EC  7038     		strb r0, [r7]
 
 #107		
 #108					(* fbTouchScreenString_7.accMode := kACS_INIT; *)
 #109					MOVE		kACS_INIT,fbTouchScreenString_7.accMode	{LNXT:66|67|-1}
 (*) USINT
-0800C69E  2001     		mov r0, #1 ; 1
-0800C6A0  F8DF 7484		ldr r7, [pc, #+1156] ; 0x2000C92E
-0800C6A4  7038     		strb r0, [r7]
+0800C6EE  2001     		mov r0, #1 ; 1
+0800C6F0  F8DF 7248		ldr r7, [pc, #+584] ; 0x2000C92E
+0800C6F4  7038     		strb r0, [r7]
 
 #110		
 #111					(* fbTouchScreenString_7 *)
 #112					CAL		fbTouchScreenString_7	{LNXT:67|68|-1}
 (*) USINT
-0800C6A6  E92D 0021		stmdb sp!, { r0, r5 }
-0800C6AA  F8DF 7478		ldr r7, [pc, #+1144] ; 0x2000C920
-0800C6AE  4638     		mov r0, r7
-0800C6B0  F8DF 4448		ldr r4, [pc, #+1096] ; 0x80CC80B
-0800C6B4  F044 0401		orr r4, r4, #1
-0800C6B8  47A0     		blx r4
-0800C6BA  E8BD 0021		ldmia sp!, { r0, r5 }
+0800C6F6  E92D 0021		stmdb sp!, { r0, r5 }
+0800C6FA  F8DF 723C		ldr r7, [pc, #+572] ; 0x2000C920
+0800C6FE  4638     		mov r0, r7
+0800C700  F8DF 420C		ldr r4, [pc, #+524] ; 0x80CC80B
+0800C704  F044 0401		orr r4, r4, #1
+0800C708  47A0     		blx r4
+0800C70A  E8BD 0021		ldmia sp!, { r0, r5 }
 
 #113		
 #114					(* fbTouchScreenString_7.accMode := kACS_PRINT; *)
 #115					MOVE		kACS_PRINT,fbTouchScreenString_7.accMode	{LNXT:68|69|-1}
 (*) USINT
-0800C6BE  2002     		mov r0, #2 ; 2
-0800C6C0  F8DF 7464		ldr r7, [pc, #+1124] ; 0x2000C92E
-0800C6C4  7038     		strb r0, [r7]
+0800C70E  2002     		mov r0, #2 ; 2
+0800C710  F8DF 7228		ldr r7, [pc, #+552] ; 0x2000C92E
+0800C714  7038     		strb r0, [r7]
 
 #116		
 #117					(* fbTouchScreenLine_9.accMode := kACS_INIT; *)
 #118					MOVE		kACS_INIT,fbTouchScreenLine_9.accMode	{LNXT:69|70|-1}
 (*) USINT
-0800C6C6  2001     		mov r0, #1 ; 1
-0800C6C8  F8DF 7464		ldr r7, [pc, #+1124] ; 0x2000C968
-0800C6CC  7038     		strb r0, [r7]
+0800C716  2001     		mov r0, #1 ; 1
+0800C718  F8DF 7228		ldr r7, [pc, #+552] ; 0x2000C968
+0800C71C  7038     		strb r0, [r7]
 
 #119		
 #120					(* fbTouchScreenLine_9 *)
 #121					CAL		fbTouchScreenLine_9	{LNXT:70|71|-1}
 (*) USINT
-0800C6CE  E92D 0021		stmdb sp!, { r0, r5 }
-0800C6D2  F8DF 7458		ldr r7, [pc, #+1112] ; 0x2000C960
-0800C6D6  4638     		mov r0, r7
-0800C6D8  F8DF 441C		ldr r4, [pc, #+1052] ; 0x80CC1DF
-0800C6DC  F044 0401		orr r4, r4, #1
-0800C6E0  47A0     		blx r4
-0800C6E2  E8BD 0021		ldmia sp!, { r0, r5 }
+0800C71E  E92D 0021		stmdb sp!, { r0, r5 }
+0800C722  F8DF 721C		ldr r7, [pc, #+540] ; 0x2000C960
+0800C726  4638     		mov r0, r7
+0800C728  F8DF 41E0		ldr r4, [pc, #+480] ; 0x80CC1DF
+0800C72C  F044 0401		orr r4, r4, #1
+0800C730  47A0     		blx r4
+0800C732  E8BD 0021		ldmia sp!, { r0, r5 }
 
 #122		
 #123					(* fbTouchScreenLine_9.accMode := kACS_PRINT; *)
 #124					MOVE		kACS_PRINT,fbTouchScreenLine_9.accMode	{LNXT:71|72|-1}
 (*) USINT
-0800C6E6  2002     		mov r0, #2 ; 2
-0800C6E8  F8DF 7444		ldr r7, [pc, #+1092] ; 0x2000C968
-0800C6EC  7038     		strb r0, [r7]
+0800C736  2002     		mov r0, #2 ; 2
+0800C738  F8DF 7208		ldr r7, [pc, #+520] ; 0x2000C968
+0800C73C  7038     		strb r0, [r7]
 
 #125		
 #126					(* fbTouchScreenString_14.accMode := kACS_INIT; *)
 #127					MOVE		kACS_INIT,fbTouchScreenString_14.accMode	{LNXT:72|73|-1}
 (*) USINT
-0800C6EE  2001     		mov r0, #1 ; 1
-0800C6F0  F8DF 7444		ldr r7, [pc, #+1092] ; 0x2000C97E
-0800C6F4  7038     		strb r0, [r7]
+0800C73E  2001     		mov r0, #1 ; 1
+0800C740  F8DF 7208		ldr r7, [pc, #+520] ; 0x2000C97E
+0800C744  7038     		strb r0, [r7]
 
 #128		
 #129					(* fbTouchScreenString_14 *)
 #130					CAL		fbTouchScreenString_14	{LNXT:73|74|-1}
 (*) USINT
-0800C6F6  E92D 0021		stmdb sp!, { r0, r5 }
-0800C6FA  F8DF 7438		ldr r7, [pc, #+1080] ; 0x2000C970
-0800C6FE  4638     		mov r0, r7
-0800C700  F8DF 43F8		ldr r4, [pc, #+1016] ; 0x80CC80B
-0800C704  F044 0401		orr r4, r4, #1
-0800C708  47A0     		blx r4
-0800C70A  E8BD 0021		ldmia sp!, { r0, r5 }
+0800C746  E92D 0021		stmdb sp!, { r0, r5 }
+0800C74A  F8DF 71FC		ldr r7, [pc, #+508] ; 0x2000C970
+0800C74E  4638     		mov r0, r7
+0800C750  F8DF 41BC		ldr r4, [pc, #+444] ; 0x80CC80B
+0800C754  F044 0401		orr r4, r4, #1
+0800C758  47A0     		blx r4
+0800C75A  E8BD 0021		ldmia sp!, { r0, r5 }
 
 #131		
 #132					(* fbTouchScreenString_14.accMode := kACS_PRINT; *)
 #133					MOVE		kACS_PRINT,fbTouchScreenString_14.accMode	{LNXT:74|75|-1}
 (*) USINT
-0800C70E  2002     		mov r0, #2 ; 2
-0800C710  F8DF 7424		ldr r7, [pc, #+1060] ; 0x2000C97E
-0800C714  7038     		strb r0, [r7]
+0800C75E  2002     		mov r0, #2 ; 2
+0800C760  F8DF 71E8		ldr r7, [pc, #+488] ; 0x2000C97E
+0800C764  7038     		strb r0, [r7]
 
 #134		
 #135					(* fbTouchScreenEdit_15.accMode := kACS_INIT; *)
 #136					MOVE		kACS_INIT,fbTouchScreenEdit_15.accMode	{LNXT:75|76|-1}
 (*) USINT
-0800C716  2001     		mov r0, #1 ; 1
-0800C718  F8DF 7424		ldr r7, [pc, #+1060] ; 0x2000CA0D
-0800C71C  7038     		strb r0, [r7]
+0800C766  2001     		mov r0, #1 ; 1
+0800C768  F8DF 71E8		ldr r7, [pc, #+488] ; 0x2000CA0D
+0800C76C  7038     		strb r0, [r7]
 
 #137		
 #138					(* fbTouchScreenEdit_15 *)
 #139					CAL		fbTouchScreenEdit_15	{LNXT:76|77|-1}
 (*) USINT
-0800C71E  E92D 0021		stmdb sp!, { r0, r5 }
-0800C722  F8DF 7418		ldr r7, [pc, #+1048] ; 0x2000C9B0
-0800C726  4638     		mov r0, r7
-0800C728  F8DF 43C8		ldr r4, [pc, #+968] ; 0x80CA081
-0800C72C  F044 0401		orr r4, r4, #1
-0800C730  47A0     		blx r4
-0800C732  E8BD 0021		ldmia sp!, { r0, r5 }
+0800C76E  E92D 0021		stmdb sp!, { r0, r5 }
+0800C772  F8DF 71DC		ldr r7, [pc, #+476] ; 0x2000C9B0
+0800C776  4638     		mov r0, r7
+0800C778  F8DF 418C		ldr r4, [pc, #+396] ; 0x80CA081
+0800C77C  F044 0401		orr r4, r4, #1
+0800C780  47A0     		blx r4
+0800C782  E8BD 0021		ldmia sp!, { r0, r5 }
 
 #140		
 #141					(* fbTouchScreenEdit_15.accMode := kACS_PRINT; *)
 #142					MOVE		kACS_PRINT,fbTouchScreenEdit_15.accMode	{LNXT:77|78|-1}
 (*) USINT
-0800C736  2002     		mov r0, #2 ; 2
-0800C738  F8DF 7404		ldr r7, [pc, #+1028] ; 0x2000CA0D
-0800C73C  7038     		strb r0, [r7]
+0800C786  2002     		mov r0, #2 ; 2
+0800C788  F8DF 71C8		ldr r7, [pc, #+456] ; 0x2000CA0D
+0800C78C  7038     		strb r0, [r7]
 
 #143		
 #144					(* fbTouchScreenLine_16.accMode := kACS_INIT; *)
 #145					MOVE		kACS_INIT,fbTouchScreenLine_16.accMode	{LNXT:78|79|-1}
 (*) USINT
-0800C73E  2001     		mov r0, #1 ; 1
-0800C740  F8DF 7404		ldr r7, [pc, #+1028] ; 0x2000CA24
-0800C744  7038     		strb r0, [r7]
+0800C78E  2001     		mov r0, #1 ; 1
+0800C790  F8DF 71C8		ldr r7, [pc, #+456] ; 0x2000CA24
+0800C794  7038     		strb r0, [r7]
 
 #146		
 #147					(* fbTouchScreenLine_16 *)
 #148					CAL		fbTouchScreenLine_16	{LNXT:79|80|-1}
 (*) USINT
-0800C746  E92D 0021		stmdb sp!, { r0, r5 }
-0800C74A  F8DF 73F8		ldr r7, [pc, #+1016] ; 0x2000CA1C
-0800C74E  4638     		mov r0, r7
-0800C750  F8DF 43A4		ldr r4, [pc, #+932] ; 0x80CC1DF
-0800C754  F044 0401		orr r4, r4, #1
-0800C758  47A0     		blx r4
-0800C75A  E8BD 0021		ldmia sp!, { r0, r5 }
+0800C796  E92D 0021		stmdb sp!, { r0, r5 }
+0800C79A  F8DF 71BC		ldr r7, [pc, #+444] ; 0x2000CA1C
+0800C79E  4638     		mov r0, r7
+0800C7A0  F8DF 4168		ldr r4, [pc, #+360] ; 0x80CC1DF
+0800C7A4  F044 0401		orr r4, r4, #1
+0800C7A8  47A0     		blx r4
+0800C7AA  E8BD 0021		ldmia sp!, { r0, r5 }
 
 #149		
 #150					(* fbTouchScreenLine_16.accMode := kACS_PRINT; *)
 #151					MOVE		kACS_PRINT,fbTouchScreenLine_16.accMode	{LNXT:80|81|-1}
 (*) USINT
-0800C75E  2002     		mov r0, #2 ; 2
-0800C760  F8DF 73E4		ldr r7, [pc, #+996] ; 0x2000CA24
-0800C764  7038     		strb r0, [r7]
+0800C7AE  2002     		mov r0, #2 ; 2
+0800C7B0  F8DF 71A8		ldr r7, [pc, #+424] ; 0x2000CA24
+0800C7B4  7038     		strb r0, [r7]
 
 #152		
 #153					(* fbTouchScreenEdit_18.accMode := kACS_INIT; *)
 #154					MOVE		kACS_INIT,fbTouchScreenEdit_18.accMode	{LNXT:81|82|-1}
 (*) USINT
-0800C766  2001     		mov r0, #1 ; 1
-0800C768  F8DF 73E4		ldr r7, [pc, #+996] ; 0x2000CA89
-0800C76C  7038     		strb r0, [r7]
+0800C7B6  2001     		mov r0, #1 ; 1
+0800C7B8  F8DF 71A8		ldr r7, [pc, #+424] ; 0x2000CA89
+0800C7BC  7038     		strb r0, [r7]
 
 #155		
 #156					(* fbTouchScreenEdit_18 *)
 #157					CAL		fbTouchScreenEdit_18	{LNXT:82|83|-1}
 (*) USINT
-0800C76E  E92D 0021		stmdb sp!, { r0, r5 }
-0800C772  F8DF 73D8		ldr r7, [pc, #+984] ; 0x2000CA2C
-0800C776  4638     		mov r0, r7
-0800C778  F8DF 4378		ldr r4, [pc, #+888] ; 0x80CA081
-0800C77C  F044 0401		orr r4, r4, #1
-0800C780  47A0     		blx r4
-0800C782  E8BD 0021		ldmia sp!, { r0, r5 }
+0800C7BE  E92D 0021		stmdb sp!, { r0, r5 }
+0800C7C2  F8DF 719C		ldr r7, [pc, #+412] ; 0x2000CA2C
+0800C7C6  4638     		mov r0, r7
+0800C7C8  F8DF 413C		ldr r4, [pc, #+316] ; 0x80CA081
+0800C7CC  F044 0401		orr r4, r4, #1
+0800C7D0  47A0     		blx r4
+0800C7D2  E8BD 0021		ldmia sp!, { r0, r5 }
 
 #158		
 #159					(* fbTouchScreenEdit_18.accMode := kACS_PRINT; *)
 #160					MOVE		kACS_PRINT,fbTouchScreenEdit_18.accMode	{LNXT:83|84|-1}
 (*) USINT
-0800C786  2002     		mov r0, #2 ; 2
-0800C788  F8DF 73C4		ldr r7, [pc, #+964] ; 0x2000CA89
-0800C78C  7038     		strb r0, [r7]
+0800C7D6  2002     		mov r0, #2 ; 2
+0800C7D8  F8DF 7188		ldr r7, [pc, #+392] ; 0x2000CA89
+0800C7DC  7038     		strb r0, [r7]
 
 #161		
 #162					(* fbTouchScreenEdit_19.accMode := kACS_INIT; *)
 #163					MOVE		kACS_INIT,fbTouchScreenEdit_19.accMode	{LNXT:84|85|-1}
 (*) USINT
-0800C78E  2001     		mov r0, #1 ; 1
-0800C790  F8DF 73C4		ldr r7, [pc, #+964] ; 0x2000CAF5
-0800C794  7038     		strb r0, [r7]
+0800C7DE  2001     		mov r0, #1 ; 1
+0800C7E0  F8DF 7188		ldr r7, [pc, #+392] ; 0x2000CAF5
+0800C7E4  7038     		strb r0, [r7]
 
 #164		
 #165					(* fbTouchScreenEdit_19 *)
 #166					CAL		fbTouchScreenEdit_19	{LNXT:85|86|-1}
 (*) USINT
-0800C796  E92D 0021		stmdb sp!, { r0, r5 }
-0800C79A  F8DF 73B8		ldr r7, [pc, #+952] ; 0x2000CA98
-0800C79E  4638     		mov r0, r7
-0800C7A0  F8DF 4350		ldr r4, [pc, #+848] ; 0x80CA081
-0800C7A4  F044 0401		orr r4, r4, #1
-0800C7A8  47A0     		blx r4
-0800C7AA  E8BD 0021		ldmia sp!, { r0, r5 }
+0800C7E6  E92D 0021		stmdb sp!, { r0, r5 }
+0800C7EA  F8DF 717C		ldr r7, [pc, #+380] ; 0x2000CA98
+0800C7EE  4638     		mov r0, r7
+0800C7F0  F8DF 4114		ldr r4, [pc, #+276] ; 0x80CA081
+0800C7F4  F044 0401		orr r4, r4, #1
+0800C7F8  47A0     		blx r4
+0800C7FA  E8BD 0021		ldmia sp!, { r0, r5 }
 
 #167		
 #168					(* fbTouchScreenEdit_19.accMode := kACS_PRINT; *)
-#169					MOVE		kACS_PRINT,fbTouchScreenEdit_19.accMode	{LNXT:86|87|-1}
+#169					MOVE		kACS_PRINT,fbTouchScreenEdit_19.accMode	{LNXT:86|91|-1}
 (*) USINT
-0800C7AE  2002     		mov r0, #2 ; 2
-0800C7B0  F8DF 73A4		ldr r7, [pc, #+932] ; 0x2000CAF5
-0800C7B4  7038     		strb r0, [r7]
+0800C7FE  2002     		mov r0, #2 ; 2
+0800C800  F8DF 7168		ldr r7, [pc, #+360] ; 0x2000CAF5
+0800C804  7038     		strb r0, [r7]
 
 #170		
-#171					(* fbTouchScreenEdit_20.accMode := kACS_INIT; *)
-#172					MOVE		kACS_INIT,fbTouchScreenEdit_20.accMode	{LNXT:87|88|-1}
-(*) USINT
-0800C7B6  2001     		mov r0, #1 ; 1
-0800C7B8  F8DF 73A4		ldr r7, [pc, #+932] ; 0x2000CB61
-0800C7BC  7038     		strb r0, [r7]
-
+#171		$label3:
+#172				(* END_IF *)
 #173		
-#174					(* fbTouchScreenEdit_20 *)
-#175					CAL		fbTouchScreenEdit_20	{LNXT:88|89|-1}
-(*) USINT
-0800C7BE  E92D 0021		stmdb sp!, { r0, r5 }
-0800C7C2  F8DF 7398		ldr r7, [pc, #+920] ; 0x2000CB04
-0800C7C6  4638     		mov r0, r7
-0800C7C8  F8DF 4328		ldr r4, [pc, #+808] ; 0x80CA081
-0800C7CC  F044 0401		orr r4, r4, #1
-0800C7D0  47A0     		blx r4
-0800C7D2  E8BD 0021		ldmia sp!, { r0, r5 }
-
-#176		
-#177					(* fbTouchScreenEdit_20.accMode := kACS_PRINT; *)
-#178					MOVE		kACS_PRINT,fbTouchScreenEdit_20.accMode	{LNXT:89|94|-1}
-(*) USINT
-0800C7D6  2002     		mov r0, #2 ; 2
-0800C7D8  F8DF 7384		ldr r7, [pc, #+900] ; 0x2000CB61
-0800C7DC  7038     		strb r0, [r7]
-
-#179		
-#180		$label3:
-#181				(* END_IF *)
-#182		
-#183				(* res := Video_Unlock( res ); *)
-#184				LDP0		res	{LNXT:94|97|-1}
+#174				(* res := Video_Unlock( res ); *)
+#175				LDP0		res	{LNXT:91|94|-1}
 (-) USINT
-#185				Video_Unlock	{LNXT:94|97|-1}
+#176				Video_Unlock	{LNXT:91|94|-1}
 (*) USINT
-0800C7DE  7830     		ldrb r0, [r6]
-0800C7E0  F8DF 4304		ldr r4, [pc, #+772] ; 0x80C82D5
-0800C7E4  F044 0401		orr r4, r4, #1
-0800C7E8  47A0     		blx r4
+0800C806  7830     		ldrb r0, [r6]
+0800C808  F8DF 40F0		ldr r4, [pc, #+240] ; 0x80C82D5
+0800C80C  F044 0401		orr r4, r4, #1
+0800C810  47A0     		blx r4
 
-#186				ST		res	{LNXT:94|97|-1}
+#177				ST		res	{LNXT:91|94|-1}
 (-) USINT
-0800C7EA  7030     		strb r0, [r6]
+0800C812  7030     		strb r0, [r6]
 
-#187		
-#188				(* bStatRedrw := FALSE; *)
-#189				MOVE		FALSE,bStatRedrw	{LNXT:97|98|-1}
+#178		
+#179				(* bStatRedrw := FALSE; *)
+#180				MOVE		FALSE,bStatRedrw	{LNXT:94|95|-1}
 (*) USINT
-0800C7EC  2000     		mov r0, #0 ; 0
-0800C7EE  F8DF 7290		ldr r7, [pc, #+656] ; 0x1
-0800C7F2  55F0     		strb r0, [r6, +r7]
+0800C814  2000     		mov r0, #0 ; 0
+0800C816  F8DF 7094		ldr r7, [pc, #+148] ; 0x1
+0800C81A  55F0     		strb r0, [r6, +r7]
+
+#181		
+#182				(* bMapsReset := FALSE; *)
+#183				MOVE		FALSE,bMapsReset	{LNXT:95|98|-1}
+(*) BOOL
+0800C81C  2000     		mov r0, #0 ; 0
+0800C81E  F8DF 7090		ldr r7, [pc, #+144] ; 0x2
+0800C822  55F0     		strb r0, [r6, +r7]
+
+#184		
+#185				(* WHILE bStatRedrw *)
+#186		$label4:
+#187				LD		bStatRedrw	{LNXT:98|-1|-1}
+(*) UNDEF
+0800C824  F8DF 7084		ldr r7, [pc, #+132] ; 0x1
+0800C828  5DF0     		ldrb r0, [r6, +r7]
+
+#188				NOT	{LNXT:98|-1|-1}
+(*) BOOL
+0800C82A  2800     		cmp r0, #0
+0800C82C  BF08 2001		eqmov r0, #1
+0800C830  BF18 2000		nemov r0, #0
+
+#189				JMPCN		$label5	{LNXT:98|101|35}
+(-) BOOL
+0800C834  2800     		cmp r0, #0
+0800C836  D035     		beq #106 ; 0x0800C8A4
+
 
 #190		
-#191				(* bMapsReset := FALSE; *)
-#192				MOVE		FALSE,bMapsReset	{LNXT:98|101|-1}
-(*) BOOL
-0800C7F4  2000     		mov r0, #0 ; 0
-0800C7F6  F8DF 728C		ldr r7, [pc, #+652] ; 0x2
-0800C7FA  55F0     		strb r0, [r6, +r7]
-
-#193		
-#194				(* WHILE bStatRedrw *)
-#195		$label4:
-#196				LD		bStatRedrw	{LNXT:101|-1|-1}
+#191				(* DO *)
+#192		
+#193					(* IF $waitRefresh *)
+#194					LD		$waitRefresh	{LNXT:101|-1|-1}
 (*) UNDEF
-0800C7FC  F8DF 7280		ldr r7, [pc, #+640] ; 0x1
-0800C800  5DF0     		ldrb r0, [r6, +r7]
+0800C83A  F8DF 70E0		ldr r7, [pc, #+224] ; 0x2000C827
+0800C83E  7838     		ldrb r0, [r7]
 
-#197				NOT	{LNXT:101|-1|-1}
+#195					JMPCN	$label6	{LNXT:101|102|106}
+(-) BOOL
+0800C840  2800     		cmp r0, #0
+0800C842  D00A     		beq #20 ; 0x0800C85A
+
+
+#196		
+#197					(* THEN *)
+#198		
+#199						(* res := Video_Sleep( 50 ); *)
+#200						LDP0		50	{LNXT:102|98|-1}
+(-) BOOL
+#201						Video_Sleep	{LNXT:102|98|-1}
 (*) BOOL
-0800C802  2800     		cmp r0, #0
-0800C804  BF08 2001		eqmov r0, #1
-0800C808  BF18 2000		nemov r0, #0
+0800C846  2732     		mov r7, #50 ; 50
+0800C848  4638     		mov r0, r7
+0800C84A  F8DF 40B4		ldr r4, [pc, #+180] ; 0x80C82E9
+0800C84E  F044 0401		orr r4, r4, #1
+0800C852  47A0     		blx r4
 
-#198				JMPCN		$label5	{LNXT:101|104|35}
-(-) BOOL
-0800C80C  2800     		cmp r0, #0
-0800C80E  F000 8132		beq #612 ; 0x0800CA76
+#202						ST		res	{LNXT:102|98|-1}
+(-) USINT
+0800C854  7030     		strb r0, [r6]
 
-
-#199		
-#200				(* DO *)
-#201		
-#202					(* IF $waitRefresh *)
-#203					LD		$waitRefresh	{LNXT:104|-1|-1}
-(*) UNDEF
-0800C812  F8DF 72F4		ldr r7, [pc, #+756] ; 0x2000C823
-0800C816  7838     		ldrb r0, [r7]
-
-#204					JMPCN	$label6	{LNXT:104|105|109}
-(-) BOOL
-0800C818  2800     		cmp r0, #0
-0800C81A  D00A     		beq #20 ; 0x0800C832
+#203						JMP		$label7	{LNXT:101|102|106}
+(-) USINT
+0800C856  E024     		b #72 ; 0x0800C8A2
 
 
+#204		$label6:
 #205		
-#206					(* THEN *)
+#206					(* ELSE *)
 #207		
-#208						(* res := Video_Sleep( 50 ); *)
-#209						LDP0		50	{LNXT:105|101|-1}
-(-) BOOL
-#210						Video_Sleep	{LNXT:105|101|-1}
-(*) BOOL
-0800C81E  2732     		mov r7, #50 ; 50
-0800C820  4638     		mov r0, r7
-0800C822  F8DF 42C8		ldr r4, [pc, #+712] ; 0x80C82E9
-0800C826  F044 0401		orr r4, r4, #1
-0800C82A  47A0     		blx r4
-
-#211						ST		res	{LNXT:105|101|-1}
+#208						(* udiev := Video_GetEvent( res ); *)
+#209						LDP0		res	{LNXT:106|108|-1}
 (-) USINT
-0800C82C  7030     		strb r0, [r6]
-
-#212						JMP		$label7	{LNXT:104|105|109}
-(-) USINT
-0800C82E  E121     		b #578 ; 0x0800CA74
-
-
-#213		$label6:
-#214		
-#215					(* ELSE *)
-#216		
-#217						(* udiev := Video_GetEvent( res ); *)
-#218						LDP0		res	{LNXT:109|111|-1}
-(-) USINT
-#219						Video_GetEvent	{LNXT:109|111|-1}
+#210						Video_GetEvent	{LNXT:106|108|-1}
 (*) USINT
-0800C832  7830     		ldrb r0, [r6]
-0800C834  F8DF 429C		ldr r4, [pc, #+668] ; 0x80C73B9
-0800C838  F044 0401		orr r4, r4, #1
-0800C83C  47A0     		blx r4
+0800C85A  7830     		ldrb r0, [r6]
+0800C85C  F8DF 4094		ldr r4, [pc, #+148] ; 0x80C73B9
+0800C860  F044 0401		orr r4, r4, #1
+0800C864  47A0     		blx r4
 
-#220						ST		udiev	{LNXT:109|111|-1}
+#211						ST		udiev	{LNXT:106|108|-1}
 (*) UDINT
-0800C83E  F8DF 724C		ldr r7, [pc, #+588] ; 0x20
-0800C842  51F0     		str r0, [r6, +r7]
+0800C866  F8DF 704C		ldr r7, [pc, #+76] ; 0x20
+0800C86A  51F0     		str r0, [r6, +r7]
 
-#221		
-#222						(* ev := TO_UINT(udiev); *)
-#223						LDP0		udiev	{LNXT:111|114|-1}
+#212		
+#213						(* ev := TO_UINT(udiev); *)
+#214						LDP0		udiev	{LNXT:108|111|-1}
 (-) UDINT
-#224						TO_UINT	{LNXT:111|114|-1}
+#215						TO_UINT	{LNXT:108|111|-1}
 (*) UDINT
-0800C844  F8DF 7244		ldr r7, [pc, #+580] ; 0x20
-0800C848  59F0     		ldr r0, [r6, +r7]
+0800C86C  F8DF 7044		ldr r7, [pc, #+68] ; 0x20
+0800C870  59F0     		ldr r0, [r6, +r7]
 
-#225						ST		ev	{LNXT:111|114|-1}
+#216						ST		ev	{LNXT:108|111|-1}
 (*) UINT
-0800C84A  F8DF 7244		ldr r7, [pc, #+580] ; 0x24
-0800C84E  53F0     		strh r0, [r6, +r7]
+0800C872  F8DF 7044		ldr r7, [pc, #+68] ; 0x24
+0800C876  53F0     		strh r0, [r6, +r7]
+
+#217		
+#218		
+#219						(* CASE ev OF *)
+#220		
+#221						(* kWM_KEY: *)
+#222						LD		ev	{LNXT:113|-1|-1}
+(*) UNDEF
+0800C878  F8DF 703C		ldr r7, [pc, #+60] ; 0x24
+0800C87C  5BF0     		ldrh r0, [r6, +r7]
+
+#223						EQ		kWM_KEY	{LNXT:113|-1|-1}
+(*) UINT
+0800C87E  2701     		mov r7, #1 ; 1
+0800C880  42B8     		cmp r0, r7
+0800C882  BF18 2000		nemov r0, #0
+0800C886  BF08 2001		eqmov r0, #1
+
+#224						JMPC		$label9	{LNXT:113|115|98}
+(-) BOOL
+0800C88A  2800     		cmp r0, #0
+0800C88C  D102     		bne #4 ; 0x0800C894
+
+
+#225						JMP		$label8	{LNXT:113|115|98}
+(-) BOOL
+0800C890  E007     		b #14 ; 0x0800C8A2
+
 
 #226		
-#227		
-#228						(* CASE ev OF *)
-#229		
-#230						(* kWM_KEY: *)
-#231						LD		ev	{LNXT:116|-1|-1}
-(*) UNDEF
-0800C850  F8DF 723C		ldr r7, [pc, #+572] ; 0x24
-0800C854  5BF0     		ldrh r0, [r6, +r7]
-
-#232						EQ		kWM_KEY	{LNXT:116|-1|-1}
-(*) UINT
-0800C856  2701     		mov r7, #1 ; 1
-0800C858  42B8     		cmp r0, r7
-0800C85A  BF18 2000		nemov r0, #0
-0800C85E  BF08 2001		eqmov r0, #1
-
-#233						JMPC		$label9	{LNXT:116|118|121}
+#227						(* Istruzioni di ciascun CASE: *)
+#228		
+#229		$label9:
+#230							(* key := TO_USINT(SHR(udiev, 16)); *)
+#231							LDP0		udiev	{LNXT:115|98|-1}
 (-) BOOL
-0800C862  2800     		cmp r0, #0
-0800C864  D10E     		bne #28 ; 0x0800C884
-
-
-#234		
-#235						(* kWM_SELECT: *)
-#236						LD		ev	{LNXT:121|-1|-1}
-(*) UNDEF
-0800C868  F8DF 7224		ldr r7, [pc, #+548] ; 0x24
-0800C86C  5BF0     		ldrh r0, [r6, +r7]
-
-#237						EQ		kWM_SELECT	{LNXT:121|-1|-1}
-(*) UINT
-0800C86E  2703     		mov r7, #3 ; 3
-0800C870  42B8     		cmp r0, r7
-0800C872  BF18 2000		nemov r0, #0
-0800C876  BF08 2001		eqmov r0, #1
-
-#238						JMPC		$label10	{LNXT:121|124|101}
-(-) BOOL
-0800C87A  2800     		cmp r0, #0
-0800C87C  D10B     		bne #22 ; 0x0800C896
-
-
-#239						JMP		$label8	{LNXT:121|124|101}
-(-) BOOL
-0800C880  E0F8     		b #496 ; 0x0800CA74
-
-
-#240		
-#241						(* Istruzioni di ciascun CASE: *)
-#242		
-#243		$label9:
-#244							(* key := TO_USINT(SHR(udiev, 16)); *)
-#245							LDP0		udiev	{LNXT:118|101|-1}
-(-) BOOL
-#246							SHR		16	{LNXT:118|101|-1}
+#232							SHR		16	{LNXT:115|98|-1}
 (*) BOOL
-0800C884  F8DF 7204		ldr r7, [pc, #+516] ; 0x20
-0800C888  59F0     		ldr r0, [r6, +r7]
-0800C88A  0C00     		lsr r0, r0, #16
+0800C894  F8DF 701C		ldr r7, [pc, #+28] ; 0x20
+0800C898  59F0     		ldr r0, [r6, +r7]
+0800C89A  0C00     		lsr r0, r0, #16
 
-#247							TO_USINT	{LNXT:118|101|-1}
+#233							TO_USINT	{LNXT:115|98|-1}
 (-) UDINT
-#248							ST		key	{LNXT:118|101|-1}
+#234							ST		key	{LNXT:115|98|-1}
 (*) USINT
-0800C88C  F8DF 7204		ldr r7, [pc, #+516] ; 0x26
-0800C890  55F0     		strb r0, [r6, +r7]
+0800C89C  F8DF 701C		ldr r7, [pc, #+28] ; 0x26
+0800C8A0  55F0     		strb r0, [r6, +r7]
 
-#249							JMP		$label8	{LNXT:118|101|-1}
+#235		
+#236		$label8:
+#237		
+#238						(* END_CASE *)
+#239		
+#240		$label7:
+#241					(* END_IF *)
+#242					JMP		$label4	{LNXT:98|101|35}
 (-) USINT
-0800C892  E0EF     		b #478 ; 0x0800CA74
+0800C8A2  E7BF     		b #-130 ; 0x0800C824
 
-
-#250		
-#251		$label10:
-#252							(* iNextSel := TO_INT(SHR(udiev, 16)); *)
-#253							LDP0		udiev	{LNXT:124|126|-1}
+#243		
+#244		$label5:
+#245				(* END_WHILE *)
+#246				JMP		$label0	{LNXT:35|38|-1}
 (-) USINT
-#254							SHR		16	{LNXT:124|126|-1}
-(*) USINT
-0800C896  F8DF 71F4		ldr r7, [pc, #+500] ; 0x20
-0800C89A  59F0     		ldr r0, [r6, +r7]
-0800C89C  0C00     		lsr r0, r0, #16
-
-#255							TO_INT	{LNXT:124|126|-1}
-(-) UDINT
-0800C89E  B200     		sxth r0, r0
-
-#256							ST		iNextSel	{LNXT:124|126|-1}
-(*) INT
-0800C8A0  F8DF 71E4		ldr r7, [pc, #+484] ; 0x4
-0800C8A4  53F0     		strh r0, [r6, +r7]
-
-#257		
-#258		
-#259							(* IF res <> 0 *)
-#260							LD		res	{LNXT:126|-1|-1}
-(-) UNDEF
-0800C8A6  7830     		ldrb r0, [r6]
-
-#261							NE		0	{LNXT:126|-1|-1}
-(*) USINT
-0800C8A8  2800     		cmp r0, #0
-0800C8AA  BF08 2000		eqmov r0, #0
-0800C8AE  BF18 2001		nemov r0, #1
-
-#262							JMPCN	$label11	{LNXT:126|129|139}
-(-) BOOL
-0800C8B2  2800     		cmp r0, #0
-0800C8B4  D00D     		beq #26 ; 0x0800C8D2
-
-
-#263		
-#264							(* THEN *)
-#265		
-#266		
-#267								(* CASE iNextSel OF *)
-#268		
-#269								(* 4: *)
-#270								LD		iNextSel	{LNXT:130|-1|-1}
-(*) UNDEF
-0800C8B8  F8DF 71CC		ldr r7, [pc, #+460] ; 0x4
-0800C8BC  5FF0     		ldrsh r0, [r6, +r7]
-
-#271								EQ		4	{LNXT:130|-1|-1}
-(*) INT
-0800C8BE  2804     		cmp r0, #4
-0800C8C0  BF18 2000		nemov r0, #0
-0800C8C4  BF08 2001		eqmov r0, #1
-
-#272								JMPC		$label13	{LNXT:130|139|139}
-(-) BOOL
-0800C8C8  2800     		cmp r0, #0
-0800C8CA  D102     		bne #4 ; 0x0800C8D2
-
-
-#273								JMP		$label12	{LNXT:130|139|139}
-(-) BOOL
-0800C8CE  E000     		b #0 ; 0x0800C8D2
-
-
-#274		
-#275								(* Istruzioni di ciascun CASE: *)
-#276		
-#277		$label13:
-#278		$label12:
-#279		
-#280								(* END_CASE *)
-#281		
-#282		$label11:
-#283							(* END_IF *)
-#284		
-#285		
-#286							(* CASE iNextSel OF *)
-#287		
-#288							(* 2: *)
-#289							LD		iNextSel	{LNXT:140|-1|-1}
-(*) UNDEF
-0800C8D2  F8DF 71B4		ldr r7, [pc, #+436] ; 0x4
-0800C8D6  5FF0     		ldrsh r0, [r6, +r7]
-
-#290							EQ		2	{LNXT:140|-1|-1}
-(*) INT
-0800C8D8  2802     		cmp r0, #2
-0800C8DA  BF18 2000		nemov r0, #0
-0800C8DE  BF08 2001		eqmov r0, #1
-
-#291							JMPC		$label15	{LNXT:140|144|101}
-(-) BOOL
-0800C8E2  2800     		cmp r0, #0
-0800C8E4  D12E     		bne #92 ; 0x0800C944
-
-
-#292		
-#293							(* 3: *)
-#294							LD		iNextSel	{LNXT:140|-1|-1}
-(*) UNDEF
-0800C8E8  F8DF 719C		ldr r7, [pc, #+412] ; 0x4
-0800C8EC  5FF0     		ldrsh r0, [r6, +r7]
-
-#295							EQ		3	{LNXT:140|-1|-1}
-(*) INT
-0800C8EE  2803     		cmp r0, #3
-0800C8F0  BF18 2000		nemov r0, #0
-0800C8F4  BF08 2001		eqmov r0, #1
-
-#296							JMPC		$label15	{LNXT:140|144|101}
-(-) BOOL
-0800C8F8  2800     		cmp r0, #0
-0800C8FA  D123     		bne #70 ; 0x0800C944
-
-
-#297		
-#298							(* 4: *)
-#299							LD		iNextSel	{LNXT:140|-1|-1}
-(*) UNDEF
-0800C8FE  F8DF 7188		ldr r7, [pc, #+392] ; 0x4
-0800C902  5FF0     		ldrsh r0, [r6, +r7]
-
-#300							EQ		4	{LNXT:140|-1|-1}
-(*) INT
-0800C904  2804     		cmp r0, #4
-0800C906  BF18 2000		nemov r0, #0
-0800C90A  BF08 2001		eqmov r0, #1
-
-#301							JMPC		$label15	{LNXT:140|144|101}
-(-) BOOL
-0800C90E  2800     		cmp r0, #0
-0800C910  D118     		bne #48 ; 0x0800C944
-
-
-#302		
-#303							(* 5: *)
-#304							LD		iNextSel	{LNXT:140|-1|-1}
-(*) UNDEF
-0800C914  F8DF 7170		ldr r7, [pc, #+368] ; 0x4
-0800C918  5FF0     		ldrsh r0, [r6, +r7]
-
-#305							EQ		5	{LNXT:140|-1|-1}
-(*) INT
-0800C91A  2805     		cmp r0, #5
-0800C91C  BF18 2000		nemov r0, #0
-0800C920  BF08 2001		eqmov r0, #1
-
-#306							JMPC		$label15	{LNXT:140|144|101}
-(-) BOOL
-0800C924  2800     		cmp r0, #0
-0800C926  D10D     		bne #26 ; 0x0800C944
-
-
-#307		
-#308							(* 6: *)
-#309							LD		iNextSel	{LNXT:140|-1|-1}
-(*) UNDEF
-0800C92A  F8DF 715C		ldr r7, [pc, #+348] ; 0x4
-0800C92E  5FF0     		ldrsh r0, [r6, +r7]
-
-#310							EQ		6	{LNXT:140|-1|-1}
-(*) INT
-0800C930  2806     		cmp r0, #6
-0800C932  BF18 2000		nemov r0, #0
-0800C936  BF08 2001		eqmov r0, #1
-
-#311							JMPC		$label15	{LNXT:140|144|101}
-(-) BOOL
-0800C93A  2800     		cmp r0, #0
-0800C93C  D102     		bne #4 ; 0x0800C944
-
-
-#312							JMP		$label14	{LNXT:140|144|101}
-(-) BOOL
-0800C940  E098     		b #304 ; 0x0800CA74
-
-
-#313		
-#314							(* Istruzioni di ciascun CASE: *)
-#315		
-#316		$label15:
-#317								(* REPEAT *)
-#318		$label16:
-#319		
-#320									(* res := Video_EnterEdit( TO_UINT( iNextSel ) ); *)
-#321									LDP0		iNextSel	{LNXT:144|146|-1}
-(-) BOOL
-#322									TO_UINT	{LNXT:144|146|-1}
-(*) BOOL
-0800C944  F8DF 7140		ldr r7, [pc, #+320] ; 0x4
-0800C948  5FF0     		ldrsh r0, [r6, +r7]
-
-#323									Video_EnterEdit	{LNXT:144|146|-1}
-(*) UINT
-0800C94A  F8DF 418C		ldr r4, [pc, #+396] ; 0x80C7435
-0800C94E  F044 0401		orr r4, r4, #1
-0800C952  47A0     		blx r4
-
-#324									ST		res	{LNXT:144|146|-1}
-(-) USINT
-0800C954  7030     		strb r0, [r6]
-
-#325		
-#326		
-#327									(* IF res = kKEY_ArrowUp *)
-#328									LD		res	{LNXT:146|-1|-1}
-(-) UNDEF
-0800C956  7830     		ldrb r0, [r6]
-
-#329									EQ		kKEY_ArrowUp	{LNXT:146|-1|-1}
-(*) USINT
-0800C958  280B     		cmp r0, #11
-0800C95A  BF18 2000		nemov r0, #0
-0800C95E  BF08 2001		eqmov r0, #1
-
-#330									JMPCN	$label18	{LNXT:146|148|153}
-(-) BOOL
-0800C962  2800     		cmp r0, #0
-0800C964  D02A     		beq #84 ; 0x0800C9BC
-
-
-#331		
-#332									(* THEN *)
-#333		
-#334										(* iNextSel := TO_INT( Video_NextEdit( TRUE ) ); *)
-#335										LDP0		TRUE	{LNXT:148|149|-1}
-(-) BOOL
-#336										Video_NextEdit	{LNXT:148|149|-1}
-(*) BOOL
-0800C968  2701     		mov r7, #1 ; 1
-0800C96A  4638     		mov r0, r7
-0800C96C  F8DF 416C		ldr r4, [pc, #+364] ; 0x80C7885
-0800C970  F044 0401		orr r4, r4, #1
-0800C974  47A0     		blx r4
-
-#337										TO_INT	{LNXT:148|149|-1}
-(-) UINT
-0800C976  B200     		sxth r0, r0
-
-#338										ST		iNextSel	{LNXT:148|149|-1}
-(*) INT
-0800C978  F8DF 710C		ldr r7, [pc, #+268] ; 0x4
-0800C97C  53F0     		strh r0, [r6, +r7]
-
-#339		
-#340		
-#341										(* IF iNextSel > -1 *)
-#342										LD		iNextSel	{LNXT:149|-1|-1}
-(*) UNDEF
-0800C97E  F8DF 7108		ldr r7, [pc, #+264] ; 0x4
-0800C982  5FF0     		ldrsh r0, [r6, +r7]
-
-#343										GT		-1	{LNXT:149|-1|-1}
-(*) INT
-0800C984  F04F 37FF		mov r7, #4294967295 ; 4294967295
-0800C988  42B8     		cmp r0, r7
-0800C98A  BFD8 2000		lemov r0, #0
-0800C98E  BFC8 2001		gtmov r0, #1
-
-#344										JMPCN	$label20	{LNXT:149|150|162}
-(-) BOOL
-0800C992  2800     		cmp r0, #0
-0800C994  D010     		beq #32 ; 0x0800C9B8
-
-
-#345		
-#346										(* THEN *)
-#347		
-#348											(* res := Video_SendEvent( kWM_SELECT, TO_UINT(iNextSel) ); *)
-#349											LDP0		iNextSel	{LNXT:150|162|-1}
-(-) BOOL
-#350											TO_UINT	{LNXT:150|162|-1}
-(*) BOOL
-0800C998  F8DF 70EC		ldr r7, [pc, #+236] ; 0x4
-0800C99C  5FF0     		ldrsh r0, [r6, +r7]
-
-#351											ST		$$TMP1	{LNXT:150|162|-1}
-(*) UINT
-0800C99E  F8DF 710C		ldr r7, [pc, #+268] ; 0x38
-0800C9A2  53F0     		strh r0, [r6, +r7]
-
-#352											LDP0		kWM_SELECT	{LNXT:150|162|-1}
-(-) UINT
-#353											Video_SendEvent		$$TMP1	{LNXT:150|162|-1}
-(*) UINT
-0800C9A4  2003     		mov r0, #3 ; 3
-0800C9A6  F8DF 7104		ldr r7, [pc, #+260] ; 0x38
-0800C9AA  5BF1     		ldrh r1, [r6, +r7]
-0800C9AC  F8DF 4120		ldr r4, [pc, #+288] ; 0x80C7357
-0800C9B0  F044 0401		orr r4, r4, #1
-0800C9B4  47A0     		blx r4
-
-#354											ST		res	{LNXT:150|162|-1}
-(-) USINT
-0800C9B6  7030     		strb r0, [r6]
-
-#355		
-#356		$label20:
-#357										(* END_IF *)
-#358										JMP		$label19	{LNXT:146|148|153}
-(-) USINT
-0800C9B8  E031     		b #98 ; 0x0800CA1E
-
-
-#359		$label18:
-#360		
-#361									(* ELSIF res = kKEY_ArrowDw *)
-#362									LD		res	{LNXT:153|-1|-1}
-(-) UNDEF
-0800C9BC  7830     		ldrb r0, [r6]
-
-#363									EQ		kKEY_ArrowDw	{LNXT:153|-1|-1}
-(*) USINT
-0800C9BE  280A     		cmp r0, #10
-0800C9C0  BF18 2000		nemov r0, #0
-0800C9C4  BF08 2001		eqmov r0, #1
-
-#364									JMPCN	$label19	{LNXT:153|155|162}
-(-) BOOL
-0800C9C8  2800     		cmp r0, #0
-0800C9CA  D028     		beq #80 ; 0x0800CA1E
-
-
-#365		
-#366									(* THEN *)
-#367		
-#368										(* iNextSel := TO_INT( Video_PrevEdit( TRUE ) ); *)
-#369										LDP0		TRUE	{LNXT:155|156|-1}
-(-) BOOL
-#370										Video_PrevEdit	{LNXT:155|156|-1}
-(*) BOOL
-0800C9CE  2701     		mov r7, #1 ; 1
-0800C9D0  4638     		mov r0, r7
-0800C9D2  F8DF 410C		ldr r4, [pc, #+268] ; 0x80C7D79
-0800C9D6  F044 0401		orr r4, r4, #1
-0800C9DA  47A0     		blx r4
-
-#371										TO_INT	{LNXT:155|156|-1}
-(-) UINT
-0800C9DC  B200     		sxth r0, r0
-
-#372										ST		iNextSel	{LNXT:155|156|-1}
-(*) INT
-0800C9DE  F8DF 70A8		ldr r7, [pc, #+168] ; 0x4
-0800C9E2  53F0     		strh r0, [r6, +r7]
-
-#373		
-#374		
-#375										(* IF iNextSel > -1 *)
-#376										LD		iNextSel	{LNXT:156|-1|-1}
-(*) UNDEF
-0800C9E4  F8DF 70A0		ldr r7, [pc, #+160] ; 0x4
-0800C9E8  5FF0     		ldrsh r0, [r6, +r7]
-
-#377										GT		-1	{LNXT:156|-1|-1}
-(*) INT
-0800C9EA  F04F 37FF		mov r7, #4294967295 ; 4294967295
-0800C9EE  42B8     		cmp r0, r7
-0800C9F0  BFD8 2000		lemov r0, #0
-0800C9F4  BFC8 2001		gtmov r0, #1
-
-#378										JMPCN	$label21	{LNXT:156|157|162}
-(-) BOOL
-0800C9F8  2800     		cmp r0, #0
-0800C9FA  D010     		beq #32 ; 0x0800CA1E
-
-
-#379		
-#380										(* THEN *)
-#381		
-#382											(* res := Video_SendEvent( kWM_SELECT, TO_UINT(iNextSel) ); *)
-#383											LDP0		iNextSel	{LNXT:157|162|-1}
-(-) BOOL
-#384											TO_UINT	{LNXT:157|162|-1}
-(*) BOOL
-0800C9FE  F8DF 7088		ldr r7, [pc, #+136] ; 0x4
-0800CA02  5FF0     		ldrsh r0, [r6, +r7]
-
-#385											ST		$$TMP1	{LNXT:157|162|-1}
-(*) UINT
-0800CA04  F8DF 70A4		ldr r7, [pc, #+164] ; 0x38
-0800CA08  53F0     		strh r0, [r6, +r7]
-
-#386											LDP0		kWM_SELECT	{LNXT:157|162|-1}
-(-) UINT
-#387											Video_SendEvent		$$TMP1	{LNXT:157|162|-1}
-(*) UINT
-0800CA0A  2003     		mov r0, #3 ; 3
-0800CA0C  F8DF 709C		ldr r7, [pc, #+156] ; 0x38
-0800CA10  5BF1     		ldrh r1, [r6, +r7]
-0800CA12  F8DF 40BC		ldr r4, [pc, #+188] ; 0x80C7357
-0800CA16  F044 0401		orr r4, r4, #1
-0800CA1A  47A0     		blx r4
-
-#388											ST		res	{LNXT:157|162|-1}
-(-) USINT
-0800CA1C  7030     		strb r0, [r6]
-
-#389		
-#390		$label21:
-#391										(* END_IF *)
-#392		
-#393		$label19:
-#394									(* END_IF *)
-#395		
-#396								(* UNTIL res <> kKEY_Confirm *)
-#397		
-#398								(*  *)
-#399								LD		res	{LNXT:162|-1|-1}
-(-) UNDEF
-0800CA1E  7830     		ldrb r0, [r6]
-
-#400								NE		kKEY_Confirm	{LNXT:162|-1|-1}
-(*) USINT
-0800CA20  280E     		cmp r0, #14
-0800CA22  BF08 2000		eqmov r0, #0
-0800CA26  BF18 2001		nemov r0, #1
-
-#401									JMPCN	$label16	{LNXT:162|144|165}
-(-) BOOL
-0800CA2A  2800     		cmp r0, #0
-0800CA2C  D08A     		beq #-236 ; 0x0800C944
-
-#402		$label17:
-#403		
-#404								(* END_REPEAT *)
-#405		
-#406		
-#407								(* IF res <> 255 *)
-#408								LD		res	{LNXT:165|-1|-1}
-(-) UNDEF
-0800CA2E  7830     		ldrb r0, [r6]
-
-#409								NE		255	{LNXT:165|-1|-1}
-(*) USINT
-0800CA30  28FF     		cmp r0, #255
-0800CA32  BF08 2000		eqmov r0, #0
-0800CA36  BF18 2001		nemov r0, #1
-
-#410								JMPCN	$label22	{LNXT:165|167|101}
-(-) BOOL
-0800CA3A  2800     		cmp r0, #0
-0800CA3C  D01A     		beq #52 ; 0x0800CA74
-
-
-#411		
-#412								(* THEN *)
-#413		
-#414									(* x1:= 0; *)
-#415									MOVE		0,x1	{LNXT:167|168|-1}
-(*) BOOL
-0800CA40  2000     		mov r0, #0 ; 0
-0800CA42  F8DF 7054		ldr r7, [pc, #+84] ; 0x28
-0800CA46  53F0     		strh r0, [r6, +r7]
-
-#416		
-#417									(* y1:= 0; *)
-#418									MOVE		0,y1	{LNXT:168|169|-1}
-(*) UINT
-0800CA48  2000     		mov r0, #0 ; 0
-0800CA4A  F8DF 7050		ldr r7, [pc, #+80] ; 0x2A
-0800CA4E  53F0     		strh r0, [r6, +r7]
-
-#419		
-#420									(* x2:= 239; *)
-#421									MOVE		239,x2	{LNXT:169|170|-1}
-(*) UINT
-0800CA50  20EF     		mov r0, #239 ; 239
-0800CA52  F8DF 704C		ldr r7, [pc, #+76] ; 0x2C
-0800CA56  53F0     		strh r0, [r6, +r7]
-
-#422		
-#423									(* y2:= 319; *)
-#424									MOVE		319,y2	{LNXT:170|171|-1}
-(*) UINT
-0800CA58  F8DF 7054		ldr r7, [pc, #+84] ; 0x13F
-0800CA5C  4638     		mov r0, r7
-0800CA5E  F8DF 7044		ldr r7, [pc, #+68] ; 0x2E
-0800CA62  53F0     		strh r0, [r6, +r7]
-
-#425		
-#426									(* bMapsReset := TRUE; *)
-#427									MOVE		TRUE,bMapsReset	{LNXT:171|172|-1}
-(*) UINT
-0800CA64  2001     		mov r0, #1 ; 1
-0800CA66  F8DF 701C		ldr r7, [pc, #+28] ; 0x2
-0800CA6A  55F0     		strb r0, [r6, +r7]
-
-#428		
-#429									(* bStatRedrw := TRUE; *)
-#430									MOVE		TRUE,bStatRedrw	{LNXT:172|101|-1}
-(*) BOOL
-0800CA6C  2001     		mov r0, #1 ; 1
-0800CA6E  F8DF 7010		ldr r7, [pc, #+16] ; 0x1
-0800CA72  55F0     		strb r0, [r6, +r7]
-
-#431		
-#432		$label22:
-#433								(* END_IF *)
-#434		
-#435		$label14:
-#436		
-#437							(* END_CASE *)
-#438		
-#439		$label8:
-#440		
-#441						(* END_CASE *)
-#442		
-#443		$label7:
-#444					(* END_IF *)
-#445					JMP		$label4	{LNXT:101|104|35}
-(-) BOOL
-0800CA74  E6C2     		b #-636 ; 0x0800C7FC
-
-#446		
-#447		$label5:
-#448				(* END_WHILE *)
-#449				JMP		$label0	{LNXT:35|38|-1}
-(-) BOOL
-0800CA76  E5A5     		b #-1206 ; 0x0800C5C4
-
-0800CA78  E8BD 4040		ldmia sp!, { r6, lr }
-
-0800CA7C  4770     		bx lr
-
-0800CA80  00000001		; 0x00000001
-0800CA84  00000002		; 0x00000002
-0800CA88  00000004		; 0x00000004
-0800CA8C  00000020		; 0x00000020
-0800CA90  00000024		; 0x00000024
-0800CA94  00000026		; 0x00000026
-0800CA98  00000028		; 0x00000028
-0800CA9C  0000002A		; 0x0000002A
-0800CAA0  0000002C		; 0x0000002C
-0800CAA4  0000002E		; 0x0000002E
-0800CAA8  00000034		; 0x00000034
-0800CAAC  00000038		; 0x00000038
-0800CAB0  0000013F		; 0x0000013F
-0800CAB4  00FFFFFF		; 0x00FFFFFF
-0800CAB8  0800C180		; 0x0800C180
-0800CABC  0800C194		; 0x0800C194
-0800CAC0  0800C1C8		; 0x0800C1C8
-0800CAC4  080C5C1D		; 0x080C5C1D
-0800CAC8  080C6483		; 0x080C6483
-0800CACC  080C6521		; 0x080C6521
-0800CAD0  080C7357		; 0x080C7357
-0800CAD4  080C73B9		; 0x080C73B9
-0800CAD8  080C7435		; 0x080C7435
-0800CADC  080C7885		; 0x080C7885
-0800CAE0  080C7D79		; 0x080C7D79
-0800CAE4  080C82C5		; 0x080C82C5
-0800CAE8  080C82D5		; 0x080C82D5
-0800CAEC  080C82E9		; 0x080C82E9
-0800CAF0  080C82F7		; 0x080C82F7
-0800CAF4  080CA081		; 0x080CA081
-0800CAF8  080CC1DF		; 0x080CC1DF
-0800CAFC  080CC80B		; 0x080CC80B
-0800CB00  080DE799		; 0x080DE799
-0800CB04  2000C81A		; 0x2000C81A
-0800CB08  2000C823		; 0x2000C823
-0800CB0C  2000C828		; 0x2000C828
-0800CB10  2000C878		; 0x2000C878
-0800CB14  2000C898		; 0x2000C898
-0800CB18  2000C89A		; 0x2000C89A
-0800CB1C  2000C8B4		; 0x2000C8B4
-0800CB20  2000C911		; 0x2000C911
-0800CB24  2000C920		; 0x2000C920
-0800CB28  2000C92E		; 0x2000C92E
-0800CB2C  2000C960		; 0x2000C960
-0800CB30  2000C968		; 0x2000C968
-0800CB34  2000C970		; 0x2000C970
-0800CB38  2000C97E		; 0x2000C97E
-0800CB3C  2000C9B0		; 0x2000C9B0
-0800CB40  2000CA0D		; 0x2000CA0D
-0800CB44  2000CA1C		; 0x2000CA1C
-0800CB48  2000CA24		; 0x2000CA24
-0800CB4C  2000CA2C		; 0x2000CA2C
-0800CB50  2000CA89		; 0x2000CA89
-0800CB54  2000CA98		; 0x2000CA98
-0800CB58  2000CAF5		; 0x2000CAF5
-0800CB5C  2000CB04		; 0x2000CB04
-0800CB60  2000CB61		; 0x2000CB61
+0800C8A4  E6B6     		b #-660 ; 0x0800C614
+
+0800C8A6  E8BD 4040		ldmia sp!, { r6, lr }
+
+0800C8AA  4770     		bx lr
+
+0800C8AC  00000001		; 0x00000001
+0800C8B0  00000002		; 0x00000002
+0800C8B4  00000020		; 0x00000020
+0800C8B8  00000024		; 0x00000024
+0800C8BC  00000026		; 0x00000026
+0800C8C0  00000028		; 0x00000028
+0800C8C4  0000002A		; 0x0000002A
+0800C8C8  0000002C		; 0x0000002C
+0800C8CC  0000002E		; 0x0000002E
+0800C8D0  00000034		; 0x00000034
+0800C8D4  0000013F		; 0x0000013F
+0800C8D8  00FFFFFF		; 0x00FFFFFF
+0800C8DC  0800C1D0		; 0x0800C1D0
+0800C8E0  0800C1E4		; 0x0800C1E4
+0800C8E4  0800C218		; 0x0800C218
+0800C8E8  080C5C1D		; 0x080C5C1D
+0800C8EC  080C6483		; 0x080C6483
+0800C8F0  080C6521		; 0x080C6521
+0800C8F4  080C73B9		; 0x080C73B9
+0800C8F8  080C82C5		; 0x080C82C5
+0800C8FC  080C82D5		; 0x080C82D5
+0800C900  080C82E9		; 0x080C82E9
+0800C904  080C82F7		; 0x080C82F7
+0800C908  080CA081		; 0x080CA081
+0800C90C  080CC1DF		; 0x080CC1DF
+0800C910  080CC80B		; 0x080CC80B
+0800C914  080DE799		; 0x080DE799
+0800C918  2000C81E		; 0x2000C81E
+0800C91C  2000C827		; 0x2000C827
+0800C920  2000C82C		; 0x2000C82C
+0800C924  2000C878		; 0x2000C878
+0800C928  2000C898		; 0x2000C898
+0800C92C  2000C89A		; 0x2000C89A
+0800C930  2000C8B4		; 0x2000C8B4
+0800C934  2000C911		; 0x2000C911
+0800C938  2000C920		; 0x2000C920
+0800C93C  2000C92E		; 0x2000C92E
+0800C940  2000C960		; 0x2000C960
+0800C944  2000C968		; 0x2000C968
+0800C948  2000C970		; 0x2000C970
+0800C94C  2000C97E		; 0x2000C97E
+0800C950  2000C9B0		; 0x2000C9B0
+0800C954  2000CA0D		; 0x2000CA0D
+0800C958  2000CA1C		; 0x2000CA1C
+0800C95C  2000CA24		; 0x2000CA24
+0800C960  2000CA2C		; 0x2000CA2C
+0800C964  2000CA89		; 0x2000CA89
+0800C968  2000CA98		; 0x2000CA98
+0800C96C  2000CAF5		; 0x2000CAF5
 
 
 Frame allocation:
@@ -2239,15 +1669,15 @@ PROGRAM main
 
 END_PROGRAM
 
-0800CB70  B082     		sub sp, sp, #8
-0800CB72  F8CD E000		str lr, [sp]
-0800CB76  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+0800C970  B082     		sub sp, sp, #8
+0800C972  F8CD E000		str lr, [sp]
+0800C976  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
 
-0800CB7A  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
-0800CB7E  F8DD E000		ldr lr, [sp]
-0800CB82  B002     		add sp, sp, #8
+0800C97A  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+0800C97E  F8DD E000		ldr lr, [sp]
+0800C982  B002     		add sp, sp, #8
 
-0800CB84  4770     		bx lr
+0800C984  4770     		bx lr
 
 END_PROGRAM
 
@@ -2258,11 +1688,11 @@ END_PROGRAM
 
 
 *** INPUT:
-0800CB86  4770     		bx lr
+0800C986  4770     		bx lr
 
 
 *** OUTPUT:
-0800CB88  4770     		bx lr
+0800C988  4770     		bx lr
 
 
 
@@ -2270,15 +1700,15 @@ END_PROGRAM
 	Task Background init code
 **************************************************
 
-0800CB8A  B082     		sub sp, sp, #8
-0800CB8C  F8CD E000		str lr, [sp]
-0800CB90  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+0800C98A  B082     		sub sp, sp, #8
+0800C98C  F8CD E000		str lr, [sp]
+0800C990  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
 
-0800CB94  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
-0800CB98  F8DD E000		ldr lr, [sp]
-0800CB9C  B002     		add sp, sp, #8
+0800C994  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+0800C998  F8DD E000		ldr lr, [sp]
+0800C99C  B002     		add sp, sp, #8
 
-0800CB9E  4770     		bx lr
+0800C99E  4770     		bx lr
 
 **************************************************
 	List program: PageDraw
@@ -2292,9 +1722,9 @@ res : USINT;
 
 END_PROGRAM
 
-0800CBB0  B082     		sub sp, sp, #8
-0800CBB2  F8CD E000		str lr, [sp]
-0800CBB6  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+0800C9B0  B082     		sub sp, sp, #8
+0800C9B2  F8CD E000		str lr, [sp]
+0800C9B6  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
 
 #0		{SRC:PageDraw}
 #1		(*$WAITSWITCH$*)
@@ -2304,16 +1734,16 @@ END_PROGRAM
 (-) UDINT
 #5			Video_Lock	{LNXT:3|6|-1}
 (*) UDINT
-0800CBBA  F8DF 7284		ldr r7, [pc, #+644] ; 0x2000C819
-0800CBBE  7838     		ldrb r0, [r7]
-0800CBC0  F8DF 4268		ldr r4, [pc, #+616] ; 0x80C82C5
-0800CBC4  F044 0401		orr r4, r4, #1
-0800CBC8  47A0     		blx r4
+0800C9BA  F8DF 7284		ldr r7, [pc, #+644] ; 0x2000C81D
+0800C9BE  7838     		ldrb r0, [r7]
+0800C9C0  F8DF 4268		ldr r4, [pc, #+616] ; 0x80C82C5
+0800C9C4  F044 0401		orr r4, r4, #1
+0800C9C8  47A0     		blx r4
 
 #6			ST		res	{LNXT:3|6|-1}
 (*) USINT
-0800CBCA  F8DF 7274		ldr r7, [pc, #+628] ; 0x2000C819
-0800CBCE  7038     		strb r0, [r7]
+0800C9CA  F8DF 7274		ldr r7, [pc, #+628] ; 0x2000C81D
+0800C9CE  7038     		strb r0, [r7]
 
 #7		
 #8			(* res := Video_SetUseBitmapsColorDepth( TRUE ); *)
@@ -2321,15 +1751,15 @@ END_PROGRAM
 (-) USINT
 #10			Video_SetUseBitmapsColorDepth	{LNXT:6|9|-1}
 (*) USINT
-0800CBD0  2001     		mov r0, #1 ; 1
-0800CBD2  F8DF 4260		ldr r4, [pc, #+608] ; 0x80C95AD
-0800CBD6  F044 0401		orr r4, r4, #1
-0800CBDA  47A0     		blx r4
+0800C9D0  2001     		mov r0, #1 ; 1
+0800C9D2  F8DF 4260		ldr r4, [pc, #+608] ; 0x80C95AD
+0800C9D6  F044 0401		orr r4, r4, #1
+0800C9DA  47A0     		blx r4
 
 #11			ST		res	{LNXT:6|9|-1}
 (*) BOOL
-0800CBDC  F8DF 7260		ldr r7, [pc, #+608] ; 0x2000C819
-0800CBE0  7038     		strb r0, [r7]
+0800C9DC  F8DF 7260		ldr r7, [pc, #+608] ; 0x2000C81D
+0800C9E0  7038     		strb r0, [r7]
 
 #12		
 #13			(* res := Video_InitHMI_ZOrder( TRUE ); *)
@@ -2337,15 +1767,15 @@ END_PROGRAM
 (-) USINT
 #15			Video_InitHMI_ZOrder	{LNXT:9|12|-1}
 (*) USINT
-0800CBE2  2001     		mov r0, #1 ; 1
-0800CBE4  F8DF 4234		ldr r4, [pc, #+564] ; 0x80C4B01
-0800CBE8  F044 0401		orr r4, r4, #1
-0800CBEC  47A0     		blx r4
+0800C9E2  2001     		mov r0, #1 ; 1
+0800C9E4  F8DF 4234		ldr r4, [pc, #+564] ; 0x80C4B01
+0800C9E8  F044 0401		orr r4, r4, #1
+0800C9EC  47A0     		blx r4
 
 #16			ST		res	{LNXT:9|12|-1}
 (*) BOOL
-0800CBEE  F8DF 7250		ldr r7, [pc, #+592] ; 0x2000C819
-0800CBF2  7038     		strb r0, [r7]
+0800C9EE  F8DF 7250		ldr r7, [pc, #+592] ; 0x2000C81D
+0800C9F2  7038     		strb r0, [r7]
 
 #17		
 #18			(* res := Video_Switch( TRUE ); *)
@@ -2353,48 +1783,48 @@ END_PROGRAM
 (-) USINT
 #20			Video_Switch	{LNXT:12|15|-1}
 (*) USINT
-0800CBF4  2701     		mov r7, #1 ; 1
-0800CBF6  4638     		mov r0, r7
-0800CBF8  F8DF 421C		ldr r4, [pc, #+540] ; 0x80C4AFD
-0800CBFC  F044 0401		orr r4, r4, #1
-0800CC00  47A0     		blx r4
+0800C9F4  2701     		mov r7, #1 ; 1
+0800C9F6  4638     		mov r0, r7
+0800C9F8  F8DF 421C		ldr r4, [pc, #+540] ; 0x80C4AFD
+0800C9FC  F044 0401		orr r4, r4, #1
+0800CA00  47A0     		blx r4
 
 #21			ST		res	{LNXT:12|15|-1}
 (*) USINT
-0800CC02  F8DF 723C		ldr r7, [pc, #+572] ; 0x2000C819
-0800CC06  7038     		strb r0, [r7]
+0800CA02  F8DF 723C		ldr r7, [pc, #+572] ; 0x2000C81D
+0800CA06  7038     		strb r0, [r7]
 
 #22		
 #23			(* giStackPtr := 0; *)
 #24			MOVE		0,giStackPtr	{LNXT:15|18|-1}
 (*) USINT
-0800CC08  2000     		mov r0, #0 ; 0
-0800CC0A  F8DF 7238		ldr r7, [pc, #+568] ; 0x2000C81A
-0800CC0E  8038     		strh r0, [r7]
+0800CA08  2000     		mov r0, #0 ; 0
+0800CA0A  F8DF 7238		ldr r7, [pc, #+568] ; 0x2000C81E
+0800CA0E  8038     		strh r0, [r7]
 
 #25		
 #26			(* $giBackBufferCurr := -1; *)
 #27			MOVE		-1,$giBackBufferCurr	{LNXT:18|19|-1}
 (*) INT
-0800CC10  F04F 30FF		mov r0, #4294967295 ; 4294967295
-0800CC14  F8DF 7230		ldr r7, [pc, #+560] ; 0x2000C81C
-0800CC18  8038     		strh r0, [r7]
+0800CA10  F04F 30FF		mov r0, #4294967295 ; 4294967295
+0800CA14  F8DF 7230		ldr r7, [pc, #+560] ; 0x2000C820
+0800CA18  8038     		strh r0, [r7]
 
 #28		
 #29			(* $giBackBufferFirst := -1; *)
 #30			MOVE		-1,$giBackBufferFirst	{LNXT:19|20|-1}
 (*) INT
-0800CC1A  F04F 30FF		mov r0, #4294967295 ; 4294967295
-0800CC1E  F8DF 722C		ldr r7, [pc, #+556] ; 0x2000C81E
-0800CC22  8038     		strh r0, [r7]
+0800CA1A  F04F 30FF		mov r0, #4294967295 ; 4294967295
+0800CA1E  F8DF 722C		ldr r7, [pc, #+556] ; 0x2000C822
+0800CA22  8038     		strh r0, [r7]
 
 #31		
 #32			(* $giBackBufferLast := -1; *)
 #33			MOVE		-1,$giBackBufferLast	{LNXT:20|23|-1}
 (*) INT
-0800CC24  F04F 30FF		mov r0, #4294967295 ; 4294967295
-0800CC28  F8DF 7224		ldr r7, [pc, #+548] ; 0x2000C820
-0800CC2C  8038     		strh r0, [r7]
+0800CA24  F04F 30FF		mov r0, #4294967295 ; 4294967295
+0800CA28  F8DF 7224		ldr r7, [pc, #+548] ; 0x2000C824
+0800CA2C  8038     		strh r0, [r7]
 
 #34		
 #35			(* res := Video_SetEditKey( 0, kKEY_Enter ); *)
@@ -2402,16 +1832,16 @@ END_PROGRAM
 (-) INT
 #37			Video_SetEditKey		kKEY_Enter	{LNXT:23|24|-1}
 (*) INT
-0800CC2E  2000     		mov r0, #0 ; 0
-0800CC30  210D     		mov r1, #13 ; 13
-0800CC32  F8DF 41F0		ldr r4, [pc, #+496] ; 0x80C6567
-0800CC36  F044 0401		orr r4, r4, #1
-0800CC3A  47A0     		blx r4
+0800CA2E  2000     		mov r0, #0 ; 0
+0800CA30  210D     		mov r1, #13 ; 13
+0800CA32  F8DF 41F0		ldr r4, [pc, #+496] ; 0x80C6567
+0800CA36  F044 0401		orr r4, r4, #1
+0800CA3A  47A0     		blx r4
 
 #38			ST		res	{LNXT:23|24|-1}
 (*) USINT
-0800CC3C  F8DF 7200		ldr r7, [pc, #+512] ; 0x2000C819
-0800CC40  7038     		strb r0, [r7]
+0800CA3C  F8DF 7200		ldr r7, [pc, #+512] ; 0x2000C81D
+0800CA40  7038     		strb r0, [r7]
 
 #39		
 #40			(* res := Video_SetEditKey( 1, kKEY_Esc ); *)
@@ -2419,16 +1849,16 @@ END_PROGRAM
 (-) USINT
 #42			Video_SetEditKey		kKEY_Esc	{LNXT:24|25|-1}
 (*) USINT
-0800CC42  2001     		mov r0, #1 ; 1
-0800CC44  211B     		mov r1, #27 ; 27
-0800CC46  F8DF 41DC		ldr r4, [pc, #+476] ; 0x80C6567
-0800CC4A  F044 0401		orr r4, r4, #1
-0800CC4E  47A0     		blx r4
+0800CA42  2001     		mov r0, #1 ; 1
+0800CA44  211B     		mov r1, #27 ; 27
+0800CA46  F8DF 41DC		ldr r4, [pc, #+476] ; 0x80C6567
+0800CA4A  F044 0401		orr r4, r4, #1
+0800CA4E  47A0     		blx r4
 
 #43			ST		res	{LNXT:24|25|-1}
 (*) USINT
-0800CC50  F8DF 71EC		ldr r7, [pc, #+492] ; 0x2000C819
-0800CC54  7038     		strb r0, [r7]
+0800CA50  F8DF 71EC		ldr r7, [pc, #+492] ; 0x2000C81D
+0800CA54  7038     		strb r0, [r7]
 
 #44		
 #45			(* res := Video_SetEditKey( 2, kKEY_Del ); *)
@@ -2436,16 +1866,16 @@ END_PROGRAM
 (-) USINT
 #47			Video_SetEditKey		kKEY_Del	{LNXT:25|26|-1}
 (*) USINT
-0800CC56  2002     		mov r0, #2 ; 2
-0800CC58  217F     		mov r1, #127 ; 127
-0800CC5A  F8DF 41C8		ldr r4, [pc, #+456] ; 0x80C6567
-0800CC5E  F044 0401		orr r4, r4, #1
-0800CC62  47A0     		blx r4
+0800CA56  2002     		mov r0, #2 ; 2
+0800CA58  217F     		mov r1, #127 ; 127
+0800CA5A  F8DF 41C8		ldr r4, [pc, #+456] ; 0x80C6567
+0800CA5E  F044 0401		orr r4, r4, #1
+0800CA62  47A0     		blx r4
 
 #48			ST		res	{LNXT:25|26|-1}
 (*) USINT
-0800CC64  F8DF 71D8		ldr r7, [pc, #+472] ; 0x2000C819
-0800CC68  7038     		strb r0, [r7]
+0800CA64  F8DF 71D8		ldr r7, [pc, #+472] ; 0x2000C81D
+0800CA68  7038     		strb r0, [r7]
 
 #49		
 #50			(* res := Video_SetEditKey( 3, kKEY_Left ); *)
@@ -2453,16 +1883,16 @@ END_PROGRAM
 (-) USINT
 #52			Video_SetEditKey		kKEY_Left	{LNXT:26|27|-1}
 (*) USINT
-0800CC6A  2003     		mov r0, #3 ; 3
-0800CC6C  2108     		mov r1, #8 ; 8
-0800CC6E  F8DF 41B4		ldr r4, [pc, #+436] ; 0x80C6567
-0800CC72  F044 0401		orr r4, r4, #1
-0800CC76  47A0     		blx r4
+0800CA6A  2003     		mov r0, #3 ; 3
+0800CA6C  2108     		mov r1, #8 ; 8
+0800CA6E  F8DF 41B4		ldr r4, [pc, #+436] ; 0x80C6567
+0800CA72  F044 0401		orr r4, r4, #1
+0800CA76  47A0     		blx r4
 
 #53			ST		res	{LNXT:26|27|-1}
 (*) USINT
-0800CC78  F8DF 71C4		ldr r7, [pc, #+452] ; 0x2000C819
-0800CC7C  7038     		strb r0, [r7]
+0800CA78  F8DF 71C4		ldr r7, [pc, #+452] ; 0x2000C81D
+0800CA7C  7038     		strb r0, [r7]
 
 #54		
 #55			(* res := Video_SetEditKey( 4, kKEY_Right ); *)
@@ -2470,16 +1900,16 @@ END_PROGRAM
 (-) USINT
 #57			Video_SetEditKey		kKEY_Right	{LNXT:27|28|-1}
 (*) USINT
-0800CC7E  2004     		mov r0, #4 ; 4
-0800CC80  210C     		mov r1, #12 ; 12
-0800CC82  F8DF 41A0		ldr r4, [pc, #+416] ; 0x80C6567
-0800CC86  F044 0401		orr r4, r4, #1
-0800CC8A  47A0     		blx r4
+0800CA7E  2004     		mov r0, #4 ; 4
+0800CA80  210C     		mov r1, #12 ; 12
+0800CA82  F8DF 41A0		ldr r4, [pc, #+416] ; 0x80C6567
+0800CA86  F044 0401		orr r4, r4, #1
+0800CA8A  47A0     		blx r4
 
 #58			ST		res	{LNXT:27|28|-1}
 (*) USINT
-0800CC8C  F8DF 71B0		ldr r7, [pc, #+432] ; 0x2000C819
-0800CC90  7038     		strb r0, [r7]
+0800CA8C  F8DF 71B0		ldr r7, [pc, #+432] ; 0x2000C81D
+0800CA90  7038     		strb r0, [r7]
 
 #59		
 #60			(* res := Video_SetEditKey( 5, kKEY_ArrowUp ); *)
@@ -2487,16 +1917,16 @@ END_PROGRAM
 (-) USINT
 #62			Video_SetEditKey		kKEY_ArrowUp	{LNXT:28|29|-1}
 (*) USINT
-0800CC92  2005     		mov r0, #5 ; 5
-0800CC94  210B     		mov r1, #11 ; 11
-0800CC96  F8DF 418C		ldr r4, [pc, #+396] ; 0x80C6567
-0800CC9A  F044 0401		orr r4, r4, #1
-0800CC9E  47A0     		blx r4
+0800CA92  2005     		mov r0, #5 ; 5
+0800CA94  210B     		mov r1, #11 ; 11
+0800CA96  F8DF 418C		ldr r4, [pc, #+396] ; 0x80C6567
+0800CA9A  F044 0401		orr r4, r4, #1
+0800CA9E  47A0     		blx r4
 
 #63			ST		res	{LNXT:28|29|-1}
 (*) USINT
-0800CCA0  F8DF 719C		ldr r7, [pc, #+412] ; 0x2000C819
-0800CCA4  7038     		strb r0, [r7]
+0800CAA0  F8DF 719C		ldr r7, [pc, #+412] ; 0x2000C81D
+0800CAA4  7038     		strb r0, [r7]
 
 #64		
 #65			(* res := Video_SetEditKey( 6, kKEY_ArrowDw ); *)
@@ -2504,16 +1934,16 @@ END_PROGRAM
 (-) USINT
 #67			Video_SetEditKey		kKEY_ArrowDw	{LNXT:29|30|-1}
 (*) USINT
-0800CCA6  2006     		mov r0, #6 ; 6
-0800CCA8  210A     		mov r1, #10 ; 10
-0800CCAA  F8DF 4178		ldr r4, [pc, #+376] ; 0x80C6567
-0800CCAE  F044 0401		orr r4, r4, #1
-0800CCB2  47A0     		blx r4
+0800CAA6  2006     		mov r0, #6 ; 6
+0800CAA8  210A     		mov r1, #10 ; 10
+0800CAAA  F8DF 4178		ldr r4, [pc, #+376] ; 0x80C6567
+0800CAAE  F044 0401		orr r4, r4, #1
+0800CAB2  47A0     		blx r4
 
 #68			ST		res	{LNXT:29|30|-1}
 (*) USINT
-0800CCB4  F8DF 7188		ldr r7, [pc, #+392] ; 0x2000C819
-0800CCB8  7038     		strb r0, [r7]
+0800CAB4  F8DF 7188		ldr r7, [pc, #+392] ; 0x2000C81D
+0800CAB8  7038     		strb r0, [r7]
 
 #69		
 #70			(* res := Video_SetEditKey( 7, kKEY_Back ); *)
@@ -2521,16 +1951,16 @@ END_PROGRAM
 (-) USINT
 #72			Video_SetEditKey		kKEY_Back	{LNXT:30|31|-1}
 (*) USINT
-0800CCBA  2007     		mov r0, #7 ; 7
-0800CCBC  2104     		mov r1, #4 ; 4
-0800CCBE  F8DF 4164		ldr r4, [pc, #+356] ; 0x80C6567
-0800CCC2  F044 0401		orr r4, r4, #1
-0800CCC6  47A0     		blx r4
+0800CABA  2007     		mov r0, #7 ; 7
+0800CABC  2104     		mov r1, #4 ; 4
+0800CABE  F8DF 4164		ldr r4, [pc, #+356] ; 0x80C6567
+0800CAC2  F044 0401		orr r4, r4, #1
+0800CAC6  47A0     		blx r4
 
 #73			ST		res	{LNXT:30|31|-1}
 (*) USINT
-0800CCC8  F8DF 7174		ldr r7, [pc, #+372] ; 0x2000C819
-0800CCCC  7038     		strb r0, [r7]
+0800CAC8  F8DF 7174		ldr r7, [pc, #+372] ; 0x2000C81D
+0800CACC  7038     		strb r0, [r7]
 
 #74		
 #75			(* res := Video_SetEditKey( 8, kKEY_Tab ); *)
@@ -2538,16 +1968,16 @@ END_PROGRAM
 (-) USINT
 #77			Video_SetEditKey		kKEY_Tab	{LNXT:31|32|-1}
 (*) USINT
-0800CCCE  2008     		mov r0, #8 ; 8
-0800CCD0  2109     		mov r1, #9 ; 9
-0800CCD2  F8DF 4150		ldr r4, [pc, #+336] ; 0x80C6567
-0800CCD6  F044 0401		orr r4, r4, #1
-0800CCDA  47A0     		blx r4
+0800CACE  2008     		mov r0, #8 ; 8
+0800CAD0  2109     		mov r1, #9 ; 9
+0800CAD2  F8DF 4150		ldr r4, [pc, #+336] ; 0x80C6567
+0800CAD6  F044 0401		orr r4, r4, #1
+0800CADA  47A0     		blx r4
 
 #78			ST		res	{LNXT:31|32|-1}
 (*) USINT
-0800CCDC  F8DF 7160		ldr r7, [pc, #+352] ; 0x2000C819
-0800CCE0  7038     		strb r0, [r7]
+0800CADC  F8DF 7160		ldr r7, [pc, #+352] ; 0x2000C81D
+0800CAE0  7038     		strb r0, [r7]
 
 #79		
 #80			(* res := Video_SetEditKey( 9, kKEY_Shift ); *)
@@ -2555,16 +1985,16 @@ END_PROGRAM
 (-) USINT
 #82			Video_SetEditKey		kKEY_Shift	{LNXT:32|33|-1}
 (*) USINT
-0800CCE2  2009     		mov r0, #9 ; 9
-0800CCE4  2106     		mov r1, #6 ; 6
-0800CCE6  F8DF 413C		ldr r4, [pc, #+316] ; 0x80C6567
-0800CCEA  F044 0401		orr r4, r4, #1
-0800CCEE  47A0     		blx r4
+0800CAE2  2009     		mov r0, #9 ; 9
+0800CAE4  2106     		mov r1, #6 ; 6
+0800CAE6  F8DF 413C		ldr r4, [pc, #+316] ; 0x80C6567
+0800CAEA  F044 0401		orr r4, r4, #1
+0800CAEE  47A0     		blx r4
 
 #83			ST		res	{LNXT:32|33|-1}
 (*) USINT
-0800CCF0  F8DF 714C		ldr r7, [pc, #+332] ; 0x2000C819
-0800CCF4  7038     		strb r0, [r7]
+0800CAF0  F8DF 714C		ldr r7, [pc, #+332] ; 0x2000C81D
+0800CAF4  7038     		strb r0, [r7]
 
 #84		
 #85			(* res := Video_SetEditKey( 10, kKEY_Caps ); *)
@@ -2572,16 +2002,16 @@ END_PROGRAM
 (-) USINT
 #87			Video_SetEditKey		kKEY_Caps	{LNXT:33|34|-1}
 (*) USINT
-0800CCF6  200A     		mov r0, #10 ; 10
-0800CCF8  2105     		mov r1, #5 ; 5
-0800CCFA  F8DF 4128		ldr r4, [pc, #+296] ; 0x80C6567
-0800CCFE  F044 0401		orr r4, r4, #1
-0800CD02  47A0     		blx r4
+0800CAF6  200A     		mov r0, #10 ; 10
+0800CAF8  2105     		mov r1, #5 ; 5
+0800CAFA  F8DF 4128		ldr r4, [pc, #+296] ; 0x80C6567
+0800CAFE  F044 0401		orr r4, r4, #1
+0800CB02  47A0     		blx r4
 
 #88			ST		res	{LNXT:33|34|-1}
 (*) USINT
-0800CD04  F8DF 7138		ldr r7, [pc, #+312] ; 0x2000C819
-0800CD08  7038     		strb r0, [r7]
+0800CB04  F8DF 7138		ldr r7, [pc, #+312] ; 0x2000C81D
+0800CB08  7038     		strb r0, [r7]
 
 #89		
 #90			(* res := Video_SetEditKey( 11, kKEY_Confirm ); *)
@@ -2589,135 +2019,135 @@ END_PROGRAM
 (-) USINT
 #92			Video_SetEditKey		kKEY_Confirm	{LNXT:34|37|-1}
 (*) USINT
-0800CD0A  200B     		mov r0, #11 ; 11
-0800CD0C  210E     		mov r1, #14 ; 14
-0800CD0E  F8DF 4114		ldr r4, [pc, #+276] ; 0x80C6567
-0800CD12  F044 0401		orr r4, r4, #1
-0800CD16  47A0     		blx r4
+0800CB0A  200B     		mov r0, #11 ; 11
+0800CB0C  210E     		mov r1, #14 ; 14
+0800CB0E  F8DF 4114		ldr r4, [pc, #+276] ; 0x80C6567
+0800CB12  F044 0401		orr r4, r4, #1
+0800CB16  47A0     		blx r4
 
 #93			ST		res	{LNXT:34|37|-1}
 (*) USINT
-0800CD18  F8DF 7124		ldr r7, [pc, #+292] ; 0x2000C819
-0800CD1C  7038     		strb r0, [r7]
+0800CB18  F8DF 7124		ldr r7, [pc, #+292] ; 0x2000C81D
+0800CB1C  7038     		strb r0, [r7]
 
 #94		
 #95			(* res := Video_LoadLanguage( 0, ?kbResEnums[0] ); *)
 #96			ADR		kbResEnums[0]	{LNXT:37|40|-1}
 (*) USINT
-0800CD1E  F8DF 00F0		ldr r0, [pc, #+240] ; 0x8008108
+0800CB1E  F8DF 00F0		ldr r0, [pc, #+240] ; 0x8008158
 
 #97			ST		$$TMP0	{LNXT:37|40|-1}
 (*) @BYTE
-0800CD22  F8DF 7130		ldr r7, [pc, #+304] ; 0x2000C824
-0800CD26  6038     		str r0, [r7]
+0800CB22  F8DF 7130		ldr r7, [pc, #+304] ; 0x2000C828
+0800CB26  6038     		str r0, [r7]
 
 #98			LDP0		0	{LNXT:37|40|-1}
 (-) @BYTE
 #99			Video_LoadLanguage		$$TMP0	{LNXT:37|40|-1}
 (*) @BYTE
-0800CD28  2700     		mov r7, #0 ; 0
-0800CD2A  4638     		mov r0, r7
-0800CD2C  F8DF 7124		ldr r7, [pc, #+292] ; 0x2000C824
-0800CD30  683F     		ldr r7, [r7]
-0800CD32  4639     		mov r1, r7
-0800CD34  F8DF 40F8		ldr r4, [pc, #+248] ; 0x80C8419
-0800CD38  F044 0401		orr r4, r4, #1
-0800CD3C  47A0     		blx r4
+0800CB28  2700     		mov r7, #0 ; 0
+0800CB2A  4638     		mov r0, r7
+0800CB2C  F8DF 7124		ldr r7, [pc, #+292] ; 0x2000C828
+0800CB30  683F     		ldr r7, [r7]
+0800CB32  4639     		mov r1, r7
+0800CB34  F8DF 40F8		ldr r4, [pc, #+248] ; 0x80C8419
+0800CB38  F044 0401		orr r4, r4, #1
+0800CB3C  47A0     		blx r4
 
 #100			ST		res	{LNXT:37|40|-1}
 (*) USINT
-0800CD3E  F8DF 7100		ldr r7, [pc, #+256] ; 0x2000C819
-0800CD42  7038     		strb r0, [r7]
+0800CB3E  F8DF 7100		ldr r7, [pc, #+256] ; 0x2000C81D
+0800CB42  7038     		strb r0, [r7]
 
 #101		
 #102			(* res := Video_AddFontUnicode( ?EWP2_8x16, EWP2_8x16_len, EWP2_8x16_hei ); *)
 #103			ADR		EWP2_8x16	{LNXT:40|41|-1}
 (*) USINT
-0800CD44  F8DF 00F0		ldr r0, [pc, #+240] ; 0x8200000
+0800CB44  F8DF 00F0		ldr r0, [pc, #+240] ; 0x8200000
 
 #104			Video_AddFontUnicode		EWP2_8x16_len, EWP2_8x16_hei	{LNXT:40|41|-1}
 (*) @BYTE
-0800CD48  4607     		mov r7, r0
-0800CD4A  4638     		mov r0, r7
-0800CD4C  2708     		mov r7, #8 ; 8
-0800CD4E  4639     		mov r1, r7
-0800CD50  2210     		mov r2, #16 ; 16
-0800CD52  F8DF 40D4		ldr r4, [pc, #+212] ; 0x80C65F1
-0800CD56  F044 0401		orr r4, r4, #1
-0800CD5A  47A0     		blx r4
+0800CB48  4607     		mov r7, r0
+0800CB4A  4638     		mov r0, r7
+0800CB4C  2708     		mov r7, #8 ; 8
+0800CB4E  4639     		mov r1, r7
+0800CB50  2210     		mov r2, #16 ; 16
+0800CB52  F8DF 40D4		ldr r4, [pc, #+212] ; 0x80C65F1
+0800CB56  F044 0401		orr r4, r4, #1
+0800CB5A  47A0     		blx r4
 
 #105			ST		res	{LNXT:40|41|-1}
 (*) USINT
-0800CD5C  F8DF 70E0		ldr r7, [pc, #+224] ; 0x2000C819
-0800CD60  7038     		strb r0, [r7]
+0800CB5C  F8DF 70E0		ldr r7, [pc, #+224] ; 0x2000C81D
+0800CB60  7038     		strb r0, [r7]
 
 #106		
 #107			(* res := Video_AddFontUnicode( ?DroidSansMono_12x24, DroidSansMono_12x24_len, DroidSansMono_12x24_hei ); *)
 #108			ADR		DroidSansMono_12x24	{LNXT:41|44|-1}
 (*) USINT
-0800CD62  F8DF 00D8		ldr r0, [pc, #+216] ; 0x8200008
+0800CB62  F8DF 00D8		ldr r0, [pc, #+216] ; 0x8200008
 
 #109			Video_AddFontUnicode		DroidSansMono_12x24_len, DroidSansMono_12x24_hei	{LNXT:41|44|-1}
 (*) @BYTE
-0800CD66  4607     		mov r7, r0
-0800CD68  4638     		mov r0, r7
-0800CD6A  270C     		mov r7, #12 ; 12
-0800CD6C  4639     		mov r1, r7
-0800CD6E  2218     		mov r2, #24 ; 24
-0800CD70  F8DF 40B4		ldr r4, [pc, #+180] ; 0x80C65F1
-0800CD74  F044 0401		orr r4, r4, #1
-0800CD78  47A0     		blx r4
+0800CB66  4607     		mov r7, r0
+0800CB68  4638     		mov r0, r7
+0800CB6A  270C     		mov r7, #12 ; 12
+0800CB6C  4639     		mov r1, r7
+0800CB6E  2218     		mov r2, #24 ; 24
+0800CB70  F8DF 40B4		ldr r4, [pc, #+180] ; 0x80C65F1
+0800CB74  F044 0401		orr r4, r4, #1
+0800CB78  47A0     		blx r4
 
 #110			ST		res	{LNXT:41|44|-1}
 (*) USINT
-0800CD7A  F8DF 70C4		ldr r7, [pc, #+196] ; 0x2000C819
-0800CD7E  7038     		strb r0, [r7]
+0800CB7A  F8DF 70C4		ldr r7, [pc, #+196] ; 0x2000C81D
+0800CB7E  7038     		strb r0, [r7]
 
 #111		
 #112			(* res := Video_SetWndSysProps( ?EWP2_8x16, 12632256, 0 ); *)
 #113			ADR		EWP2_8x16	{LNXT:44|49|-1}
 (*) USINT
-0800CD80  F8DF 00B4		ldr r0, [pc, #+180] ; 0x8200000
+0800CB80  F8DF 00B4		ldr r0, [pc, #+180] ; 0x8200000
 
 #114			Video_SetWndSysProps		12632256, 0	{LNXT:44|49|-1}
 (*) @BYTE
-0800CD84  4607     		mov r7, r0
-0800CD86  4638     		mov r0, r7
-0800CD88  F8DF 7080		ldr r7, [pc, #+128] ; 0xC0C0C0
-0800CD8C  4639     		mov r1, r7
-0800CD8E  2700     		mov r7, #0 ; 0
-0800CD90  463A     		mov r2, r7
-0800CD92  F8DF 408C		ldr r4, [pc, #+140] ; 0x80C653F
-0800CD96  F044 0401		orr r4, r4, #1
-0800CD9A  47A0     		blx r4
+0800CB84  4607     		mov r7, r0
+0800CB86  4638     		mov r0, r7
+0800CB88  F8DF 7080		ldr r7, [pc, #+128] ; 0xC0C0C0
+0800CB8C  4639     		mov r1, r7
+0800CB8E  2700     		mov r7, #0 ; 0
+0800CB90  463A     		mov r2, r7
+0800CB92  F8DF 408C		ldr r4, [pc, #+140] ; 0x80C653F
+0800CB96  F044 0401		orr r4, r4, #1
+0800CB9A  47A0     		blx r4
 
 #115			ST		res	{LNXT:44|49|-1}
 (*) USINT
-0800CD9C  F8DF 70A0		ldr r7, [pc, #+160] ; 0x2000C819
-0800CDA0  7038     		strb r0, [r7]
+0800CB9C  F8DF 70A0		ldr r7, [pc, #+160] ; 0x2000C81D
+0800CBA0  7038     		strb r0, [r7]
 
 #116		
 #117			(* guiCallStack[ giStackPtr ] := 0; *)
 #118			MOVE		0,guiCallStack[giStackPtr]	{LNXT:49|50|-1}
 (*) USINT
-0800CDA2  2000     		mov r0, #0 ; 0
-0800CDA4  F8DF 709C		ldr r7, [pc, #+156] ; 0x2000C81A
-0800CDA8  F9B7 5000		ldrsh r5, [r7]
-0800CDAC  F8DF 70A8		ldr r7, [pc, #+168] ; 0x2000C828
-0800CDB0  EB07 0745		add r7, r7, r5, lsl #1
-0800CDB4  8038     		strh r0, [r7]
+0800CBA2  2000     		mov r0, #0 ; 0
+0800CBA4  F8DF 709C		ldr r7, [pc, #+156] ; 0x2000C81E
+0800CBA8  F9B7 5000		ldrsh r5, [r7]
+0800CBAC  F8DF 70A8		ldr r7, [pc, #+168] ; 0x2000C82C
+0800CBB0  EB07 0745		add r7, r7, r5, lsl #1
+0800CBB4  8038     		strh r0, [r7]
 
 #119		
 #120			(* WHILE TRUE *)
 #121		$label0:
 #122			LD		TRUE	{LNXT:50|-1|-1}
 (-) UNDEF
-0800CDB6  2001     		mov r0, #1 ; 1
+0800CBB6  2001     		mov r0, #1 ; 1
 
 #123			JMPCN		$label1	{LNXT:50|52|3}
 (-) BOOL
-0800CDB8  2800     		cmp r0, #0
-0800CDBA  D020     		beq #64 ; 0x0800CDFE
+0800CBB8  2800     		cmp r0, #0
+0800CBBA  D020     		beq #64 ; 0x0800CBFE
 
 
 #124		
@@ -2728,27 +2158,27 @@ END_PROGRAM
 #129				(* 0: *)
 #130				LD		guiCallStack[giStackPtr]	{LNXT:53|-1|-1}
 (*) UNDEF
-0800CDBE  F8DF 7084		ldr r7, [pc, #+132] ; 0x2000C81A
-0800CDC2  F9B7 5000		ldrsh r5, [r7]
-0800CDC6  F8DF 7090		ldr r7, [pc, #+144] ; 0x2000C828
-0800CDCA  EB07 0745		add r7, r7, r5, lsl #1
-0800CDCE  8838     		ldrh r0, [r7]
+0800CBBE  F8DF 7084		ldr r7, [pc, #+132] ; 0x2000C81E
+0800CBC2  F9B7 5000		ldrsh r5, [r7]
+0800CBC6  F8DF 7090		ldr r7, [pc, #+144] ; 0x2000C82C
+0800CBCA  EB07 0745		add r7, r7, r5, lsl #1
+0800CBCE  8838     		ldrh r0, [r7]
 
 #131				EQ		0	{LNXT:53|-1|-1}
 (*) UINT
-0800CDD0  2800     		cmp r0, #0
-0800CDD2  BF18 2000		nemov r0, #0
-0800CDD6  BF08 2001		eqmov r0, #1
+0800CBD0  2800     		cmp r0, #0
+0800CBD2  BF18 2000		nemov r0, #0
+0800CBD6  BF08 2001		eqmov r0, #1
 
 #132				JMPC		$label3	{LNXT:53|54|50}
 (-) BOOL
-0800CDDA  2800     		cmp r0, #0
-0800CDDC  D102     		bne #4 ; 0x0800CDE4
+0800CBDA  2800     		cmp r0, #0
+0800CBDC  D102     		bne #4 ; 0x0800CBE4
 
 
 #133				JMP		$label2	{LNXT:53|54|50}
 (-) BOOL
-0800CDE0  E00C     		b #24 ; 0x0800CDFC
+0800CBE0  E00C     		b #24 ; 0x0800CBFC
 
 
 #134		
@@ -2758,13 +2188,13 @@ END_PROGRAM
 #138					(* fbTouchScreen *)
 #139					CAL		fbTouchScreen	{LNXT:54|50|-1}
 (*) BOOL
-0800CDE4  E92D 0021		stmdb sp!, { r0, r5 }
-0800CDE8  F8DF 7070		ldr r7, [pc, #+112] ; 0x2000C83C
-0800CDEC  463D     		mov r5, r7
-0800CDEE  F8DF 4024		ldr r4, [pc, #+36] ; 0x800C500
-0800CDF2  F044 0401		orr r4, r4, #1
-0800CDF6  47A0     		blx r4
-0800CDF8  E8BD 0021		ldmia sp!, { r0, r5 }
+0800CBE4  E92D 0021		stmdb sp!, { r0, r5 }
+0800CBE8  F8DF 7070		ldr r7, [pc, #+112] ; 0x2000C840
+0800CBEC  463D     		mov r5, r7
+0800CBEE  F8DF 4024		ldr r4, [pc, #+36] ; 0x800C550
+0800CBF2  F044 0401		orr r4, r4, #1
+0800CBF6  47A0     		blx r4
+0800CBF8  E8BD 0021		ldmia sp!, { r0, r5 }
 
 #140		
 #141		$label2:
@@ -2772,35 +2202,35 @@ END_PROGRAM
 #143				(* END_CASE *)
 #144				JMP		$label0	{LNXT:50|52|3}
 (-) BOOL
-0800CDFC  E7DB     		b #-74 ; 0x0800CDB6
+0800CBFC  E7DB     		b #-74 ; 0x0800CBB6
 
-0800CDFE  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
-0800CE02  F8DD E000		ldr lr, [sp]
-0800CE06  B002     		add sp, sp, #8
+0800CBFE  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+0800CC02  F8DD E000		ldr lr, [sp]
+0800CC06  B002     		add sp, sp, #8
 
-0800CE08  4770     		bx lr
+0800CC08  4770     		bx lr
 
-0800CE0C  00C0C0C0		; 0x00C0C0C0
-0800CE10  08008108		; 0x08008108
-0800CE14  0800C500		; 0x0800C500
-0800CE18  080C4AFD		; 0x080C4AFD
-0800CE1C  080C4B01		; 0x080C4B01
-0800CE20  080C653F		; 0x080C653F
-0800CE24  080C6567		; 0x080C6567
-0800CE28  080C65F1		; 0x080C65F1
-0800CE2C  080C82C5		; 0x080C82C5
-0800CE30  080C8419		; 0x080C8419
-0800CE34  080C95AD		; 0x080C95AD
-0800CE38  08200000		; 0x08200000
-0800CE3C  08200008		; 0x08200008
-0800CE40  2000C819		; 0x2000C819
-0800CE44  2000C81A		; 0x2000C81A
-0800CE48  2000C81C		; 0x2000C81C
-0800CE4C  2000C81E		; 0x2000C81E
-0800CE50  2000C820		; 0x2000C820
-0800CE54  2000C824		; 0x2000C824
-0800CE58  2000C828		; 0x2000C828
-0800CE5C  2000C83C		; 0x2000C83C
+0800CC0C  00C0C0C0		; 0x00C0C0C0
+0800CC10  08008158		; 0x08008158
+0800CC14  0800C550		; 0x0800C550
+0800CC18  080C4AFD		; 0x080C4AFD
+0800CC1C  080C4B01		; 0x080C4B01
+0800CC20  080C653F		; 0x080C653F
+0800CC24  080C6567		; 0x080C6567
+0800CC28  080C65F1		; 0x080C65F1
+0800CC2C  080C82C5		; 0x080C82C5
+0800CC30  080C8419		; 0x080C8419
+0800CC34  080C95AD		; 0x080C95AD
+0800CC38  08200000		; 0x08200000
+0800CC3C  08200008		; 0x08200008
+0800CC40  2000C81D		; 0x2000C81D
+0800CC44  2000C81E		; 0x2000C81E
+0800CC48  2000C820		; 0x2000C820
+0800CC4C  2000C822		; 0x2000C822
+0800CC50  2000C824		; 0x2000C824
+0800CC54  2000C828		; 0x2000C828
+0800CC58  2000C82C		; 0x2000C82C
+0800CC5C  2000C840		; 0x2000C840
 
 END_PROGRAM
 
@@ -2811,11 +2241,11 @@ END_PROGRAM
 
 
 *** INPUT:
-0800CE60  4770     		bx lr
+0800CC60  4770     		bx lr
 
 
 *** OUTPUT:
-0800CE62  4770     		bx lr
+0800CC62  4770     		bx lr
 
 
 
@@ -2823,15 +2253,15 @@ END_PROGRAM
 	Task Draw init code
 **************************************************
 
-0800CE64  B082     		sub sp, sp, #8
-0800CE66  F8CD E000		str lr, [sp]
-0800CE6A  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+0800CC64  B082     		sub sp, sp, #8
+0800CC66  F8CD E000		str lr, [sp]
+0800CC6A  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
 
-0800CE6E  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
-0800CE72  F8DD E000		ldr lr, [sp]
-0800CE76  B002     		add sp, sp, #8
+0800CC6E  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+0800CC72  F8DD E000		ldr lr, [sp]
+0800CC76  B002     		add sp, sp, #8
 
-0800CE78  4770     		bx lr
+0800CC78  4770     		bx lr
 
 **************************************************
 	List program: InitParDB
@@ -2846,79 +2276,79 @@ dummyCrc32 : UDINT;
 
 END_PROGRAM
 
-0800CE90  B082     		sub sp, sp, #8
-0800CE92  F8CD E000		str lr, [sp]
-0800CE96  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+0800CC90  B082     		sub sp, sp, #8
+0800CC92  F8CD E000		str lr, [sp]
+0800CC96  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
 
 #0		{SRC:InitParDB}
 #1		(*$WAITSWITCH$*)
 #2		
-#3			(* dummyCrc32 := 1593205572; *)
-#4			MOVE		1593205572,dummyCrc32	{LNXT:3|5|-1}
+#3			(* dummyCrc32 := 1945023196; *)
+#4			MOVE		1945023196,dummyCrc32	{LNXT:3|5|-1}
 (*) UDINT
-0800CE9A  F8DF 7080		ldr r7, [pc, #+128] ; 0x5EF66344
-0800CE9E  4638     		mov r0, r7
-0800CEA0  F8DF 7068		ldr r7, [pc, #+104] ; 0x2000C80C
-0800CEA4  6038     		str r0, [r7]
+0800CC9A  F8DF 7080		ldr r7, [pc, #+128] ; 0x73EEB2DC
+0800CC9E  4638     		mov r0, r7
+0800CCA0  F8DF 7068		ldr r7, [pc, #+104] ; 0x2000C80C
+0800CCA4  6038     		str r0, [r7]
 
 #5		
-#6			(* warningsKiller := sysDBase_SetExtTable( ADR($$ParDB), $$ParDBLength, 200, 0, 0, 2, 201, ADR(%MW201.0), 1, 2 ); *)
+#6			(* warningsKiller := sysDBase_SetExtTable( ADR($$ParDB), $$ParDBLength, 200, 0, 0, 2, 201, ADR(%MW201.0), 3, 2 ); *)
 #7			ADR		%MW201.0	{LNXT:5|3|-1}
 (*) UDINT
-0800CEA6  F8DF 0068		ldr r0, [pc, #+104] ; 0x2000C810
+0800CCA6  F8DF 0068		ldr r0, [pc, #+104] ; 0x2000C810
 
 #8			ST		$$TMP1	{LNXT:5|3|-1}
 (*) @WORD
-0800CEAA  F8DF 7068		ldr r7, [pc, #+104] ; 0x2000C814
-0800CEAE  6038     		str r0, [r7]
+0800CCAA  F8DF 7068		ldr r7, [pc, #+104] ; 0x2000C818
+0800CCAE  6038     		str r0, [r7]
 
 #9			ADR		$$ParDB	{LNXT:5|3|-1}
 (*) @WORD
-0800CEB0  F8DF 0050		ldr r0, [pc, #+80] ; 0x80080E0
+0800CCB0  F8DF 0050		ldr r0, [pc, #+80] ; 0x80080E0
 
-#10			sysDBase_SetExtTable		$$ParDBLength, 200, 0, 0, 2, 201, $$TMP1, 1, 2	{LNXT:5|3|-1}
+#10			sysDBase_SetExtTable		$$ParDBLength, 200, 0, 0, 2, 201, $$TMP1, 3, 2	{LNXT:5|3|-1}
 (*) @USINT
-0800CEB4  B086     		sub sp, sp, #24
-0800CEB6  4607     		mov r7, r0
-0800CEB8  4638     		mov r0, r7
-0800CEBA  2701     		mov r7, #1 ; 1
-0800CEBC  4639     		mov r1, r7
-0800CEBE  27C8     		mov r7, #200 ; 200
-0800CEC0  463A     		mov r2, r7
-0800CEC2  2700     		mov r7, #0 ; 0
-0800CEC4  463B     		mov r3, r7
-0800CEC6  2700     		mov r7, #0 ; 0
-0800CEC8  F8CD 7000		str r7, [sp]
-0800CECC  2702     		mov r7, #2 ; 2
-0800CECE  F8CD 7004		str r7, [sp, #+4]
-0800CED2  27C9     		mov r7, #201 ; 201
-0800CED4  F8CD 7008		str r7, [sp, #+8]
-0800CED8  F8DF 7038		ldr r7, [pc, #+56] ; 0x2000C814
-0800CEDC  683F     		ldr r7, [r7]
-0800CEDE  F8CD 700C		str r7, [sp, #+12]
-0800CEE2  2701     		mov r7, #1 ; 1
-0800CEE4  F8CD 7010		str r7, [sp, #+16]
-0800CEE8  2702     		mov r7, #2 ; 2
-0800CEEA  F8CD 7014		str r7, [sp, #+20]
-0800CEEE  F8DF 4018		ldr r4, [pc, #+24] ; 0x80D955D
-0800CEF2  F044 0401		orr r4, r4, #1
-0800CEF6  47A0     		blx r4
-0800CEF8  B006     		add sp, sp, #24
+0800CCB4  B086     		sub sp, sp, #24
+0800CCB6  4607     		mov r7, r0
+0800CCB8  4638     		mov r0, r7
+0800CCBA  2703     		mov r7, #3 ; 3
+0800CCBC  4639     		mov r1, r7
+0800CCBE  27C8     		mov r7, #200 ; 200
+0800CCC0  463A     		mov r2, r7
+0800CCC2  2700     		mov r7, #0 ; 0
+0800CCC4  463B     		mov r3, r7
+0800CCC6  2700     		mov r7, #0 ; 0
+0800CCC8  F8CD 7000		str r7, [sp]
+0800CCCC  2702     		mov r7, #2 ; 2
+0800CCCE  F8CD 7004		str r7, [sp, #+4]
+0800CCD2  27C9     		mov r7, #201 ; 201
+0800CCD4  F8CD 7008		str r7, [sp, #+8]
+0800CCD8  F8DF 7038		ldr r7, [pc, #+56] ; 0x2000C818
+0800CCDC  683F     		ldr r7, [r7]
+0800CCDE  F8CD 700C		str r7, [sp, #+12]
+0800CCE2  2703     		mov r7, #3 ; 3
+0800CCE4  F8CD 7010		str r7, [sp, #+16]
+0800CCE8  2702     		mov r7, #2 ; 2
+0800CCEA  F8CD 7014		str r7, [sp, #+20]
+0800CCEE  F8DF 4018		ldr r4, [pc, #+24] ; 0x80D955D
+0800CCF2  F044 0401		orr r4, r4, #1
+0800CCF6  47A0     		blx r4
+0800CCF8  B006     		add sp, sp, #24
 
 #11			ST		warningsKiller	{LNXT:5|3|-1}
 (*) USINT
-0800CEFA  F8DF 701C		ldr r7, [pc, #+28] ; 0x2000C818
-0800CEFE  7038     		strb r0, [r7]
+0800CCFA  F8DF 701C		ldr r7, [pc, #+28] ; 0x2000C81C
+0800CCFE  7038     		strb r0, [r7]
 
-0800CF00  E00E     		b #28
+0800CD00  E00E     		b #28
 
-0800CF04  080080E0		; 0x080080E0
-0800CF08  080D955D		; 0x080D955D
-0800CF0C  2000C80C		; 0x2000C80C
-0800CF10  2000C810		; 0x2000C810
-0800CF14  2000C814		; 0x2000C814
-0800CF18  2000C818		; 0x2000C818
-0800CF1C  5EF66344		; 0x5EF66344
+0800CD04  080080E0		; 0x080080E0
+0800CD08  080D955D		; 0x080D955D
+0800CD0C  2000C80C		; 0x2000C80C
+0800CD10  2000C810		; 0x2000C810
+0800CD14  2000C818		; 0x2000C818
+0800CD18  2000C81C		; 0x2000C81C
+0800CD1C  73EEB2DC		; 0x73EEB2DC
 
 END_PROGRAM
 **************************************************
@@ -2936,25 +2366,25 @@ END_PROGRAM
 #4			(* IF sysPar_PARPOLI AND 16#fc00) <> 2048 *)
 #5			LD		sysPar_PARPOLI	{LNXT:2|-1|-1}
 (*) UNDEF
-0800CF20  F8DF 7034		ldr r7, [pc, #+52] ; 0x20008976
-0800CF24  8838     		ldrh r0, [r7]
+0800CD20  F8DF 7034		ldr r7, [pc, #+52] ; 0x20008976
+0800CD24  8838     		ldrh r0, [r7]
 
 #6			AND		16#fc00	{LNXT:2|-1|-1}
 (*) UINT
-0800CF26  F44F 477C		mov r7, #64512 ; 64512
-0800CF2A  4038     		and r0, r0, r7
+0800CD26  F44F 477C		mov r7, #64512 ; 64512
+0800CD2A  4038     		and r0, r0, r7
 
 #7			NE		2048	{LNXT:2|-1|-1}
 (*) UINT
-0800CF2C  F44F 6700		mov r7, #2048 ; 2048
-0800CF30  42B8     		cmp r0, r7
-0800CF32  BF08 2000		eqmov r0, #0
-0800CF36  BF18 2001		nemov r0, #1
+0800CD2C  F44F 6700		mov r7, #2048 ; 2048
+0800CD30  42B8     		cmp r0, r7
+0800CD32  BF08 2000		eqmov r0, #0
+0800CD36  BF18 2001		nemov r0, #1
 
 #8			JMPCN	$label0	{LNXT:2|3|2}
 (-) BOOL
-0800CF3A  2800     		cmp r0, #0
-0800CF3C  D005     		beq #10 ; 0x0800CF4A
+0800CD3A  2800     		cmp r0, #0
+0800CD3C  D005     		beq #10 ; 0x0800CD4A
 
 
 #9		
@@ -2964,27 +2394,27 @@ END_PROGRAM
 #13		$label1:
 #14				LD		TRUE	{LNXT:3|-1|-1}
 (-) UNDEF
-0800CF40  2001     		mov r0, #1 ; 1
+0800CD40  2001     		mov r0, #1 ; 1
 
 #15				JMPCN		$label2	{LNXT:3|2|2}
 (-) BOOL
-0800CF42  2800     		cmp r0, #0
-0800CF44  D001     		beq #2 ; 0x0800CF4A
+0800CD42  2800     		cmp r0, #0
+0800CD44  D001     		beq #2 ; 0x0800CD4A
 
 
 #16		
 #17				(* DO *)
 #18					JMP		$label1	{LNXT:3|2|2}
 (-) BOOL
-0800CF48  E7FA     		b #-12 ; 0x0800CF40
+0800CD48  E7FA     		b #-12 ; 0x0800CD40
 
-0800CF4A  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
-0800CF4E  F8DD E000		ldr lr, [sp]
-0800CF52  B002     		add sp, sp, #8
+0800CD4A  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+0800CD4E  F8DD E000		ldr lr, [sp]
+0800CD52  B002     		add sp, sp, #8
 
-0800CF54  4770     		bx lr
+0800CD54  4770     		bx lr
 
-0800CF58  20008976		; 0x20008976
+0800CD58  20008976		; 0x20008976
 
 END_PROGRAM
 
@@ -2995,11 +2425,11 @@ END_PROGRAM
 
 
 *** INPUT:
-0800CF5C  4770     		bx lr
+0800CD5C  4770     		bx lr
 
 
 *** OUTPUT:
-0800CF5E  4770     		bx lr
+0800CD5E  4770     		bx lr
 
 
 
@@ -3007,15 +2437,15 @@ END_PROGRAM
 	Task Init init code
 **************************************************
 
-0800CF60  B082     		sub sp, sp, #8
-0800CF62  F8CD E000		str lr, [sp]
-0800CF66  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+0800CD60  B082     		sub sp, sp, #8
+0800CD62  F8CD E000		str lr, [sp]
+0800CD66  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
 
-0800CF6A  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
-0800CF6E  F8DD E000		ldr lr, [sp]
-0800CF72  B002     		add sp, sp, #8
+0800CD6A  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+0800CD6E  F8DD E000		ldr lr, [sp]
+0800CD72  B002     		add sp, sp, #8
 
-0800CF74  4770     		bx lr
+0800CD74  4770     		bx lr
 
 **************************************************
 	List program: PageRefresh
@@ -3029,9 +2459,9 @@ res : USINT;
 
 END_PROGRAM
 
-0800CF80  B082     		sub sp, sp, #8
-0800CF82  F8CD E000		str lr, [sp]
-0800CF86  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+0800CD80  B082     		sub sp, sp, #8
+0800CD82  F8CD E000		str lr, [sp]
+0800CD86  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
 
 #0		{SRC:PageRefresh}
 #1		(*$WAITSWITCH$*)
@@ -3040,19 +2470,19 @@ END_PROGRAM
 #4		$label0:
 #5			LD		giStackPtr	{LNXT:3|-1|-1}
 (*) UNDEF
-0800CF8A  F8DF 709C		ldr r7, [pc, #+156] ; 0x2000C81A
-0800CF8E  F9B7 0000		ldrsh r0, [r7]
+0800CD8A  F8DF 709C		ldr r7, [pc, #+156] ; 0x2000C81E
+0800CD8E  F9B7 0000		ldrsh r0, [r7]
 
 #6			LT		0	{LNXT:3|-1|-1}
 (*) INT
-0800CF92  2800     		cmp r0, #0
-0800CF94  BFA8 2000		gemov r0, #0
-0800CF98  BFB8 2001		ltmov r0, #1
+0800CD92  2800     		cmp r0, #0
+0800CD94  BFA8 2000		gemov r0, #0
+0800CD98  BFB8 2001		ltmov r0, #1
 
 #7			JMPCN		$label1	{LNXT:3|4|7}
 (-) BOOL
-0800CF9C  2800     		cmp r0, #0
-0800CF9E  D00B     		beq #22 ; 0x0800CFB8
+0800CD9C  2800     		cmp r0, #0
+0800CD9E  D00B     		beq #22 ; 0x0800CDB8
 
 
 #8		
@@ -3062,20 +2492,20 @@ END_PROGRAM
 (-) BOOL
 #12				Video_Sleep	{LNXT:4|3|-1}
 (*) BOOL
-0800CFA2  2732     		mov r7, #50 ; 50
-0800CFA4  4638     		mov r0, r7
-0800CFA6  F8DF 407C		ldr r4, [pc, #+124] ; 0x80C82E9
-0800CFAA  F044 0401		orr r4, r4, #1
-0800CFAE  47A0     		blx r4
+0800CDA2  2732     		mov r7, #50 ; 50
+0800CDA4  4638     		mov r0, r7
+0800CDA6  F8DF 407C		ldr r4, [pc, #+124] ; 0x80C82E9
+0800CDAA  F044 0401		orr r4, r4, #1
+0800CDAE  47A0     		blx r4
 
 #13				ST		res	{LNXT:4|3|-1}
 (*) USINT
-0800CFB0  F8DF 7078		ldr r7, [pc, #+120] ; 0x2000C822
-0800CFB4  7038     		strb r0, [r7]
+0800CDB0  F8DF 7078		ldr r7, [pc, #+120] ; 0x2000C826
+0800CDB4  7038     		strb r0, [r7]
 
 #14				JMP		$label0	{LNXT:3|4|7}
 (-) USINT
-0800CFB6  E7E8     		b #-48 ; 0x0800CF8A
+0800CDB6  E7E8     		b #-48 ; 0x0800CD8A
 
 #15		
 #16		$label1:
@@ -3085,12 +2515,12 @@ END_PROGRAM
 #20		$label2:
 #21			LD		TRUE	{LNXT:7|-1|-1}
 (-) UNDEF
-0800CFB8  2001     		mov r0, #1 ; 1
+0800CDB8  2001     		mov r0, #1 ; 1
 
 #22			JMPCN		$label3	{LNXT:7|9|3}
 (-) BOOL
-0800CFBA  2800     		cmp r0, #0
-0800CFBC  D02A     		beq #84 ; 0x0800D014
+0800CDBA  2800     		cmp r0, #0
+0800CDBC  D02A     		beq #84 ; 0x0800CE14
 
 
 #23		
@@ -3101,27 +2531,27 @@ END_PROGRAM
 #28				(* 0: *)
 #29				LD		guiCallStack[giStackPtr]	{LNXT:10|-1|-1}
 (*) UNDEF
-0800CFC0  F8DF 7064		ldr r7, [pc, #+100] ; 0x2000C81A
-0800CFC4  F9B7 5000		ldrsh r5, [r7]
-0800CFC8  F8DF 7064		ldr r7, [pc, #+100] ; 0x2000C828
-0800CFCC  EB07 0745		add r7, r7, r5, lsl #1
-0800CFD0  8838     		ldrh r0, [r7]
+0800CDC0  F8DF 7064		ldr r7, [pc, #+100] ; 0x2000C81E
+0800CDC4  F9B7 5000		ldrsh r5, [r7]
+0800CDC8  F8DF 7064		ldr r7, [pc, #+100] ; 0x2000C82C
+0800CDCC  EB07 0745		add r7, r7, r5, lsl #1
+0800CDD0  8838     		ldrh r0, [r7]
 
 #30				EQ		0	{LNXT:10|-1|-1}
 (*) UINT
-0800CFD2  2800     		cmp r0, #0
-0800CFD4  BF18 2000		nemov r0, #0
-0800CFD8  BF08 2001		eqmov r0, #1
+0800CDD2  2800     		cmp r0, #0
+0800CDD4  BF18 2000		nemov r0, #0
+0800CDD8  BF08 2001		eqmov r0, #1
 
 #31				JMPC		$label5	{LNXT:10|11|16}
 (-) BOOL
-0800CFDC  2800     		cmp r0, #0
-0800CFDE  D102     		bne #4 ; 0x0800CFE6
+0800CDDC  2800     		cmp r0, #0
+0800CDDE  D102     		bne #4 ; 0x0800CDE6
 
 
 #32				JMP		$label4	{LNXT:10|11|16}
 (-) BOOL
-0800CFE2  E00C     		b #24 ; 0x0800CFFE
+0800CDE2  E00C     		b #24 ; 0x0800CDFE
 
 
 #33		
@@ -3131,13 +2561,13 @@ END_PROGRAM
 #37					(* fbRefrTouchScreen *)
 #38					CAL		fbRefrTouchScreen	{LNXT:11|16|-1}
 (*) BOOL
-0800CFE6  E92D 0021		stmdb sp!, { r0, r5 }
-0800CFEA  F8DF 7048		ldr r7, [pc, #+72] ; 0x2000CB70
-0800CFEE  463D     		mov r5, r7
-0800CFF0  F8DF 402C		ldr r4, [pc, #+44] ; 0x800C43C
-0800CFF4  F044 0401		orr r4, r4, #1
-0800CFF8  47A0     		blx r4
-0800CFFA  E8BD 0021		ldmia sp!, { r0, r5 }
+0800CDE6  E92D 0021		stmdb sp!, { r0, r5 }
+0800CDEA  F8DF 7048		ldr r7, [pc, #+72] ; 0x2000CB04
+0800CDEE  463D     		mov r5, r7
+0800CDF0  F8DF 402C		ldr r4, [pc, #+44] ; 0x800C48C
+0800CDF4  F044 0401		orr r4, r4, #1
+0800CDF8  47A0     		blx r4
+0800CDFA  E8BD 0021		ldmia sp!, { r0, r5 }
 
 #39		
 #40		$label4:
@@ -3149,33 +2579,33 @@ END_PROGRAM
 (-) BOOL
 #46				Video_Sleep	{LNXT:16|7|-1}
 (*) BOOL
-0800CFFE  2732     		mov r7, #50 ; 50
-0800D000  4638     		mov r0, r7
-0800D002  F8DF 4020		ldr r4, [pc, #+32] ; 0x80C82E9
-0800D006  F044 0401		orr r4, r4, #1
-0800D00A  47A0     		blx r4
+0800CDFE  2732     		mov r7, #50 ; 50
+0800CE00  4638     		mov r0, r7
+0800CE02  F8DF 4020		ldr r4, [pc, #+32] ; 0x80C82E9
+0800CE06  F044 0401		orr r4, r4, #1
+0800CE0A  47A0     		blx r4
 
 #47				ST		res	{LNXT:16|7|-1}
 (*) USINT
-0800D00C  F8DF 701C		ldr r7, [pc, #+28] ; 0x2000C822
-0800D010  7038     		strb r0, [r7]
+0800CE0C  F8DF 701C		ldr r7, [pc, #+28] ; 0x2000C826
+0800CE10  7038     		strb r0, [r7]
 
 #48				JMP		$label2	{LNXT:7|9|3}
 (-) USINT
-0800D012  E7D1     		b #-94 ; 0x0800CFB8
+0800CE12  E7D1     		b #-94 ; 0x0800CDB8
 
-0800D014  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
-0800D018  F8DD E000		ldr lr, [sp]
-0800D01C  B002     		add sp, sp, #8
+0800CE14  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+0800CE18  F8DD E000		ldr lr, [sp]
+0800CE1C  B002     		add sp, sp, #8
 
-0800D01E  4770     		bx lr
+0800CE1E  4770     		bx lr
 
-0800D020  0800C43C		; 0x0800C43C
-0800D024  080C82E9		; 0x080C82E9
-0800D028  2000C81A		; 0x2000C81A
-0800D02C  2000C822		; 0x2000C822
-0800D030  2000C828		; 0x2000C828
-0800D034  2000CB70		; 0x2000CB70
+0800CE20  0800C48C		; 0x0800C48C
+0800CE24  080C82E9		; 0x080C82E9
+0800CE28  2000C81E		; 0x2000C81E
+0800CE2C  2000C826		; 0x2000C826
+0800CE30  2000C82C		; 0x2000C82C
+0800CE34  2000CB04		; 0x2000CB04
 
 END_PROGRAM
 
@@ -3186,11 +2616,11 @@ END_PROGRAM
 
 
 *** INPUT:
-0800D038  4770     		bx lr
+0800CE38  4770     		bx lr
 
 
 *** OUTPUT:
-0800D03A  4770     		bx lr
+0800CE3A  4770     		bx lr
 
 
 
@@ -3198,15 +2628,15 @@ END_PROGRAM
 	Task Refresh init code
 **************************************************
 
-0800D03C  B082     		sub sp, sp, #8
-0800D03E  F8CD E000		str lr, [sp]
-0800D042  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+0800CE3C  B082     		sub sp, sp, #8
+0800CE3E  F8CD E000		str lr, [sp]
+0800CE42  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
 
-0800D046  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
-0800D04A  F8DD E000		ldr lr, [sp]
-0800D04E  B002     		add sp, sp, #8
+0800CE46  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+0800CE4A  F8DD E000		ldr lr, [sp]
+0800CE4E  B002     		add sp, sp, #8
 
-0800D050  4770     		bx lr
+0800CE50  4770     		bx lr
 
 
 
@@ -3214,724 +2644,610 @@ END_PROGRAM
 	Global init code
 **************************************************
 
-0800D060  B082     		sub sp, sp, #8
-0800D062  F8CD E000		str lr, [sp]
-0800D066  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+0800CE60  B082     		sub sp, sp, #8
+0800CE62  F8CD E000		str lr, [sp]
+0800CE66  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
 
 Var init: V:HMI:GISTACKPTR = -1
-0800D06A  F8DF 0460		ldr r0, [pc, #+1120] ; 0xFFFFFFFF
-0800D06E  F8DF 7508		ldr r7, [pc, #+1288] ; 0x2000C81A
-0800D072  8038     		strh r0, [r7]
+0800CE6A  F8DF 03AC		ldr r0, [pc, #+940] ; 0xFFFFFFFF
+0800CE6E  F8DF 7438		ldr r7, [pc, #+1080] ; 0x2000C81E
+0800CE72  8038     		strh r0, [r7]
 
 Var init: V:HMI:$GIBACKBUFFERCURR = -1
-0800D074  F8DF 0454		ldr r0, [pc, #+1108] ; 0xFFFFFFFF
-0800D078  F8DF 7500		ldr r7, [pc, #+1280] ; 0x2000C81C
-0800D07C  8038     		strh r0, [r7]
+0800CE74  F8DF 03A0		ldr r0, [pc, #+928] ; 0xFFFFFFFF
+0800CE78  F8DF 7430		ldr r7, [pc, #+1072] ; 0x2000C820
+0800CE7C  8038     		strh r0, [r7]
 
 Var init: V:HMI:$GIBACKBUFFERFIRST = -1
-0800D07E  F8DF 044C		ldr r0, [pc, #+1100] ; 0xFFFFFFFF
-0800D082  F8DF 74FC		ldr r7, [pc, #+1276] ; 0x2000C81E
-0800D086  8038     		strh r0, [r7]
+0800CE7E  F8DF 0398		ldr r0, [pc, #+920] ; 0xFFFFFFFF
+0800CE82  F8DF 742C		ldr r7, [pc, #+1068] ; 0x2000C822
+0800CE86  8038     		strh r0, [r7]
 
 Var init: V:HMI:$GIBACKBUFFERLAST = -1
-0800D088  F8DF 0440		ldr r0, [pc, #+1088] ; 0xFFFFFFFF
-0800D08C  F8DF 74F4		ldr r7, [pc, #+1268] ; 0x2000C820
-0800D090  8038     		strh r0, [r7]
+0800CE88  F8DF 038C		ldr r0, [pc, #+908] ; 0xFFFFFFFF
+0800CE8C  F8DF 7424		ldr r7, [pc, #+1060] ; 0x2000C824
+0800CE90  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_1.WHND = 2
-0800D092  F8DF 0440		ldr r0, [pc, #+1088] ; 0x2
-0800D096  F8DF 74F0		ldr r7, [pc, #+1264] ; 0x2000C8C4
-0800D09A  8038     		strh r0, [r7]
+0800CE92  F8DF 038C		ldr r0, [pc, #+908] ; 0x2
+0800CE96  F8DF 7420		ldr r7, [pc, #+1056] ; 0x2000C8C4
+0800CE9A  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_1.X1 = 174
-0800D09C  F8DF 0494		ldr r0, [pc, #+1172] ; 0xAE
-0800D0A0  F8DF 74E8		ldr r7, [pc, #+1256] ; 0x2000C8C6
-0800D0A4  8038     		strh r0, [r7]
+0800CE9C  F8DF 03D0		ldr r0, [pc, #+976] ; 0xAE
+0800CEA0  F8DF 7418		ldr r7, [pc, #+1048] ; 0x2000C8C6
+0800CEA4  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_1.Y1 = 8
-0800D0A6  F8DF 0444		ldr r0, [pc, #+1092] ; 0x8
-0800D0AA  F8DF 74E4		ldr r7, [pc, #+1252] ; 0x2000C8C8
-0800D0AE  8038     		strh r0, [r7]
+0800CEA6  F8DF 0390		ldr r0, [pc, #+912] ; 0x8
+0800CEAA  F8DF 7414		ldr r7, [pc, #+1044] ; 0x2000C8C8
+0800CEAE  8038     		strh r0, [r7]
 
-Var init: V:HMI:FBTOUCHSCREENEDIT_1.X2 = 221
-0800D0B0  F8DF 0494		ldr r0, [pc, #+1172] ; 0xDD
-0800D0B4  F8DF 74DC		ldr r7, [pc, #+1244] ; 0x2000C8CA
-0800D0B8  8038     		strh r0, [r7]
+Var init: V:HMI:FBTOUCHSCREENEDIT_1.X2 = 233
+0800CEB0  F8DF 03D0		ldr r0, [pc, #+976] ; 0xE9
+0800CEB4  F8DF 740C		ldr r7, [pc, #+1036] ; 0x2000C8CA
+0800CEB8  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_1.Y2 = 31
-0800D0BA  F8DF 0440		ldr r0, [pc, #+1088] ; 0x1F
-0800D0BE  F8DF 74D8		ldr r7, [pc, #+1240] ; 0x2000C8CC
-0800D0C2  8038     		strh r0, [r7]
+0800CEBA  F8DF 0384		ldr r0, [pc, #+900] ; 0x1F
+0800CEBE  F8DF 7408		ldr r7, [pc, #+1032] ; 0x2000C8CC
+0800CEC2  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_1.PFONT = 
-0800D0C4  F8DF 74D4		ldr r7, [pc, #+1236] ; 0x2000C8D0
-0800D0C8  F8DF 04A4		ldr r0, [pc, #+1188] ; 0x8200008
-0800D0CC  6038     		str r0, [r7]
+0800CEC4  F8DF 7404		ldr r7, [pc, #+1028] ; 0x2000C8D0
+0800CEC8  F8DF 03D0		ldr r0, [pc, #+976] ; 0x8200008
+0800CECC  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_1.BCKCOL = 16777215
-0800D0CE  F8DF 0490		ldr r0, [pc, #+1168] ; 0xFFFFFF
-0800D0D2  F8DF 74CC		ldr r7, [pc, #+1228] ; 0x2000C8DC
-0800D0D6  6038     		str r0, [r7]
+0800CECE  F8DF 03BC		ldr r0, [pc, #+956] ; 0xFFFFFF
+0800CED2  F8DF 73FC		ldr r7, [pc, #+1020] ; 0x2000C8DC
+0800CED6  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_1.FORESELCOL = 16777215
-0800D0D8  F8DF 0484		ldr r0, [pc, #+1156] ; 0xFFFFFF
-0800D0DC  F8DF 74C4		ldr r7, [pc, #+1220] ; 0x2000C8E0
-0800D0E0  6038     		str r0, [r7]
+0800CED8  F8DF 03B0		ldr r0, [pc, #+944] ; 0xFFFFFF
+0800CEDC  F8DF 73F4		ldr r7, [pc, #+1012] ; 0x2000C8E0
+0800CEE0  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_1.RW = 1
-0800D0E2  F8DF 03EC		ldr r0, [pc, #+1004] ; 0x1
-0800D0E6  F8DF 74C0		ldr r7, [pc, #+1216] ; 0x2000C8F0
-0800D0EA  7038     		strb r0, [r7]
+0800CEE2  F8DF 0338		ldr r0, [pc, #+824] ; 0x1
+0800CEE6  F8DF 73F0		ldr r7, [pc, #+1008] ; 0x2000C8F0
+0800CEEA  7038     		strb r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_1.REFR = 1
-0800D0EC  F8DF 03E0		ldr r0, [pc, #+992] ; 0x1
-0800D0F0  F8DF 74B8		ldr r7, [pc, #+1208] ; 0x2000C8F1
-0800D0F4  7038     		strb r0, [r7]
+0800CEEC  F8DF 032C		ldr r0, [pc, #+812] ; 0x1
+0800CEF0  F8DF 73E8		ldr r7, [pc, #+1000] ; 0x2000C8F1
+0800CEF4  7038     		strb r0, [r7]
 
-Var init: V:HMI:FBTOUCHSCREENEDIT_1.PVAR = 2101248
-0800D0F6  F8DF 045C		ldr r0, [pc, #+1116] ; 0x201000
-0800D0FA  F8DF 74B4		ldr r7, [pc, #+1204] ; 0x2000C8F4
-0800D0FE  6038     		str r0, [r7]
+Var init: V:HMI:FBTOUCHSCREENEDIT_1.PVAR = 
+0800CEF6  F8DF 73E8		ldr r7, [pc, #+1000] ; 0x2000C8F4
+0800CEFA  F8DF 03A4		ldr r0, [pc, #+932] ; 0x20003A92
+0800CEFE  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_1.TYPE = 5
-0800D100  F8DF 03DC		ldr r0, [pc, #+988] ; 0x5
-0800D104  F8DF 74AC		ldr r7, [pc, #+1196] ; 0x2000C8F8
-0800D108  7038     		strb r0, [r7]
+0800CF00  F8DF 0328		ldr r0, [pc, #+808] ; 0x5
+0800CF04  F8DF 73DC		ldr r7, [pc, #+988] ; 0x2000C8F8
+0800CF08  7038     		strb r0, [r7]
 
-Var init: V:HMI:FBTOUCHSCREENEDIT_1.FORMAT = 16777228
-0800D10A  F8DF 0458		ldr r0, [pc, #+1112] ; 0x100000C
-0800D10E  F8DF 74A8		ldr r7, [pc, #+1192] ; 0x2000C904
-0800D112  6038     		str r0, [r7]
+Var init: V:HMI:FBTOUCHSCREENEDIT_1.FORMAT = 16777224
+0800CF0A  F8DF 0384		ldr r0, [pc, #+900] ; 0x1000008
+0800CF0E  F8DF 73D8		ldr r7, [pc, #+984] ; 0x2000C904
+0800CF12  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_1.PVISVAR = 1
-0800D114  F8DF 03B8		ldr r0, [pc, #+952] ; 0x1
-0800D118  F8DF 74A0		ldr r7, [pc, #+1184] ; 0x2000C908
-0800D11C  6038     		str r0, [r7]
+0800CF14  F8DF 0304		ldr r0, [pc, #+772] ; 0x1
+0800CF18  F8DF 73D0		ldr r7, [pc, #+976] ; 0x2000C908
+0800CF1C  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_1.ORDER = 1
-0800D11E  F8DF 03B0		ldr r0, [pc, #+944] ; 0x1
-0800D122  F8DF 749C		ldr r7, [pc, #+1180] ; 0x2000C910
-0800D126  7038     		strb r0, [r7]
+0800CF1E  F8DF 02FC		ldr r0, [pc, #+764] ; 0x1
+0800CF22  F8DF 73CC		ldr r7, [pc, #+972] ; 0x2000C910
+0800CF26  7038     		strb r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENSTRING_7.X = 7
-0800D128  F8DF 03BC		ldr r0, [pc, #+956] ; 0x7
-0800D12C  F8DF 7494		ldr r7, [pc, #+1172] ; 0x2000C92A
-0800D130  8038     		strh r0, [r7]
+0800CF28  F8DF 0308		ldr r0, [pc, #+776] ; 0x7
+0800CF2C  F8DF 73C4		ldr r7, [pc, #+964] ; 0x2000C92A
+0800CF30  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENSTRING_7.Y = 8
-0800D132  F8DF 03B8		ldr r0, [pc, #+952] ; 0x8
-0800D136  F8DF 7490		ldr r7, [pc, #+1168] ; 0x2000C92C
-0800D13A  8038     		strh r0, [r7]
+0800CF32  F8DF 0304		ldr r0, [pc, #+772] ; 0x8
+0800CF36  F8DF 73C0		ldr r7, [pc, #+960] ; 0x2000C92C
+0800CF3A  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENSTRING_7.PSTRING = 
-0800D13C  F8DF 748C		ldr r7, [pc, #+1164] ; 0x2000C930
-0800D140  F8DF 0424		ldr r0, [pc, #+1060] ; 0x8008150
-0800D144  6038     		str r0, [r7]
+0800CF3C  F8DF 73BC		ldr r7, [pc, #+956] ; 0x2000C930
+0800CF40  F8DF 0350		ldr r0, [pc, #+848] ; 0x80081A0
+0800CF44  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENSTRING_7.PFONT = 
-0800D146  F8DF 7488		ldr r7, [pc, #+1160] ; 0x2000C934
-0800D14A  F8DF 0424		ldr r0, [pc, #+1060] ; 0x8200008
-0800D14E  6038     		str r0, [r7]
+0800CF46  F8DF 73B8		ldr r7, [pc, #+952] ; 0x2000C934
+0800CF4A  F8DF 0350		ldr r0, [pc, #+848] ; 0x8200008
+0800CF4E  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENSTRING_7.BCKCOL = 16777215
-0800D150  F8DF 040C		ldr r0, [pc, #+1036] ; 0xFFFFFF
-0800D154  F8DF 747C		ldr r7, [pc, #+1148] ; 0x2000C93C
-0800D158  6038     		str r0, [r7]
+0800CF50  F8DF 0338		ldr r0, [pc, #+824] ; 0xFFFFFF
+0800CF54  F8DF 73AC		ldr r7, [pc, #+940] ; 0x2000C93C
+0800CF58  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENSTRING_7.PVISVAR = 1
-0800D15A  F8DF 0374		ldr r0, [pc, #+884] ; 0x1
-0800D15E  F8DF 7478		ldr r7, [pc, #+1144] ; 0x2000C940
-0800D162  6038     		str r0, [r7]
+0800CF5A  F8DF 02C0		ldr r0, [pc, #+704] ; 0x1
+0800CF5E  F8DF 73A8		ldr r7, [pc, #+936] ; 0x2000C940
+0800CF62  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENSTRING_7.FORMAT = 32
-0800D164  F8DF 0398		ldr r0, [pc, #+920] ; 0x20
-0800D168  F8DF 7470		ldr r7, [pc, #+1136] ; 0x2000C944
-0800D16C  8038     		strh r0, [r7]
+0800CF64  F8DF 02DC		ldr r0, [pc, #+732] ; 0x20
+0800CF68  F8DF 73A0		ldr r7, [pc, #+928] ; 0x2000C944
+0800CF6C  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENSTRING_7.SELFORECOL = 16777215
-0800D16E  F8DF 03F0		ldr r0, [pc, #+1008] ; 0xFFFFFF
-0800D172  F8DF 746C		ldr r7, [pc, #+1132] ; 0x2000C950
-0800D176  6038     		str r0, [r7]
+0800CF6E  F8DF 031C		ldr r0, [pc, #+796] ; 0xFFFFFF
+0800CF72  F8DF 739C		ldr r7, [pc, #+924] ; 0x2000C950
+0800CF76  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENLINE_9.X1 = 7
-0800D178  F8DF 036C		ldr r0, [pc, #+876] ; 0x7
-0800D17C  F8DF 7464		ldr r7, [pc, #+1124] ; 0x2000C960
-0800D180  8038     		strh r0, [r7]
+0800CF78  F8DF 02B8		ldr r0, [pc, #+696] ; 0x7
+0800CF7C  F8DF 7394		ldr r7, [pc, #+916] ; 0x2000C960
+0800CF80  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENLINE_9.Y1 = 40
-0800D182  F8DF 0388		ldr r0, [pc, #+904] ; 0x28
-0800D186  F8DF 7460		ldr r7, [pc, #+1120] ; 0x2000C962
-0800D18A  8038     		strh r0, [r7]
+0800CF82  F8DF 02CC		ldr r0, [pc, #+716] ; 0x28
+0800CF86  F8DF 7390		ldr r7, [pc, #+912] ; 0x2000C962
+0800CF8A  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENLINE_9.X2 = 230
-0800D18C  F8DF 03BC		ldr r0, [pc, #+956] ; 0xE6
-0800D190  F8DF 7458		ldr r7, [pc, #+1112] ; 0x2000C964
-0800D194  8038     		strh r0, [r7]
+0800CF8C  F8DF 02EC		ldr r0, [pc, #+748] ; 0xE6
+0800CF90  F8DF 7388		ldr r7, [pc, #+904] ; 0x2000C964
+0800CF94  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENLINE_9.Y2 = 40
-0800D196  F8DF 0374		ldr r0, [pc, #+884] ; 0x28
-0800D19A  F8DF 7454		ldr r7, [pc, #+1108] ; 0x2000C966
-0800D19E  8038     		strh r0, [r7]
+0800CF96  F8DF 02B8		ldr r0, [pc, #+696] ; 0x28
+0800CF9A  F8DF 7384		ldr r7, [pc, #+900] ; 0x2000C966
+0800CF9E  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENLINE_9.BORDPTS = 1
-0800D1A0  F8DF 032C		ldr r0, [pc, #+812] ; 0x1
-0800D1A4  F8DF 744C		ldr r7, [pc, #+1100] ; 0x2000C969
-0800D1A8  7038     		strb r0, [r7]
+0800CFA0  F8DF 0278		ldr r0, [pc, #+632] ; 0x1
+0800CFA4  F8DF 737C		ldr r7, [pc, #+892] ; 0x2000C969
+0800CFA8  7038     		strb r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENSTRING_14.WHND = 1
-0800D1AA  F8DF 0324		ldr r0, [pc, #+804] ; 0x1
-0800D1AE  F8DF 7448		ldr r7, [pc, #+1096] ; 0x2000C978
-0800D1B2  8038     		strh r0, [r7]
+0800CFAA  F8DF 0270		ldr r0, [pc, #+624] ; 0x1
+0800CFAE  F8DF 7378		ldr r7, [pc, #+888] ; 0x2000C978
+0800CFB2  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENSTRING_14.X = 7
-0800D1B4  F8DF 0330		ldr r0, [pc, #+816] ; 0x7
-0800D1B8  F8DF 7440		ldr r7, [pc, #+1088] ; 0x2000C97A
-0800D1BC  8038     		strh r0, [r7]
+0800CFB4  F8DF 027C		ldr r0, [pc, #+636] ; 0x7
+0800CFB8  F8DF 7370		ldr r7, [pc, #+880] ; 0x2000C97A
+0800CFBC  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENSTRING_14.Y = 51
-0800D1BE  F8DF 0350		ldr r0, [pc, #+848] ; 0x33
-0800D1C2  F8DF 743C		ldr r7, [pc, #+1084] ; 0x2000C97C
-0800D1C6  8038     		strh r0, [r7]
+0800CFBE  F8DF 0294		ldr r0, [pc, #+660] ; 0x33
+0800CFC2  F8DF 736C		ldr r7, [pc, #+876] ; 0x2000C97C
+0800CFC6  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENSTRING_14.PSTRING = 
-0800D1C8  F8DF 7438		ldr r7, [pc, #+1080] ; 0x2000C980
-0800D1CC  F8DF 039C		ldr r0, [pc, #+924] ; 0x8008160
-0800D1D0  6038     		str r0, [r7]
+0800CFC8  F8DF 7368		ldr r7, [pc, #+872] ; 0x2000C980
+0800CFCC  F8DF 02C8		ldr r0, [pc, #+712] ; 0x80081B0
+0800CFD0  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENSTRING_14.PFONT = 
-0800D1D2  F8DF 7434		ldr r7, [pc, #+1076] ; 0x2000C984
-0800D1D6  F8DF 0398		ldr r0, [pc, #+920] ; 0x8200008
-0800D1DA  6038     		str r0, [r7]
+0800CFD2  F8DF 7364		ldr r7, [pc, #+868] ; 0x2000C984
+0800CFD6  F8DF 02C4		ldr r0, [pc, #+708] ; 0x8200008
+0800CFDA  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENSTRING_14.BCKCOL = 16777215
-0800D1DC  F8DF 0380		ldr r0, [pc, #+896] ; 0xFFFFFF
-0800D1E0  F8DF 7428		ldr r7, [pc, #+1064] ; 0x2000C98C
-0800D1E4  6038     		str r0, [r7]
+0800CFDC  F8DF 02AC		ldr r0, [pc, #+684] ; 0xFFFFFF
+0800CFE0  F8DF 7358		ldr r7, [pc, #+856] ; 0x2000C98C
+0800CFE4  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENSTRING_14.PVISVAR = 1
-0800D1E6  F8DF 02E8		ldr r0, [pc, #+744] ; 0x1
-0800D1EA  F8DF 7424		ldr r7, [pc, #+1060] ; 0x2000C990
-0800D1EE  6038     		str r0, [r7]
+0800CFE6  F8DF 0234		ldr r0, [pc, #+564] ; 0x1
+0800CFEA  F8DF 7354		ldr r7, [pc, #+852] ; 0x2000C990
+0800CFEE  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENSTRING_14.FORMAT = 32
-0800D1F0  F8DF 030C		ldr r0, [pc, #+780] ; 0x20
-0800D1F4  F8DF 741C		ldr r7, [pc, #+1052] ; 0x2000C994
-0800D1F8  8038     		strh r0, [r7]
+0800CFF0  F8DF 0250		ldr r0, [pc, #+592] ; 0x20
+0800CFF4  F8DF 734C		ldr r7, [pc, #+844] ; 0x2000C994
+0800CFF8  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENSTRING_14.SELFORECOL = 16777215
-0800D1FA  F8DF 0364		ldr r0, [pc, #+868] ; 0xFFFFFF
-0800D1FE  F8DF 7418		ldr r7, [pc, #+1048] ; 0x2000C9A0
-0800D202  6038     		str r0, [r7]
+0800CFFA  F8DF 0290		ldr r0, [pc, #+656] ; 0xFFFFFF
+0800CFFE  F8DF 7348		ldr r7, [pc, #+840] ; 0x2000C9A0
+0800D002  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_15.WHND = 3
-0800D204  F8DF 02D0		ldr r0, [pc, #+720] ; 0x3
-0800D208  F8DF 7410		ldr r7, [pc, #+1040] ; 0x2000C9C0
-0800D20C  8038     		strh r0, [r7]
+0800D004  F8DF 021C		ldr r0, [pc, #+540] ; 0x3
+0800D008  F8DF 7340		ldr r7, [pc, #+832] ; 0x2000C9C0
+0800D00C  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_15.X1 = 174
-0800D20E  F8DF 0324		ldr r0, [pc, #+804] ; 0xAE
-0800D212  F8DF 740C		ldr r7, [pc, #+1036] ; 0x2000C9C2
-0800D216  8038     		strh r0, [r7]
+0800D00E  F8DF 0260		ldr r0, [pc, #+608] ; 0xAE
+0800D012  F8DF 733C		ldr r7, [pc, #+828] ; 0x2000C9C2
+0800D016  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_15.Y1 = 51
-0800D218  F8DF 02F4		ldr r0, [pc, #+756] ; 0x33
-0800D21C  F8DF 7404		ldr r7, [pc, #+1028] ; 0x2000C9C4
-0800D220  8038     		strh r0, [r7]
+0800D018  F8DF 0238		ldr r0, [pc, #+568] ; 0x33
+0800D01C  F8DF 7334		ldr r7, [pc, #+820] ; 0x2000C9C4
+0800D020  8038     		strh r0, [r7]
 
-Var init: V:HMI:FBTOUCHSCREENEDIT_15.X2 = 221
-0800D222  F8DF 0324		ldr r0, [pc, #+804] ; 0xDD
-0800D226  F8DF 7400		ldr r7, [pc, #+1024] ; 0x2000C9C6
-0800D22A  8038     		strh r0, [r7]
+Var init: V:HMI:FBTOUCHSCREENEDIT_15.X2 = 233
+0800D022  F8DF 0260		ldr r0, [pc, #+608] ; 0xE9
+0800D026  F8DF 7330		ldr r7, [pc, #+816] ; 0x2000C9C6
+0800D02A  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_15.Y2 = 74
-0800D22C  F8DF 02E4		ldr r0, [pc, #+740] ; 0x4A
-0800D230  F8DF 73F8		ldr r7, [pc, #+1016] ; 0x2000C9C8
-0800D234  8038     		strh r0, [r7]
+0800D02C  F8DF 0228		ldr r0, [pc, #+552] ; 0x4A
+0800D030  F8DF 7328		ldr r7, [pc, #+808] ; 0x2000C9C8
+0800D034  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_15.PFONT = 
-0800D236  F8DF 73F8		ldr r7, [pc, #+1016] ; 0x2000C9CC
-0800D23A  F8DF 0334		ldr r0, [pc, #+820] ; 0x8200008
-0800D23E  6038     		str r0, [r7]
+0800D036  F8DF 7328		ldr r7, [pc, #+808] ; 0x2000C9CC
+0800D03A  F8DF 0260		ldr r0, [pc, #+608] ; 0x8200008
+0800D03E  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_15.BCKCOL = 16777215
-0800D240  F8DF 031C		ldr r0, [pc, #+796] ; 0xFFFFFF
-0800D244  F8DF 73EC		ldr r7, [pc, #+1004] ; 0x2000C9D8
-0800D248  6038     		str r0, [r7]
+0800D040  F8DF 0248		ldr r0, [pc, #+584] ; 0xFFFFFF
+0800D044  F8DF 731C		ldr r7, [pc, #+796] ; 0x2000C9D8
+0800D048  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_15.FORESELCOL = 16777215
-0800D24A  F8DF 0314		ldr r0, [pc, #+788] ; 0xFFFFFF
-0800D24E  F8DF 73E8		ldr r7, [pc, #+1000] ; 0x2000C9DC
-0800D252  6038     		str r0, [r7]
+0800D04A  F8DF 0240		ldr r0, [pc, #+576] ; 0xFFFFFF
+0800D04E  F8DF 7318		ldr r7, [pc, #+792] ; 0x2000C9DC
+0800D052  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_15.RW = 1
-0800D254  F8DF 0278		ldr r0, [pc, #+632] ; 0x1
-0800D258  F8DF 73E0		ldr r7, [pc, #+992] ; 0x2000C9EC
-0800D25C  7038     		strb r0, [r7]
+0800D054  F8DF 01C4		ldr r0, [pc, #+452] ; 0x1
+0800D058  F8DF 7310		ldr r7, [pc, #+784] ; 0x2000C9EC
+0800D05C  7038     		strb r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_15.REFR = 1
-0800D25E  F8DF 0270		ldr r0, [pc, #+624] ; 0x1
-0800D262  F8DF 73DC		ldr r7, [pc, #+988] ; 0x2000C9ED
-0800D266  7038     		strb r0, [r7]
+0800D05E  F8DF 01BC		ldr r0, [pc, #+444] ; 0x1
+0800D062  F8DF 730C		ldr r7, [pc, #+780] ; 0x2000C9ED
+0800D066  7038     		strb r0, [r7]
 
-Var init: V:HMI:FBTOUCHSCREENEDIT_15.PVAR = 2101504
-0800D268  F8DF 02EC		ldr r0, [pc, #+748] ; 0x201100
-0800D26C  F8DF 73D4		ldr r7, [pc, #+980] ; 0x2000C9F0
-0800D270  6038     		str r0, [r7]
+Var init: V:HMI:FBTOUCHSCREENEDIT_15.PVAR = 
+0800D068  F8DF 7308		ldr r7, [pc, #+776] ; 0x2000C9F0
+0800D06C  F8DF 0234		ldr r0, [pc, #+564] ; 0x20008EE8
+0800D070  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_15.TYPE = 5
-0800D272  F8DF 026C		ldr r0, [pc, #+620] ; 0x5
-0800D276  F8DF 73D0		ldr r7, [pc, #+976] ; 0x2000C9F4
-0800D27A  7038     		strb r0, [r7]
+0800D072  F8DF 01B8		ldr r0, [pc, #+440] ; 0x5
+0800D076  F8DF 7300		ldr r7, [pc, #+768] ; 0x2000C9F4
+0800D07A  7038     		strb r0, [r7]
 
-Var init: V:HMI:FBTOUCHSCREENEDIT_15.FORMAT = 16777228
-0800D27C  F8DF 02E4		ldr r0, [pc, #+740] ; 0x100000C
-0800D280  F8DF 73C8		ldr r7, [pc, #+968] ; 0x2000CA00
-0800D284  6038     		str r0, [r7]
+Var init: V:HMI:FBTOUCHSCREENEDIT_15.FORMAT = 16777224
+0800D07C  F8DF 0210		ldr r0, [pc, #+528] ; 0x1000008
+0800D080  F8DF 72F8		ldr r7, [pc, #+760] ; 0x2000CA00
+0800D084  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_15.PVISVAR = 1
-0800D286  F8DF 0248		ldr r0, [pc, #+584] ; 0x1
-0800D28A  F8DF 73C4		ldr r7, [pc, #+964] ; 0x2000CA04
-0800D28E  6038     		str r0, [r7]
+0800D086  F8DF 0194		ldr r0, [pc, #+404] ; 0x1
+0800D08A  F8DF 72F4		ldr r7, [pc, #+756] ; 0x2000CA04
+0800D08E  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_15.ORDER = 6
-0800D290  F8DF 0250		ldr r0, [pc, #+592] ; 0x6
-0800D294  F8DF 73BC		ldr r7, [pc, #+956] ; 0x2000CA0C
-0800D298  7038     		strb r0, [r7]
+0800D090  F8DF 019C		ldr r0, [pc, #+412] ; 0x6
+0800D094  F8DF 72EC		ldr r7, [pc, #+748] ; 0x2000CA0C
+0800D098  7038     		strb r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENLINE_16.X1 = 8
-0800D29A  F8DF 0250		ldr r0, [pc, #+592] ; 0x8
-0800D29E  F8DF 73B8		ldr r7, [pc, #+952] ; 0x2000CA1C
-0800D2A2  8038     		strh r0, [r7]
+0800D09A  F8DF 019C		ldr r0, [pc, #+412] ; 0x8
+0800D09E  F8DF 72E8		ldr r7, [pc, #+744] ; 0x2000CA1C
+0800D0A2  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENLINE_16.Y1 = 85
-0800D2A4  F8DF 0270		ldr r0, [pc, #+624] ; 0x55
-0800D2A8  F8DF 73B0		ldr r7, [pc, #+944] ; 0x2000CA1E
-0800D2AC  8038     		strh r0, [r7]
+0800D0A4  F8DF 01B4		ldr r0, [pc, #+436] ; 0x55
+0800D0A8  F8DF 72E0		ldr r7, [pc, #+736] ; 0x2000CA1E
+0800D0AC  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENLINE_16.X2 = 231
-0800D2AE  F8DF 02A0		ldr r0, [pc, #+672] ; 0xE7
-0800D2B2  F8DF 73AC		ldr r7, [pc, #+940] ; 0x2000CA20
-0800D2B6  8038     		strh r0, [r7]
+0800D0AE  F8DF 01D0		ldr r0, [pc, #+464] ; 0xE7
+0800D0B2  F8DF 72DC		ldr r7, [pc, #+732] ; 0x2000CA20
+0800D0B6  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENLINE_16.Y2 = 85
-0800D2B8  F8DF 025C		ldr r0, [pc, #+604] ; 0x55
-0800D2BC  F8DF 73A4		ldr r7, [pc, #+932] ; 0x2000CA22
-0800D2C0  8038     		strh r0, [r7]
+0800D0B8  F8DF 01A0		ldr r0, [pc, #+416] ; 0x55
+0800D0BC  F8DF 72D4		ldr r7, [pc, #+724] ; 0x2000CA22
+0800D0C0  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENLINE_16.BORDPTS = 1
-0800D2C2  F8DF 020C		ldr r0, [pc, #+524] ; 0x1
-0800D2C6  F8DF 73A0		ldr r7, [pc, #+928] ; 0x2000CA25
-0800D2CA  7038     		strb r0, [r7]
+0800D0C2  F8DF 0158		ldr r0, [pc, #+344] ; 0x1
+0800D0C6  F8DF 72D0		ldr r7, [pc, #+720] ; 0x2000CA25
+0800D0CA  7038     		strb r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_18.WHND = 4
-0800D2CC  F8DF 020C		ldr r0, [pc, #+524] ; 0x4
-0800D2D0  F8DF 7398		ldr r7, [pc, #+920] ; 0x2000CA3C
-0800D2D4  8038     		strh r0, [r7]
+0800D0CC  F8DF 0158		ldr r0, [pc, #+344] ; 0x4
+0800D0D0  F8DF 72C8		ldr r7, [pc, #+712] ; 0x2000CA3C
+0800D0D4  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_18.X1 = 33
-0800D2D6  F8DF 022C		ldr r0, [pc, #+556] ; 0x21
-0800D2DA  F8DF 7394		ldr r7, [pc, #+916] ; 0x2000CA3E
-0800D2DE  8038     		strh r0, [r7]
+0800D0D6  F8DF 0170		ldr r0, [pc, #+368] ; 0x21
+0800D0DA  F8DF 72C4		ldr r7, [pc, #+708] ; 0x2000CA3E
+0800D0DE  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_18.Y1 = 107
-0800D2E0  F8DF 023C		ldr r0, [pc, #+572] ; 0x6B
-0800D2E4  F8DF 738C		ldr r7, [pc, #+908] ; 0x2000CA40
-0800D2E8  8038     		strh r0, [r7]
+0800D0E0  F8DF 017C		ldr r0, [pc, #+380] ; 0x6B
+0800D0E4  F8DF 72BC		ldr r7, [pc, #+700] ; 0x2000CA40
+0800D0E8  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_18.X2 = 200
-0800D2EA  F8DF 0250		ldr r0, [pc, #+592] ; 0xC8
-0800D2EE  F8DF 7388		ldr r7, [pc, #+904] ; 0x2000CA42
-0800D2F2  8038     		strh r0, [r7]
+0800D0EA  F8DF 0188		ldr r0, [pc, #+392] ; 0xC8
+0800D0EE  F8DF 72B8		ldr r7, [pc, #+696] ; 0x2000CA42
+0800D0F2  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_18.Y2 = 130
-0800D2F4  F8DF 022C		ldr r0, [pc, #+556] ; 0x82
-0800D2F8  F8DF 7380		ldr r7, [pc, #+896] ; 0x2000CA44
-0800D2FC  8038     		strh r0, [r7]
+0800D0F4  F8DF 016C		ldr r0, [pc, #+364] ; 0x82
+0800D0F8  F8DF 72B0		ldr r7, [pc, #+688] ; 0x2000CA44
+0800D0FC  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_18.PFONT = 
-0800D2FE  F8DF 7380		ldr r7, [pc, #+896] ; 0x2000CA48
-0800D302  F8DF 026C		ldr r0, [pc, #+620] ; 0x8200008
-0800D306  6038     		str r0, [r7]
+0800D0FE  F8DF 72B0		ldr r7, [pc, #+688] ; 0x2000CA48
+0800D102  F8DF 0198		ldr r0, [pc, #+408] ; 0x8200008
+0800D106  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_18.BCKCOL = 16777215
-0800D308  F8DF 0254		ldr r0, [pc, #+596] ; 0xFFFFFF
-0800D30C  F8DF 7374		ldr r7, [pc, #+884] ; 0x2000CA54
-0800D310  6038     		str r0, [r7]
+0800D108  F8DF 0180		ldr r0, [pc, #+384] ; 0xFFFFFF
+0800D10C  F8DF 72A4		ldr r7, [pc, #+676] ; 0x2000CA54
+0800D110  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_18.FORESELCOL = 16777215
-0800D312  F8DF 024C		ldr r0, [pc, #+588] ; 0xFFFFFF
-0800D316  F8DF 7370		ldr r7, [pc, #+880] ; 0x2000CA58
-0800D31A  6038     		str r0, [r7]
+0800D112  F8DF 0178		ldr r0, [pc, #+376] ; 0xFFFFFF
+0800D116  F8DF 72A0		ldr r7, [pc, #+672] ; 0x2000CA58
+0800D11A  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_18.RW = 1
-0800D31C  F8DF 01B0		ldr r0, [pc, #+432] ; 0x1
-0800D320  F8DF 7368		ldr r7, [pc, #+872] ; 0x2000CA68
-0800D324  7038     		strb r0, [r7]
+0800D11C  F8DF 00FC		ldr r0, [pc, #+252] ; 0x1
+0800D120  F8DF 7298		ldr r7, [pc, #+664] ; 0x2000CA68
+0800D124  7038     		strb r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_18.REFR = 1
-0800D326  F8DF 01A8		ldr r0, [pc, #+424] ; 0x1
-0800D32A  F8DF 7364		ldr r7, [pc, #+868] ; 0x2000CA69
-0800D32E  7038     		strb r0, [r7]
+0800D126  F8DF 00F4		ldr r0, [pc, #+244] ; 0x1
+0800D12A  F8DF 7294		ldr r7, [pc, #+660] ; 0x2000CA69
+0800D12E  7038     		strb r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_18.PVAR = 2101760
-0800D330  F8DF 0228		ldr r0, [pc, #+552] ; 0x201200
-0800D334  F8DF 735C		ldr r7, [pc, #+860] ; 0x2000CA6C
-0800D338  6038     		str r0, [r7]
+0800D130  F8DF 0154		ldr r0, [pc, #+340] ; 0x201200
+0800D134  F8DF 728C		ldr r7, [pc, #+652] ; 0x2000CA6C
+0800D138  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_18.TYPE = 5
-0800D33A  F8DF 01A4		ldr r0, [pc, #+420] ; 0x5
-0800D33E  F8DF 7358		ldr r7, [pc, #+856] ; 0x2000CA70
-0800D342  7038     		strb r0, [r7]
+0800D13A  F8DF 00F0		ldr r0, [pc, #+240] ; 0x5
+0800D13E  F8DF 7288		ldr r7, [pc, #+648] ; 0x2000CA70
+0800D142  7038     		strb r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_18.FORMAT = 20
-0800D344  F8DF 01B0		ldr r0, [pc, #+432] ; 0x14
-0800D348  F8DF 7350		ldr r7, [pc, #+848] ; 0x2000CA7C
-0800D34C  6038     		str r0, [r7]
+0800D144  F8DF 00F4		ldr r0, [pc, #+244] ; 0x14
+0800D148  F8DF 7280		ldr r7, [pc, #+640] ; 0x2000CA7C
+0800D14C  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_18.PVISVAR = 1
-0800D34E  F8DF 0180		ldr r0, [pc, #+384] ; 0x1
-0800D352  F8DF 734C		ldr r7, [pc, #+844] ; 0x2000CA80
-0800D356  6038     		str r0, [r7]
+0800D14E  F8DF 00CC		ldr r0, [pc, #+204] ; 0x1
+0800D152  F8DF 727C		ldr r7, [pc, #+636] ; 0x2000CA80
+0800D156  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_18.ORDER = 7
-0800D358  F8DF 018C		ldr r0, [pc, #+396] ; 0x7
-0800D35C  F8DF 7344		ldr r7, [pc, #+836] ; 0x2000CA88
-0800D360  7038     		strb r0, [r7]
+0800D158  F8DF 00D8		ldr r0, [pc, #+216] ; 0x7
+0800D15C  F8DF 7274		ldr r7, [pc, #+628] ; 0x2000CA88
+0800D160  7038     		strb r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_18.PENUMID = 1
-0800D362  F8DF 016C		ldr r0, [pc, #+364] ; 0x1
-0800D366  F8DF 7340		ldr r7, [pc, #+832] ; 0x2000CA90
-0800D36A  6038     		str r0, [r7]
+0800D162  F8DF 00B8		ldr r0, [pc, #+184] ; 0x1
+0800D166  F8DF 7270		ldr r7, [pc, #+624] ; 0x2000CA90
+0800D16A  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_19.WHND = 5
-0800D36C  F8DF 0170		ldr r0, [pc, #+368] ; 0x5
-0800D370  F8DF 7338		ldr r7, [pc, #+824] ; 0x2000CAA8
-0800D374  8038     		strh r0, [r7]
+0800D16C  F8DF 00BC		ldr r0, [pc, #+188] ; 0x5
+0800D170  F8DF 7268		ldr r7, [pc, #+616] ; 0x2000CAA8
+0800D174  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_19.X1 = 34
-0800D376  F8DF 0190		ldr r0, [pc, #+400] ; 0x22
-0800D37A  F8DF 7334		ldr r7, [pc, #+820] ; 0x2000CAAA
-0800D37E  8038     		strh r0, [r7]
+0800D176  F8DF 00D4		ldr r0, [pc, #+212] ; 0x22
+0800D17A  F8DF 7264		ldr r7, [pc, #+612] ; 0x2000CAAA
+0800D17E  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_19.Y1 = 141
-0800D380  F8DF 01A4		ldr r0, [pc, #+420] ; 0x8D
-0800D384  F8DF 732C		ldr r7, [pc, #+812] ; 0x2000CAAC
-0800D388  8038     		strh r0, [r7]
+0800D180  F8DF 00E4		ldr r0, [pc, #+228] ; 0x8D
+0800D184  F8DF 725C		ldr r7, [pc, #+604] ; 0x2000CAAC
+0800D188  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_19.X2 = 201
-0800D38A  F8DF 01B4		ldr r0, [pc, #+436] ; 0xC9
-0800D38E  F8DF 7328		ldr r7, [pc, #+808] ; 0x2000CAAE
-0800D392  8038     		strh r0, [r7]
+0800D18A  F8DF 00EC		ldr r0, [pc, #+236] ; 0xC9
+0800D18E  F8DF 7258		ldr r7, [pc, #+600] ; 0x2000CAAE
+0800D192  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_19.Y2 = 164
-0800D394  F8DF 0198		ldr r0, [pc, #+408] ; 0xA4
-0800D398  F8DF 7320		ldr r7, [pc, #+800] ; 0x2000CAB0
-0800D39C  8038     		strh r0, [r7]
+0800D194  F8DF 00D4		ldr r0, [pc, #+212] ; 0xA4
+0800D198  F8DF 7250		ldr r7, [pc, #+592] ; 0x2000CAB0
+0800D19C  8038     		strh r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_19.PFONT = 
-0800D39E  F8DF 7320		ldr r7, [pc, #+800] ; 0x2000CAB4
-0800D3A2  F8DF 01CC		ldr r0, [pc, #+460] ; 0x8200008
-0800D3A6  6038     		str r0, [r7]
+0800D19E  F8DF 7250		ldr r7, [pc, #+592] ; 0x2000CAB4
+0800D1A2  F8DF 00F8		ldr r0, [pc, #+248] ; 0x8200008
+0800D1A6  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_19.BCKCOL = 16777215
-0800D3A8  F8DF 01B4		ldr r0, [pc, #+436] ; 0xFFFFFF
-0800D3AC  F8DF 7314		ldr r7, [pc, #+788] ; 0x2000CAC0
-0800D3B0  6038     		str r0, [r7]
+0800D1A8  F8DF 00E0		ldr r0, [pc, #+224] ; 0xFFFFFF
+0800D1AC  F8DF 7244		ldr r7, [pc, #+580] ; 0x2000CAC0
+0800D1B0  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_19.FORESELCOL = 16777215
-0800D3B2  F8DF 01AC		ldr r0, [pc, #+428] ; 0xFFFFFF
-0800D3B6  F8DF 7310		ldr r7, [pc, #+784] ; 0x2000CAC4
-0800D3BA  6038     		str r0, [r7]
+0800D1B2  F8DF 00D8		ldr r0, [pc, #+216] ; 0xFFFFFF
+0800D1B6  F8DF 7240		ldr r7, [pc, #+576] ; 0x2000CAC4
+0800D1BA  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_19.RW = 1
-0800D3BC  F8DF 0110		ldr r0, [pc, #+272] ; 0x1
-0800D3C0  F8DF 7308		ldr r7, [pc, #+776] ; 0x2000CAD4
-0800D3C4  7038     		strb r0, [r7]
+0800D1BC  F8DF 005C		ldr r0, [pc, #+92] ; 0x1
+0800D1C0  F8DF 7238		ldr r7, [pc, #+568] ; 0x2000CAD4
+0800D1C4  7038     		strb r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_19.REFR = 1
-0800D3C6  F8DF 0108		ldr r0, [pc, #+264] ; 0x1
-0800D3CA  F8DF 7304		ldr r7, [pc, #+772] ; 0x2000CAD5
-0800D3CE  7038     		strb r0, [r7]
+0800D1C6  F8DF 0054		ldr r0, [pc, #+84] ; 0x1
+0800D1CA  F8DF 7234		ldr r7, [pc, #+564] ; 0x2000CAD5
+0800D1CE  7038     		strb r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_19.PVAR = 2101760
-0800D3D0  F8DF 0188		ldr r0, [pc, #+392] ; 0x201200
-0800D3D4  F8DF 72FC		ldr r7, [pc, #+764] ; 0x2000CAD8
-0800D3D8  6038     		str r0, [r7]
+0800D1D0  F8DF 00B4		ldr r0, [pc, #+180] ; 0x201200
+0800D1D4  F8DF 722C		ldr r7, [pc, #+556] ; 0x2000CAD8
+0800D1D8  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_19.TYPE = 5
-0800D3DA  F8DF 0104		ldr r0, [pc, #+260] ; 0x5
-0800D3DE  F8DF 72F8		ldr r7, [pc, #+760] ; 0x2000CADC
-0800D3E2  7038     		strb r0, [r7]
+0800D1DA  F8DF 0050		ldr r0, [pc, #+80] ; 0x5
+0800D1DE  F8DF 7228		ldr r7, [pc, #+552] ; 0x2000CADC
+0800D1E2  7038     		strb r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_19.FORMAT = 20
-0800D3E4  F8DF 0110		ldr r0, [pc, #+272] ; 0x14
-0800D3E8  F8DF 72F0		ldr r7, [pc, #+752] ; 0x2000CAE8
-0800D3EC  6038     		str r0, [r7]
+0800D1E4  F8DF 0054		ldr r0, [pc, #+84] ; 0x14
+0800D1E8  F8DF 7220		ldr r7, [pc, #+544] ; 0x2000CAE8
+0800D1EC  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_19.PVISVAR = 1
-0800D3EE  F8DF 00E0		ldr r0, [pc, #+224] ; 0x1
-0800D3F2  F8DF 72EC		ldr r7, [pc, #+748] ; 0x2000CAEC
-0800D3F6  6038     		str r0, [r7]
+0800D1EE  F8DF 002C		ldr r0, [pc, #+44] ; 0x1
+0800D1F2  F8DF 721C		ldr r7, [pc, #+540] ; 0x2000CAEC
+0800D1F6  6038     		str r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_19.ORDER = 8
-0800D3F8  F8DF 00F0		ldr r0, [pc, #+240] ; 0x8
-0800D3FC  F8DF 72E4		ldr r7, [pc, #+740] ; 0x2000CAF4
-0800D400  7038     		strb r0, [r7]
+0800D1F8  F8DF 003C		ldr r0, [pc, #+60] ; 0x8
+0800D1FC  F8DF 7214		ldr r7, [pc, #+532] ; 0x2000CAF4
+0800D200  7038     		strb r0, [r7]
 
 Var init: V:HMI:FBTOUCHSCREENEDIT_19.PENUMID = 2
-0800D402  F8DF 00D0		ldr r0, [pc, #+208] ; 0x2
-0800D406  F8DF 72E0		ldr r7, [pc, #+736] ; 0x2000CAFC
-0800D40A  6038     		str r0, [r7]
+0800D202  F8DF 001C		ldr r0, [pc, #+28] ; 0x2
+0800D206  F8DF 7210		ldr r7, [pc, #+528] ; 0x2000CAFC
+0800D20A  6038     		str r0, [r7]
 
-Var init: V:HMI:FBTOUCHSCREENEDIT_20.WHND = 6
-0800D40C  F8DF 00D4		ldr r0, [pc, #+212] ; 0x6
-0800D410  F8DF 72D8		ldr r7, [pc, #+728] ; 0x2000CB14
-0800D414  8038     		strh r0, [r7]
+0800D20C  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+0800D210  F8DD E000		ldr lr, [sp]
+0800D214  B002     		add sp, sp, #8
 
-Var init: V:HMI:FBTOUCHSCREENEDIT_20.X1 = 88
-0800D416  F8DF 0104		ldr r0, [pc, #+260] ; 0x58
-0800D41A  F8DF 72D4		ldr r7, [pc, #+724] ; 0x2000CB16
-0800D41E  8038     		strh r0, [r7]
+0800D216  4770     		bx lr
 
-Var init: V:HMI:FBTOUCHSCREENEDIT_20.Y1 = 192
-0800D420  F8DF 0114		ldr r0, [pc, #+276] ; 0xC0
-0800D424  F8DF 72CC		ldr r7, [pc, #+716] ; 0x2000CB18
-0800D428  8038     		strh r0, [r7]
-
-Var init: V:HMI:FBTOUCHSCREENEDIT_20.X2 = 147
-0800D42A  F8DF 0100		ldr r0, [pc, #+256] ; 0x93
-0800D42E  F8DF 72C8		ldr r7, [pc, #+712] ; 0x2000CB1A
-0800D432  8038     		strh r0, [r7]
-
-Var init: V:HMI:FBTOUCHSCREENEDIT_20.Y2 = 215
-0800D434  F8DF 010C		ldr r0, [pc, #+268] ; 0xD7
-0800D438  F8DF 72C0		ldr r7, [pc, #+704] ; 0x2000CB1C
-0800D43C  8038     		strh r0, [r7]
-
-Var init: V:HMI:FBTOUCHSCREENEDIT_20.PFONT = 
-0800D43E  F8DF 72C0		ldr r7, [pc, #+704] ; 0x2000CB20
-0800D442  F8DF 012C		ldr r0, [pc, #+300] ; 0x8200008
-0800D446  6038     		str r0, [r7]
-
-Var init: V:HMI:FBTOUCHSCREENEDIT_20.BCKCOL = 16777215
-0800D448  F8DF 0114		ldr r0, [pc, #+276] ; 0xFFFFFF
-0800D44C  F8DF 72B4		ldr r7, [pc, #+692] ; 0x2000CB2C
-0800D450  6038     		str r0, [r7]
-
-Var init: V:HMI:FBTOUCHSCREENEDIT_20.FORESELCOL = 16777215
-0800D452  F8DF 010C		ldr r0, [pc, #+268] ; 0xFFFFFF
-0800D456  F8DF 72B0		ldr r7, [pc, #+688] ; 0x2000CB30
-0800D45A  6038     		str r0, [r7]
-
-Var init: V:HMI:FBTOUCHSCREENEDIT_20.BORDPTS = 1
-0800D45C  F8DF 0070		ldr r0, [pc, #+112] ; 0x1
-0800D460  F8DF 72A8		ldr r7, [pc, #+680] ; 0x2000CB38
-0800D464  7038     		strb r0, [r7]
-
-Var init: V:HMI:FBTOUCHSCREENEDIT_20.RW = 1
-0800D466  F8DF 0068		ldr r0, [pc, #+104] ; 0x1
-0800D46A  F8DF 72A4		ldr r7, [pc, #+676] ; 0x2000CB40
-0800D46E  7038     		strb r0, [r7]
-
-Var init: V:HMI:FBTOUCHSCREENEDIT_20.REFR = 1
-0800D470  F8DF 005C		ldr r0, [pc, #+92] ; 0x1
-0800D474  F8DF 729C		ldr r7, [pc, #+668] ; 0x2000CB41
-0800D478  7038     		strb r0, [r7]
-
-Var init: V:HMI:FBTOUCHSCREENEDIT_20.PVAR = 
-0800D47A  F8DF 729C		ldr r7, [pc, #+668] ; 0x2000CB44
-0800D47E  F8DF 00F4		ldr r0, [pc, #+244] ; 0x2000C810
-0800D482  6038     		str r0, [r7]
-
-Var init: V:HMI:FBTOUCHSCREENEDIT_20.TYPE = 5
-0800D484  F8DF 0058		ldr r0, [pc, #+88] ; 0x5
-0800D488  F8DF 7290		ldr r7, [pc, #+656] ; 0x2000CB48
-0800D48C  7038     		strb r0, [r7]
-
-Var init: V:HMI:FBTOUCHSCREENEDIT_20.FORMAT = 16
-0800D48E  F8DF 0064		ldr r0, [pc, #+100] ; 0x10
-0800D492  F8DF 728C		ldr r7, [pc, #+652] ; 0x2000CB54
-0800D496  6038     		str r0, [r7]
-
-Var init: V:HMI:FBTOUCHSCREENEDIT_20.PVISVAR = 1
-0800D498  F8DF 0034		ldr r0, [pc, #+52] ; 0x1
-0800D49C  F8DF 7284		ldr r7, [pc, #+644] ; 0x2000CB58
-0800D4A0  6038     		str r0, [r7]
-
-Var init: V:HMI:FBTOUCHSCREENEDIT_20.PCANSEL = 1
-0800D4A2  F8DF 002C		ldr r0, [pc, #+44] ; 0x1
-0800D4A6  F8DF 7280		ldr r7, [pc, #+640] ; 0x2000CB5C
-0800D4AA  6038     		str r0, [r7]
-
-Var init: V:HMI:FBTOUCHSCREENEDIT_20.ORDER = 9
-0800D4AC  F8DF 0040		ldr r0, [pc, #+64] ; 0x9
-0800D4B0  F8DF 7278		ldr r7, [pc, #+632] ; 0x2000CB60
-0800D4B4  7038     		strb r0, [r7]
-
-Var init: V:CONFIGURATION_VARIABLES:TEMPSEND = 8
-0800D4B6  F8DF 0034		ldr r0, [pc, #+52] ; 0x8
-0800D4BA  F8DF 70B8		ldr r7, [pc, #+184] ; 0x2000C810
-0800D4BE  8038     		strh r0, [r7]
-
-0800D4C0  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
-0800D4C4  F8DD E000		ldr lr, [sp]
-0800D4C8  B002     		add sp, sp, #8
-
-0800D4CA  4770     		bx lr
-
-0800D4CC  FFFFFFFF		; 0xFFFFFFFF
-0800D4D0  00000001		; 0x00000001
-0800D4D4  00000002		; 0x00000002
-0800D4D8  00000003		; 0x00000003
-0800D4DC  00000004		; 0x00000004
-0800D4E0  00000005		; 0x00000005
-0800D4E4  00000006		; 0x00000006
-0800D4E8  00000007		; 0x00000007
-0800D4EC  00000008		; 0x00000008
-0800D4F0  00000009		; 0x00000009
-0800D4F4  00000010		; 0x00000010
-0800D4F8  00000014		; 0x00000014
-0800D4FC  0000001F		; 0x0000001F
-0800D500  00000020		; 0x00000020
-0800D504  00000021		; 0x00000021
-0800D508  00000022		; 0x00000022
-0800D50C  00000028		; 0x00000028
-0800D510  00000033		; 0x00000033
-0800D514  0000004A		; 0x0000004A
-0800D518  00000055		; 0x00000055
-0800D51C  00000058		; 0x00000058
-0800D520  0000006B		; 0x0000006B
-0800D524  00000082		; 0x00000082
-0800D528  0000008D		; 0x0000008D
-0800D52C  00000093		; 0x00000093
-0800D530  000000A4		; 0x000000A4
-0800D534  000000AE		; 0x000000AE
-0800D538  000000C0		; 0x000000C0
-0800D53C  000000C8		; 0x000000C8
-0800D540  000000C9		; 0x000000C9
-0800D544  000000D7		; 0x000000D7
-0800D548  000000DD		; 0x000000DD
-0800D54C  000000E6		; 0x000000E6
-0800D550  000000E7		; 0x000000E7
-0800D554  00201000		; 0x00201000
-0800D558  00201100		; 0x00201100
-0800D55C  00201200		; 0x00201200
-0800D560  00FFFFFF		; 0x00FFFFFF
-0800D564  0100000C		; 0x0100000C
-0800D568  08008150		; 0x08008150
-0800D56C  08008160		; 0x08008160
-0800D570  08200008		; 0x08200008
-0800D574  2000C810		; 0x2000C810
-0800D578  2000C81A		; 0x2000C81A
-0800D57C  2000C81C		; 0x2000C81C
-0800D580  2000C81E		; 0x2000C81E
-0800D584  2000C820		; 0x2000C820
-0800D588  2000C8C4		; 0x2000C8C4
-0800D58C  2000C8C6		; 0x2000C8C6
-0800D590  2000C8C8		; 0x2000C8C8
-0800D594  2000C8CA		; 0x2000C8CA
-0800D598  2000C8CC		; 0x2000C8CC
-0800D59C  2000C8D0		; 0x2000C8D0
-0800D5A0  2000C8DC		; 0x2000C8DC
-0800D5A4  2000C8E0		; 0x2000C8E0
-0800D5A8  2000C8F0		; 0x2000C8F0
-0800D5AC  2000C8F1		; 0x2000C8F1
-0800D5B0  2000C8F4		; 0x2000C8F4
-0800D5B4  2000C8F8		; 0x2000C8F8
-0800D5B8  2000C904		; 0x2000C904
-0800D5BC  2000C908		; 0x2000C908
-0800D5C0  2000C910		; 0x2000C910
-0800D5C4  2000C92A		; 0x2000C92A
-0800D5C8  2000C92C		; 0x2000C92C
-0800D5CC  2000C930		; 0x2000C930
-0800D5D0  2000C934		; 0x2000C934
-0800D5D4  2000C93C		; 0x2000C93C
-0800D5D8  2000C940		; 0x2000C940
-0800D5DC  2000C944		; 0x2000C944
-0800D5E0  2000C950		; 0x2000C950
-0800D5E4  2000C960		; 0x2000C960
-0800D5E8  2000C962		; 0x2000C962
-0800D5EC  2000C964		; 0x2000C964
-0800D5F0  2000C966		; 0x2000C966
-0800D5F4  2000C969		; 0x2000C969
-0800D5F8  2000C978		; 0x2000C978
-0800D5FC  2000C97A		; 0x2000C97A
-0800D600  2000C97C		; 0x2000C97C
-0800D604  2000C980		; 0x2000C980
-0800D608  2000C984		; 0x2000C984
-0800D60C  2000C98C		; 0x2000C98C
-0800D610  2000C990		; 0x2000C990
-0800D614  2000C994		; 0x2000C994
-0800D618  2000C9A0		; 0x2000C9A0
-0800D61C  2000C9C0		; 0x2000C9C0
-0800D620  2000C9C2		; 0x2000C9C2
-0800D624  2000C9C4		; 0x2000C9C4
-0800D628  2000C9C6		; 0x2000C9C6
-0800D62C  2000C9C8		; 0x2000C9C8
-0800D630  2000C9CC		; 0x2000C9CC
-0800D634  2000C9D8		; 0x2000C9D8
-0800D638  2000C9DC		; 0x2000C9DC
-0800D63C  2000C9EC		; 0x2000C9EC
-0800D640  2000C9ED		; 0x2000C9ED
-0800D644  2000C9F0		; 0x2000C9F0
-0800D648  2000C9F4		; 0x2000C9F4
-0800D64C  2000CA00		; 0x2000CA00
-0800D650  2000CA04		; 0x2000CA04
-0800D654  2000CA0C		; 0x2000CA0C
-0800D658  2000CA1C		; 0x2000CA1C
-0800D65C  2000CA1E		; 0x2000CA1E
-0800D660  2000CA20		; 0x2000CA20
-0800D664  2000CA22		; 0x2000CA22
-0800D668  2000CA25		; 0x2000CA25
-0800D66C  2000CA3C		; 0x2000CA3C
-0800D670  2000CA3E		; 0x2000CA3E
-0800D674  2000CA40		; 0x2000CA40
-0800D678  2000CA42		; 0x2000CA42
-0800D67C  2000CA44		; 0x2000CA44
-0800D680  2000CA48		; 0x2000CA48
-0800D684  2000CA54		; 0x2000CA54
-0800D688  2000CA58		; 0x2000CA58
-0800D68C  2000CA68		; 0x2000CA68
-0800D690  2000CA69		; 0x2000CA69
-0800D694  2000CA6C		; 0x2000CA6C
-0800D698  2000CA70		; 0x2000CA70
-0800D69C  2000CA7C		; 0x2000CA7C
-0800D6A0  2000CA80		; 0x2000CA80
-0800D6A4  2000CA88		; 0x2000CA88
-0800D6A8  2000CA90		; 0x2000CA90
-0800D6AC  2000CAA8		; 0x2000CAA8
-0800D6B0  2000CAAA		; 0x2000CAAA
-0800D6B4  2000CAAC		; 0x2000CAAC
-0800D6B8  2000CAAE		; 0x2000CAAE
-0800D6BC  2000CAB0		; 0x2000CAB0
-0800D6C0  2000CAB4		; 0x2000CAB4
-0800D6C4  2000CAC0		; 0x2000CAC0
-0800D6C8  2000CAC4		; 0x2000CAC4
-0800D6CC  2000CAD4		; 0x2000CAD4
-0800D6D0  2000CAD5		; 0x2000CAD5
-0800D6D4  2000CAD8		; 0x2000CAD8
-0800D6D8  2000CADC		; 0x2000CADC
-0800D6DC  2000CAE8		; 0x2000CAE8
-0800D6E0  2000CAEC		; 0x2000CAEC
-0800D6E4  2000CAF4		; 0x2000CAF4
-0800D6E8  2000CAFC		; 0x2000CAFC
-0800D6EC  2000CB14		; 0x2000CB14
-0800D6F0  2000CB16		; 0x2000CB16
-0800D6F4  2000CB18		; 0x2000CB18
-0800D6F8  2000CB1A		; 0x2000CB1A
-0800D6FC  2000CB1C		; 0x2000CB1C
-0800D700  2000CB20		; 0x2000CB20
-0800D704  2000CB2C		; 0x2000CB2C
-0800D708  2000CB30		; 0x2000CB30
-0800D70C  2000CB38		; 0x2000CB38
-0800D710  2000CB40		; 0x2000CB40
-0800D714  2000CB41		; 0x2000CB41
-0800D718  2000CB44		; 0x2000CB44
-0800D71C  2000CB48		; 0x2000CB48
-0800D720  2000CB54		; 0x2000CB54
-0800D724  2000CB58		; 0x2000CB58
-0800D728  2000CB5C		; 0x2000CB5C
-0800D72C  2000CB60		; 0x2000CB60
+0800D218  FFFFFFFF		; 0xFFFFFFFF
+0800D21C  00000001		; 0x00000001
+0800D220  00000002		; 0x00000002
+0800D224  00000003		; 0x00000003
+0800D228  00000004		; 0x00000004
+0800D22C  00000005		; 0x00000005
+0800D230  00000006		; 0x00000006
+0800D234  00000007		; 0x00000007
+0800D238  00000008		; 0x00000008
+0800D23C  00000014		; 0x00000014
+0800D240  0000001F		; 0x0000001F
+0800D244  00000020		; 0x00000020
+0800D248  00000021		; 0x00000021
+0800D24C  00000022		; 0x00000022
+0800D250  00000028		; 0x00000028
+0800D254  00000033		; 0x00000033
+0800D258  0000004A		; 0x0000004A
+0800D25C  00000055		; 0x00000055
+0800D260  0000006B		; 0x0000006B
+0800D264  00000082		; 0x00000082
+0800D268  0000008D		; 0x0000008D
+0800D26C  000000A4		; 0x000000A4
+0800D270  000000AE		; 0x000000AE
+0800D274  000000C8		; 0x000000C8
+0800D278  000000C9		; 0x000000C9
+0800D27C  000000E6		; 0x000000E6
+0800D280  000000E7		; 0x000000E7
+0800D284  000000E9		; 0x000000E9
+0800D288  00201200		; 0x00201200
+0800D28C  00FFFFFF		; 0x00FFFFFF
+0800D290  01000008		; 0x01000008
+0800D294  080081A0		; 0x080081A0
+0800D298  080081B0		; 0x080081B0
+0800D29C  08200008		; 0x08200008
+0800D2A0  20003A92		; 0x20003A92
+0800D2A4  20008EE8		; 0x20008EE8
+0800D2A8  2000C81E		; 0x2000C81E
+0800D2AC  2000C820		; 0x2000C820
+0800D2B0  2000C822		; 0x2000C822
+0800D2B4  2000C824		; 0x2000C824
+0800D2B8  2000C8C4		; 0x2000C8C4
+0800D2BC  2000C8C6		; 0x2000C8C6
+0800D2C0  2000C8C8		; 0x2000C8C8
+0800D2C4  2000C8CA		; 0x2000C8CA
+0800D2C8  2000C8CC		; 0x2000C8CC
+0800D2CC  2000C8D0		; 0x2000C8D0
+0800D2D0  2000C8DC		; 0x2000C8DC
+0800D2D4  2000C8E0		; 0x2000C8E0
+0800D2D8  2000C8F0		; 0x2000C8F0
+0800D2DC  2000C8F1		; 0x2000C8F1
+0800D2E0  2000C8F4		; 0x2000C8F4
+0800D2E4  2000C8F8		; 0x2000C8F8
+0800D2E8  2000C904		; 0x2000C904
+0800D2EC  2000C908		; 0x2000C908
+0800D2F0  2000C910		; 0x2000C910
+0800D2F4  2000C92A		; 0x2000C92A
+0800D2F8  2000C92C		; 0x2000C92C
+0800D2FC  2000C930		; 0x2000C930
+0800D300  2000C934		; 0x2000C934
+0800D304  2000C93C		; 0x2000C93C
+0800D308  2000C940		; 0x2000C940
+0800D30C  2000C944		; 0x2000C944
+0800D310  2000C950		; 0x2000C950
+0800D314  2000C960		; 0x2000C960
+0800D318  2000C962		; 0x2000C962
+0800D31C  2000C964		; 0x2000C964
+0800D320  2000C966		; 0x2000C966
+0800D324  2000C969		; 0x2000C969
+0800D328  2000C978		; 0x2000C978
+0800D32C  2000C97A		; 0x2000C97A
+0800D330  2000C97C		; 0x2000C97C
+0800D334  2000C980		; 0x2000C980
+0800D338  2000C984		; 0x2000C984
+0800D33C  2000C98C		; 0x2000C98C
+0800D340  2000C990		; 0x2000C990
+0800D344  2000C994		; 0x2000C994
+0800D348  2000C9A0		; 0x2000C9A0
+0800D34C  2000C9C0		; 0x2000C9C0
+0800D350  2000C9C2		; 0x2000C9C2
+0800D354  2000C9C4		; 0x2000C9C4
+0800D358  2000C9C6		; 0x2000C9C6
+0800D35C  2000C9C8		; 0x2000C9C8
+0800D360  2000C9CC		; 0x2000C9CC
+0800D364  2000C9D8		; 0x2000C9D8
+0800D368  2000C9DC		; 0x2000C9DC
+0800D36C  2000C9EC		; 0x2000C9EC
+0800D370  2000C9ED		; 0x2000C9ED
+0800D374  2000C9F0		; 0x2000C9F0
+0800D378  2000C9F4		; 0x2000C9F4
+0800D37C  2000CA00		; 0x2000CA00
+0800D380  2000CA04		; 0x2000CA04
+0800D384  2000CA0C		; 0x2000CA0C
+0800D388  2000CA1C		; 0x2000CA1C
+0800D38C  2000CA1E		; 0x2000CA1E
+0800D390  2000CA20		; 0x2000CA20
+0800D394  2000CA22		; 0x2000CA22
+0800D398  2000CA25		; 0x2000CA25
+0800D39C  2000CA3C		; 0x2000CA3C
+0800D3A0  2000CA3E		; 0x2000CA3E
+0800D3A4  2000CA40		; 0x2000CA40
+0800D3A8  2000CA42		; 0x2000CA42
+0800D3AC  2000CA44		; 0x2000CA44
+0800D3B0  2000CA48		; 0x2000CA48
+0800D3B4  2000CA54		; 0x2000CA54
+0800D3B8  2000CA58		; 0x2000CA58
+0800D3BC  2000CA68		; 0x2000CA68
+0800D3C0  2000CA69		; 0x2000CA69
+0800D3C4  2000CA6C		; 0x2000CA6C
+0800D3C8  2000CA70		; 0x2000CA70
+0800D3CC  2000CA7C		; 0x2000CA7C
+0800D3D0  2000CA80		; 0x2000CA80
+0800D3D4  2000CA88		; 0x2000CA88
+0800D3D8  2000CA90		; 0x2000CA90
+0800D3DC  2000CAA8		; 0x2000CAA8
+0800D3E0  2000CAAA		; 0x2000CAAA
+0800D3E4  2000CAAC		; 0x2000CAAC
+0800D3E8  2000CAAE		; 0x2000CAAE
+0800D3EC  2000CAB0		; 0x2000CAB0
+0800D3F0  2000CAB4		; 0x2000CAB4
+0800D3F4  2000CAC0		; 0x2000CAC0
+0800D3F8  2000CAC4		; 0x2000CAC4
+0800D3FC  2000CAD4		; 0x2000CAD4
+0800D400  2000CAD5		; 0x2000CAD5
+0800D404  2000CAD8		; 0x2000CAD8
+0800D408  2000CADC		; 0x2000CADC
+0800D40C  2000CAE8		; 0x2000CAE8
+0800D410  2000CAEC		; 0x2000CAEC
+0800D414  2000CAF4		; 0x2000CAF4
+0800D418  2000CAFC		; 0x2000CAFC
 
 
 
@@ -3941,8 +3257,8 @@ MEMORY MAP
 
 Code area type:          		       main code
 Start code area:          		0000000008008000h
-End code area:            		000000000800D730h
-Code size:                		00005730h
+End code area:            		000000000800D420h
+Code size:                		00005420h
 
 Code area type:          		       auxiliary
 Start code area:          		0000000008200000h
@@ -3950,8 +3266,8 @@ End code area:            		0000000008200FA4h
 Code size:                		00000FA4h
 
 Start local data area:    		000000002000C800h
-End local data area:      		000000002000CB84h
-Local data size:          		00000384h
+End local data area:      		000000002000CB18h
+Local data size:          		00000318h
 
 Start retentive data area:		0000000000000000h
 End retentive data area:  		0000000000000000h
@@ -3964,7 +3280,7 @@ Bit data size:            		00000000h
 
 
 ********************************************
-CODE ID:                                FFBDC394
+CODE ID:                                D3FEC539
 DEBUG MEMO ID:                          00002EF2
 FULL MEMO ID:                           00008D22
 ********************************************

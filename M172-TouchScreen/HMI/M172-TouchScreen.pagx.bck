@@ -285,44 +285,6 @@
 							<EVENT name="OnChange"/>
 						</EVENTS>
 					</EDIT>
-					<EDIT name="Edit_20">
-						<FONT>DroidSansMono_12x24</FONT>
-						<COLOR type="RGBColor">0</COLOR>
-						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
-						<SELBCK type="RGBColor">0</SELBCK>
-						<SELCOL type="RGBColor">16777215</SELCOL>
-						<STYLE>Flat</STYLE>
-						<BORDCOL type="RGBColor">0</BORDCOL>
-						<BORDPTS>1</BORDPTS>
-						<XPOS>88</XPOS>
-						<YPOS>192</YPOS>
-						<XDIM>60</XDIM>
-						<YDIM>24</YDIM>
-						<NUMCHAR>5</NUMCHAR>
-						<ORDER>9</ORDER>
-						<FORMAT>%.1d</FORMAT>
-						<ALIGN>Center</ALIGN>
-						<ACCESS>RW</ACCESS>
-						<DESC/>
-						<ZORDER>20</ZORDER>
-						<VAR type="INT">TempSensor</VAR>
-						<TYPE>INT</TYPE>
-						<REFRESH>TRUE</REFRESH>
-						<VISIBLE>TRUE</VISIBLE>
-						<SELECT>TRUE</SELECT>
-						<LABEL/>
-						<VARMIN>*</VARMIN>
-						<VARMAX>*</VARMAX>
-						<EVENTS>
-							<EVENT name="BeforeUpdate"/>
-							<EVENT name="AfterUpdate"/>
-							<EVENT name="OnGotFocus"/>
-							<EVENT name="OnLostFocus"/>
-							<EVENT name="OnClick"/>
-							<EVENT name="OnEnter"/>
-							<EVENT name="OnChange"/>
-						</EVENTS>
-					</EDIT>
 				</EDITS>
 				<TEXTBOXES/>
 				<COMBOBOXES/>
@@ -344,6 +306,7 @@
 			<ACTIONS/>
 			<SCRIPT>
 				<![CDATA[        VAR_GLOBAL
+	{G:"Ungrouped_vars"}
 user_detected_str : STRING[ 31 ] := '"User Detected"';
 set_temp : INT;
 	END_VAR
