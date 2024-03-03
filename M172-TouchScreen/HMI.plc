@@ -27,14 +27,17 @@ VAR_GLOBAL
 	{G:"TouchScreen_vars"}
 	fbTouchScreen : DrawTouchScreen;
 	fbRefrTouchScreen : RefrTouchScreen;
-	fbTouchScreenString_7 : Static02 := (x:=7, y:=8, pFont:=?DroidSansMono_12x24, bckCol:=16777215, pString:=?kStr00001, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
-	fbTouchScreenString_14 : Static02 := (wHnd:=1, x:=7, y:=51, pFont:=?DroidSansMono_12x24, bckCol:=16777215, pString:=?kStr00002, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
-	fbTouchScreenLine_9 : Line01 := (x1:=7, y1:=40, x2:=230, y2:=40, bordPts:=1);
-	fbTouchScreenLine_16 : Line01 := (x1:=8, y1:=85, x2:=231, y2:=85, bordPts:=1);
-	fbTouchScreenEdit_1 : EditBox03 := (wHnd:=2, x1:=174, y1:=8, x2:=233, y2:=31, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=?iTempSensor, order:=1, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#01000008, pEnumId:=0);
-	fbTouchScreenEdit_15 : EditBox03 := (wHnd:=3, x1:=174, y1:=51, x2:=233, y2:=74, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=?iHmdSensor, order:=6, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#01000008, pEnumId:=0);
-	fbTouchScreenEdit_18 : EditBox03 := (wHnd:=4, x1:=33, y1:=107, x2:=200, y2:=130, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201200, order:=7, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#00000014, pEnumId:=1);
-	fbTouchScreenEdit_19 : EditBox03 := (wHnd:=5, x1:=34, y1:=141, x2:=201, y2:=164, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201200, order:=8, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#00000014, pEnumId:=2);
+	fbTouchScreenString_7 : Static02 := (x:=10, y:=20, pFont:=?DroidSansMono_12x24, bckCol:=16777215, pString:=?kStr00001, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
+	fbTouchScreenString_14 : Static02 := (wHnd:=1, x:=10, y:=60, pFont:=?DroidSansMono_12x24, bckCol:=16777215, pString:=?kStr00002, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
+	fbTouchScreenLine_16 : Line01 := (x1:=6, y1:=100, x2:=235, y2:=100, bordPts:=1);
+	fbTouchScreenString_21 : Static02 := (wHnd:=2, x:=10, y:=120, pFont:=?DroidSansMono_12x24, bckCol:=16777215, pString:=?kStr00003, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
+	fbTouchScreenLine_22 : Line01 := (x1:=6, y1:=200, x2:=235, y2:=200, bordPts:=1);
+	fbTouchScreenString_23 : Static02 := (wHnd:=3, x:=10, y:=160, pFont:=?DroidSansMono_12x24, bckCol:=16777215, pString:=?kStr00004, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
+	fbTouchScreenEdit_1 : EditBox03 := (wHnd:=4, x1:=170, y1:=20, x2:=229, y2:=43, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=?iTempSensor, order:=1, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#01000008, pEnumId:=0);
+	fbTouchScreenEdit_15 : EditBox03 := (wHnd:=5, x1:=170, y1:=60, x2:=229, y2:=83, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=?iHmdSensor, order:=6, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#01000008, pEnumId:=0);
+	fbTouchScreenEdit_18 : EditBox03 := (wHnd:=6, x1:=37, y1:=220, x2:=204, y2:=243, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201200, order:=7, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#00000014, pEnumId:=1);
+	fbTouchScreenEdit_19 : EditBox03 := (wHnd:=7, x1:=38, y1:=260, x2:=205, y2:=283, pFont:=?DroidSansMono_12x24, bckCol:=16777215, rw:=TRUE, pVar:=16#00201200, order:=8, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#00000014, pEnumId:=2);
+	fbTouchScreenEdit_20 : EditBox03 := (wHnd:=8, x1:=170, y1:=120, x2:=229, y2:=143, pFont:=?DroidSansMono_12x24, style:=1, bckCol:=16777215, bordPts:=1, rw:=TRUE, pVar:=?iTempSetPoint, order:=9, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#01000008, pCanSel:=1, pEnumId:=0);
 	TouchScreen_user_detected_str : STRING[31];
 	TouchScreen_set_temp : INT;
 
@@ -51,7 +54,9 @@ END_VAR
 
 VAR_GLOBAL CONSTANT
 
-	kStr00002 :STRING[4] := 'Hmd';
+	kStr00002 :STRING[9] := 'Humidity';
+	kStr00004 :STRING[7] := 'Status';
+	kStr00003 :STRING[10] := 'Set Temp.';
 	kStr00001 :STRING[12] := 'Temperature';
 
 END_VAR
@@ -517,12 +522,15 @@ FUNCTION_BLOCK DrawTouchScreen
 	TouchScreen_set_temp : INT;
 	fbTouchScreenString_7 : Static02;
 	fbTouchScreenString_14 : Static02;
-	fbTouchScreenLine_9 : Line01;
 	fbTouchScreenLine_16 : Line01;
+	fbTouchScreenString_21 : Static02;
+	fbTouchScreenLine_22 : Line01;
+	fbTouchScreenString_23 : Static02;
 	fbTouchScreenEdit_1 : EditBox03;
 	fbTouchScreenEdit_15 : EditBox03;
 	fbTouchScreenEdit_18 : EditBox03;
 	fbTouchScreenEdit_19 : EditBox03;
+	fbTouchScreenEdit_20 : EditBox03;
 	$waitRefresh : BOOL;
 	END_VAR
 
@@ -620,9 +628,6 @@ FUNCTION_BLOCK DrawTouchScreen
 			fbTouchScreenString_7.accMode := kACS_INIT;
 			fbTouchScreenString_7();
 			fbTouchScreenString_7.accMode := kACS_PRINT;
-			fbTouchScreenLine_9.accMode := kACS_INIT;
-			fbTouchScreenLine_9();
-			fbTouchScreenLine_9.accMode := kACS_PRINT;
 			fbTouchScreenString_14.accMode := kACS_INIT;
 			fbTouchScreenString_14();
 			fbTouchScreenString_14.accMode := kACS_PRINT;
@@ -638,6 +643,18 @@ FUNCTION_BLOCK DrawTouchScreen
 			fbTouchScreenEdit_19.accMode := kACS_INIT;
 			fbTouchScreenEdit_19();
 			fbTouchScreenEdit_19.accMode := kACS_PRINT;
+			fbTouchScreenEdit_20.accMode := kACS_INIT;
+			fbTouchScreenEdit_20();
+			fbTouchScreenEdit_20.accMode := kACS_PRINT;
+			fbTouchScreenString_21.accMode := kACS_INIT;
+			fbTouchScreenString_21();
+			fbTouchScreenString_21.accMode := kACS_PRINT;
+			fbTouchScreenLine_22.accMode := kACS_INIT;
+			fbTouchScreenLine_22();
+			fbTouchScreenLine_22.accMode := kACS_PRINT;
+			fbTouchScreenString_23.accMode := kACS_INIT;
+			fbTouchScreenString_23();
+			fbTouchScreenString_23.accMode := kACS_PRINT;
 
 		END_IF;
 
@@ -668,14 +685,71 @@ FUNCTION_BLOCK DrawTouchScreen
 
 					key := TO_USINT(SHR(udiev, 16));
 
-				END_CASE;
-			END_IF;
+				(* Selecting a control: *)
+				kWM_SELECT:
+
+					(* Extracting the index of the edit box clicked *)
+					iNextSel := TO_INT(SHR(udiev, 16));
+
+					IF res <> 0 THEN
+
+						CASE iNextSel OF
+
+							6:	(* Object: Edit_18 - Event: OnClick - ProcName: Wave *)
+							
+							(* End of associated procedure *)
+
+						END_CASE;
+
+					END_IF;
+
+					CASE iNextSel OF
+
+						4,5,6,7,8:
+							REPEAT
+
+							(* Entering the edit mode *)
+							res := Video_EnterEdit( TO_UINT( iNextSel ) );
+
+							IF res = kKEY_ArrowUp THEN
+
+								iNextSel := TO_INT( Video_NextEdit( TRUE ) );
+								IF iNextSel > -1 THEN
+									res := Video_SendEvent( kWM_SELECT, TO_UINT(iNextSel) );
+								END_IF;
+
+							ELSIF res = kKEY_ArrowDw THEN
+
+								iNextSel := TO_INT( Video_PrevEdit( TRUE ) );
+								IF iNextSel > -1 THEN
+									res := Video_SendEvent( kWM_SELECT, TO_UINT(iNextSel) );
+								END_IF;
+
+							END_IF;
+
+							UNTIL res <> kKEY_Confirm 
+							END_REPEAT;
+
+							IF res <> 255 THEN
+								(* The area to be cleared is the area of the entire screen (without system bar)*)
+								x1:= 0;
+								y1:= 0;
+								x2:= 239;
+								y2:= 319;
+								bMapsReset := TRUE;
+								bStatRedrw := TRUE;
+							END_IF;
+
+					END_CASE;
+
+					END_CASE;
+				END_IF;
+
+			END_WHILE;
 
 		END_WHILE;
 
-	END_WHILE;
-
-END_FUNCTION_BLOCK
+	END_FUNCTION_BLOCK
 
 	(***************************)
 	(*                         *)
@@ -690,12 +764,15 @@ FUNCTION_BLOCK RefrTouchScreen
 	giStackPtr : INT;
 	fbTouchScreenString_7 : Static02;
 	fbTouchScreenString_14 : Static02;
-	fbTouchScreenLine_9 : Line01;
 	fbTouchScreenLine_16 : Line01;
+	fbTouchScreenString_21 : Static02;
+	fbTouchScreenLine_22 : Line01;
+	fbTouchScreenString_23 : Static02;
 	fbTouchScreenEdit_1 : EditBox03;
 	fbTouchScreenEdit_15 : EditBox03;
 	fbTouchScreenEdit_18 : EditBox03;
 	fbTouchScreenEdit_19 : EditBox03;
+	fbTouchScreenEdit_20 : EditBox03;
 	$waitRefresh : BOOL;
 	END_VAR
 

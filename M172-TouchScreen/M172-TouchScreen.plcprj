@@ -34,11 +34,12 @@
 			<functions/>
 			<functionBlocks/>
 			<programs>
-				<program name="main" version="1.0.0" creationDate="0" lastModifiedDate="1709166630" excludeFromBuild="FALSE" excludeFromBuildIfNotDef="">
+				<program name="main" version="1.0.0" creationDate="0" lastModifiedDate="1709424841" excludeFromBuild="FALSE" excludeFromBuildIfNotDef="">
 					<vars/>
 					<iecDeclaration active="FALSE"/>
 					<sourceCode type="ST">
-						<![CDATA[//TempSend := TempSensor;
+						<![CDATA[iTempSend := iTempSensor;
+iHmdSend := iHmdSensor;
 ]]>
 					</sourceCode>
 				</program>
@@ -6679,7 +6680,7 @@ END_PROGRAM
 					<persistentVariables/>
 				</project_config>
 				<TM172DC-P_659p9 template="TM172DC\TM172DC-P_659p9.pct" version="4" uniqueID="0" name="M172DCL Portrait" caption="M172DCL Portrait">
-					<devConfig HMIProject="HMI\M172-TouchScreen.pajx" HMIProjectCRC="400660598">
+					<devConfig HMIProject="HMI\M172-TouchScreen.pajx" HMIProjectCRC="-163702925">
 						<params/>
 						<paramsRO>
 							<param>

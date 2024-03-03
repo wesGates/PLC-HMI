@@ -86,14 +86,41 @@
 						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
 						<COLOR type="RGBColor">0</COLOR>
 						<TEXT>
-							<![CDATA[Hmd]]>
+							<![CDATA[Humidity]]>
 						</TEXT>
 						<XPOS>7</XPOS>
 						<YPOS>51</YPOS>
-						<XDIM>36</XDIM>
+						<XDIM>96</XDIM>
 						<YDIM>24</YDIM>
 						<VISIBLE>TRUE</VISIBLE>
 						<ZORDER>14</ZORDER>
+						<STYLE>Flat</STYLE>
+						<BORDCOL type="RGBColor">0</BORDCOL>
+						<BORDPTS>0</BORDPTS>
+						<SELBCK type="RGBColor">0</SELBCK>
+						<SELCOL type="RGBColor">16777215</SELCOL>
+						<NUMCHAR>0</NUMCHAR>
+						<ALIGN>Left</ALIGN>
+						<REFRESH>FALSE</REFRESH>
+						<SELECT>FALSE</SELECT>
+						<EVENTS>
+							<EVENT name="BeforeUpdate"/>
+							<EVENT name="AfterUpdate"/>
+						</EVENTS>
+					</STRING>
+					<STRING name="String_21">
+						<FONT>DroidSansMono_12x24</FONT>
+						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
+						<COLOR type="RGBColor">0</COLOR>
+						<TEXT>
+							<![CDATA[Set Temp.]]>
+						</TEXT>
+						<XPOS>11</XPOS>
+						<YPOS>99</YPOS>
+						<XDIM>108</XDIM>
+						<YDIM>24</YDIM>
+						<VISIBLE>TRUE</VISIBLE>
+						<ZORDER>21</ZORDER>
 						<STYLE>Flat</STYLE>
 						<BORDCOL type="RGBColor">0</BORDCOL>
 						<BORDPTS>0</BORDPTS>
@@ -144,16 +171,16 @@
 						<BORDPTS>0</BORDPTS>
 						<XPOS>174</XPOS>
 						<YPOS>8</YPOS>
-						<XDIM>48</XDIM>
+						<XDIM>60</XDIM>
 						<YDIM>24</YDIM>
-						<NUMCHAR>4</NUMCHAR>
+						<NUMCHAR>5</NUMCHAR>
 						<ORDER>1</ORDER>
 						<FORMAT>%.1d</FORMAT>
 						<ALIGN>Right</ALIGN>
 						<ACCESS>RW</ACCESS>
 						<DESC/>
 						<ZORDER>1</ZORDER>
-						<VAR type="INT">@LocalParameters.NTC</VAR>
+						<VAR type="INT">iTempSensor</VAR>
 						<TYPE>INT</TYPE>
 						<REFRESH>TRUE</REFRESH>
 						<VISIBLE>TRUE</VISIBLE>
@@ -182,16 +209,16 @@
 						<BORDPTS>0</BORDPTS>
 						<XPOS>174</XPOS>
 						<YPOS>51</YPOS>
-						<XDIM>48</XDIM>
+						<XDIM>60</XDIM>
 						<YDIM>24</YDIM>
-						<NUMCHAR>4</NUMCHAR>
+						<NUMCHAR>5</NUMCHAR>
 						<ORDER>6</ORDER>
 						<FORMAT>%.1d</FORMAT>
 						<ALIGN>Right</ALIGN>
 						<ACCESS>RW</ACCESS>
 						<DESC/>
 						<ZORDER>15</ZORDER>
-						<VAR type="INT">@LocalParameters.RH</VAR>
+						<VAR type="INT">iHmdSensor</VAR>
 						<TYPE>INT</TYPE>
 						<REFRESH>TRUE</REFRESH>
 						<VISIBLE>TRUE</VISIBLE>
@@ -218,8 +245,8 @@
 						<STYLE>Flat</STYLE>
 						<BORDCOL type="RGBColor">0</BORDCOL>
 						<BORDPTS>0</BORDPTS>
-						<XPOS>33</XPOS>
-						<YPOS>107</YPOS>
+						<XPOS>41</XPOS>
+						<YPOS>202</YPOS>
 						<XDIM>168</XDIM>
 						<YDIM>24</YDIM>
 						<NUMCHAR>14</NUMCHAR>
@@ -256,8 +283,8 @@
 						<STYLE>Flat</STYLE>
 						<BORDCOL type="RGBColor">0</BORDCOL>
 						<BORDPTS>0</BORDPTS>
-						<XPOS>34</XPOS>
-						<YPOS>141</YPOS>
+						<XPOS>39</XPOS>
+						<YPOS>246</YPOS>
 						<XDIM>168</XDIM>
 						<YDIM>24</YDIM>
 						<NUMCHAR>14</NUMCHAR>
@@ -272,6 +299,44 @@
 						<REFRESH>TRUE</REFRESH>
 						<VISIBLE>TRUE</VISIBLE>
 						<SELECT>FALSE</SELECT>
+						<LABEL/>
+						<VARMIN>*</VARMIN>
+						<VARMAX>*</VARMAX>
+						<EVENTS>
+							<EVENT name="BeforeUpdate"/>
+							<EVENT name="AfterUpdate"/>
+							<EVENT name="OnGotFocus"/>
+							<EVENT name="OnLostFocus"/>
+							<EVENT name="OnClick"/>
+							<EVENT name="OnEnter"/>
+							<EVENT name="OnChange"/>
+						</EVENTS>
+					</EDIT>
+					<EDIT name="Edit_20">
+						<FONT>DroidSansMono_12x24</FONT>
+						<COLOR type="RGBColor">0</COLOR>
+						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
+						<SELBCK type="RGBColor">0</SELBCK>
+						<SELCOL type="RGBColor">16777215</SELCOL>
+						<STYLE>Raised</STYLE>
+						<BORDCOL type="RGBColor">0</BORDCOL>
+						<BORDPTS>1</BORDPTS>
+						<XPOS>164</XPOS>
+						<YPOS>97</YPOS>
+						<XDIM>60</XDIM>
+						<YDIM>24</YDIM>
+						<NUMCHAR>5</NUMCHAR>
+						<ORDER>9</ORDER>
+						<FORMAT>%.1d</FORMAT>
+						<ALIGN>Right</ALIGN>
+						<ACCESS>RW</ACCESS>
+						<DESC/>
+						<ZORDER>20</ZORDER>
+						<VAR type="INT">iTempSetPoint</VAR>
+						<TYPE>INT</TYPE>
+						<REFRESH>TRUE</REFRESH>
+						<VISIBLE>TRUE</VISIBLE>
+						<SELECT>TRUE</SELECT>
 						<LABEL/>
 						<VARMIN>*</VARMIN>
 						<VARMAX>*</VARMAX>
