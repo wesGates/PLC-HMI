@@ -9,8 +9,8 @@
 				</ENUM>
 				<ENUM id="2" name="ClimateControlStatus" descr="ClimateControlStatus">
 					<VAL id="0">Off</VAL>
-					<VAL id="1">Cool</VAL>
-					<VAL id="2">Heat</VAL>
+					<VAL id="1">Heating</VAL>
+					<VAL id="2">Cooling</VAL>
 				</ENUM>
 			</ENUMS>
 			<STRINGTABLE/>
@@ -18,7 +18,7 @@
 	</LANGUAGES>
 	<PAGES_INFO>
 		<MODEL>flat</MODEL>
-		<FIRST_PAGE>DemoHMI</FIRST_PAGE>
+		<FIRST_PAGE>PLCHMI</FIRST_PAGE>
 		<CURR_LANG>0</CURR_LANG>
 		<TITLEBAR_FONT>EWP2_6x8</TITLEBAR_FONT>
 		<TITLEBAR_COLOR type="RGBColor">16777215</TITLEBAR_COLOR>
@@ -32,7 +32,7 @@
 		<FONTS useOnTarget="false" downloadUsedChars="false"/>
 	</RESOURCES>
 	<PAGES>
-		<PAGE name="DemoHMI">
+		<PAGE name="PLCHMI">
 			<ATTRIBUTES>
 				<MSGID>0</MSGID>
 				<WNDMODE>0</WNDMODE>
@@ -60,11 +60,11 @@
 						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
 						<COLOR type="RGBColor">0</COLOR>
 						<TEXT>
-							<![CDATA[Amb. Temperature]]>
+							<![CDATA[TS Temperature]]>
 						</TEXT>
 						<XPOS>3</XPOS>
 						<YPOS>4</YPOS>
-						<XDIM>96</XDIM>
+						<XDIM>84</XDIM>
 						<YDIM>8</YDIM>
 						<VISIBLE>TRUE</VISIBLE>
 						<ZORDER>1</ZORDER>
@@ -87,11 +87,11 @@
 						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
 						<COLOR type="RGBColor">0</COLOR>
 						<TEXT>
-							<![CDATA[Amb. Humidity]]>
+							<![CDATA[TS Humidity]]>
 						</TEXT>
 						<XPOS>3</XPOS>
 						<YPOS>16</YPOS>
-						<XDIM>78</XDIM>
+						<XDIM>66</XDIM>
 						<YDIM>8</YDIM>
 						<VISIBLE>TRUE</VISIBLE>
 						<ZORDER>4</ZORDER>
@@ -114,11 +114,11 @@
 						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
 						<COLOR type="RGBColor">0</COLOR>
 						<TEXT>
-							<![CDATA[Climate Control]]>
+							<![CDATA[Status]]>
 						</TEXT>
-						<XPOS>3</XPOS>
+						<XPOS>4</XPOS>
 						<YPOS>47</YPOS>
-						<XDIM>90</XDIM>
+						<XDIM>36</XDIM>
 						<YDIM>8</YDIM>
 						<VISIBLE>TRUE</VISIBLE>
 						<ZORDER>11</ZORDER>
@@ -141,11 +141,11 @@
 						<BCKCOLOR type="RGBColor">16777215</BCKCOLOR>
 						<COLOR type="RGBColor">0</COLOR>
 						<TEXT>
-							<![CDATA[Set Temperature]]>
+							<![CDATA[Set Temp.]]>
 						</TEXT>
 						<XPOS>4</XPOS>
 						<YPOS>35</YPOS>
-						<XDIM>90</XDIM>
+						<XDIM>54</XDIM>
 						<YDIM>8</YDIM>
 						<VISIBLE>TRUE</VISIBLE>
 						<ZORDER>13</ZORDER>
@@ -264,19 +264,19 @@
 						<STYLE>Flat</STYLE>
 						<BORDCOL type="RGBColor">0</BORDCOL>
 						<BORDPTS>0</BORDPTS>
-						<XPOS>95</XPOS>
+						<XPOS>84</XPOS>
 						<YPOS>47</YPOS>
-						<XDIM>30</XDIM>
+						<XDIM>42</XDIM>
 						<YDIM>8</YDIM>
-						<NUMCHAR>5</NUMCHAR>
+						<NUMCHAR>7</NUMCHAR>
 						<ORDER>5</ORDER>
 						<FORMAT>ClimateControlStatus</FORMAT>
 						<ALIGN>Right</ALIGN>
 						<ACCESS>RW</ACCESS>
 						<DESC/>
 						<ZORDER>12</ZORDER>
-						<VAR type="BOOL">@LocalParameters.xClimateControlStatus</VAR>
-						<TYPE>BOOL</TYPE>
+						<VAR type="INT">@LocalParameters.uiSystemStatus</VAR>
+						<TYPE>INT</TYPE>
 						<REFRESH>TRUE</REFRESH>
 						<VISIBLE>TRUE</VISIBLE>
 						<SELECT>FALSE</SELECT>

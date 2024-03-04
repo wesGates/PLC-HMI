@@ -24,19 +24,17 @@ VAR_GLOBAL
 	$PagNumber : UINT;
 	$waitRefresh : BOOL;
 
-	{G:"DemoHMI_vars"}
-	fbDemoHMI : DrawDemoHMI;
-	fbRefrDemoHMI : RefrDemoHMI;
-	fbDemoHMIString_1 : Static01 := (x:=2, y:=2, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00001, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
-	fbDemoHMIString_4 : Static01 := (wHnd:=1, x:=2, y:=14, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00002, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
-	fbDemoHMIString_6 : Static01 := (wHnd:=2, x:=2, y:=23, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00003, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
-	fbDemoHMIString_8 : Static01 := (wHnd:=3, x:=2, y:=32, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00004, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
-	fbDemoHMIString_11 : Static01 := (wHnd:=4, x:=2, y:=45, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00005, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
-	fbDemoHMIEdit_3 : EditBox01 := (wHnd:=5, x1:=99, y1:=2, x2:=122, y2:=9, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00230100, order:=1, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#0000000C);
-	fbDemoHMIEdit_5 : EditBox01 := (wHnd:=6, x1:=99, y1:=14, x2:=122, y2:=21, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00400000, order:=2, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, pVarMin:=200, pVarMax:=350, format:=16#0101400C, pCanSel:=1);
-	fbDemoHMIEdit_7 : EditBox01 := (wHnd:=7, x1:=99, y1:=23, x2:=122, y2:=30, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00400100, order:=3, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, pVarMax:=50, format:=16#0101400C, pCanSel:=1);
-	fbDemoHMIEdit_9 : EditBox01 := (wHnd:=8, x1:=99, y1:=32, x2:=122, y2:=39, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00400200, order:=4, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyUInt, pVarMin:=1, pVarMax:=30, format:=16#0001400C, pCanSel:=1);
-	fbDemoHMIEdit_12 : EditBox01 := (wHnd:=9, x1:=94, y1:=45, x2:=123, y2:=52, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00230000, order:=5, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyBool, enumId:=1, format:=16#0000000C);
+	{G:"PLCHMI_vars"}
+	fbPLCHMI : DrawPLCHMI;
+	fbRefrPLCHMI : RefrPLCHMI;
+	fbPLCHMIString_1 : Static01 := (x:=3, y:=4, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00001, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
+	fbPLCHMIString_4 : Static01 := (wHnd:=1, x:=3, y:=16, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00002, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
+	fbPLCHMIString_11 : Static01 := (wHnd:=2, x:=4, y:=47, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00003, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
+	fbPLCHMIString_13 : Static01 := (wHnd:=3, x:=4, y:=35, pFont:=?EWP2_6x8, bckCol:=16777215, pString:=?kStr00004, pVisVar:=1, format:=16#0020, bordPts:=0, selForeCol:=16777215, pRefrVar:=0, pSelVar:=0, numChars:=0);
+	fbPLCHMIEdit_3 : EditBox01 := (wHnd:=4, x1:=100, y1:=4, x2:=123, y2:=11, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00230000, order:=1, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#0100000C);
+	fbPLCHMIEdit_5 : EditBox01 := (wHnd:=5, x1:=100, y1:=16, x2:=123, y2:=23, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00230100, order:=2, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#0100000C, pCanSel:=1);
+	fbPLCHMIEdit_12 : EditBox01 := (wHnd:=6, x1:=84, y1:=47, x2:=125, y2:=54, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00230300, order:=5, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, enumId:=2, format:=16#0000000C);
+	fbPLCHMIEdit_14 : EditBox01 := (wHnd:=7, x1:=101, y1:=35, x2:=124, y2:=42, pFont:=?EWP2_6x8, bckCol:=16777215, rw:=TRUE, pVar:=16#00230200, order:=6, pVisVar:=1, foreSelCol:=16777215, refr:=TRUE, type:=tyInt, format:=16#0100000C, pCanSel:=1);
 
 	{G:"Back page manager"}
 	fbBackPage : DrawBackPage;
@@ -51,11 +49,10 @@ END_VAR
 
 VAR_GLOBAL CONSTANT
 
-	kStr00001 :STRING[13] := 'Ambient Temp';
-	kStr00004 :STRING[11] := 'Time Delay';
-	kStr00005 :STRING[15] := 'Output Cooling';
-	kStr00003 :STRING[13] := 'Differential';
-	kStr00002 :STRING[12] := 'Set Cooling';
+	kStr00002 :STRING[12] := 'TS Humidity';
+	kStr00004 :STRING[16] := 'Set Temperature';
+	kStr00003 :STRING[7] := 'Status';
+	kStr00001 :STRING[15] := 'TS Temperature';
 
 END_VAR
 VAR_GLOBAL CONSTANT
@@ -241,13 +238,21 @@ VAR_GLOBAL CONSTANT
 
 	(*** Enumeratives: ***)
 	kbEnumIdxBaseLanguage : UDINT := 0;
-	kbResEnums : ARRAY[ 0..27 ] OF BYTE :=
+	kbResEnums : ARRAY[ 0..68 ] OF BYTE :=
 	(*** Language: BaseLanguage ***)
 	(*** Enum ID ***) 16#01,
 	(* 0 *) 16#00, 16#00, 16#00, 16#00, 
 	(* OFF *) 16#4F, 16#46, 16#46, 16#00, 
 	(* 1 *) 16#01, 16#00, 16#00, 16#00, 
 	(* ON *) 16#4F, 16#4E, 16#00, 
+	(* End of enum *) 16#CD, 16#CD, 16#CD, 16#CD, 16#CD, 16#CD, 16#CD, 16#CD, 
+	(*** Enum ID ***) 16#02,
+	(* 0 *) 16#00, 16#00, 16#00, 16#00, 
+	(* Off *) 16#4F, 16#66, 16#66, 16#00, 
+	(* 1 *) 16#01, 16#00, 16#00, 16#00, 
+	(* Heating *) 16#48, 16#65, 16#61, 16#74, 16#69, 16#6E, 16#67, 16#00, 
+	(* 2 *) 16#02, 16#00, 16#00, 16#00, 
+	(* Cooling *) 16#43, 16#6F, 16#6F, 16#6C, 16#69, 16#6E, 16#67, 16#00, 
 	(* End of enum *) 16#CD, 16#CD, 16#CD, 16#CD, 16#CD, 16#CD, 16#CD, 16#CD, 
 	(* End of language *) 16#CD, 16#CD, 16#CD, 16#CD ;
 	{G:"Parameters"}
@@ -308,7 +313,7 @@ PROGRAM PageDraw
 	(* Declaring the system attributes of windows *)
 	res := Video_SetWndSysProps( ?EWP2_6x8, 16777215, 0 );
 
-	(* *** INITIALIZING THE OBJECTS OF PAGE 'DemoHMI' *** *)
+	(* *** INITIALIZING THE OBJECTS OF PAGE 'PLCHMI' *** *)
 
 	(* Init the set elements *)
 	guiCallStack[ giStackPtr ] := 0;
@@ -316,7 +321,7 @@ PROGRAM PageDraw
 		CASE guiCallStack[ giStackPtr ] OF
 
 			0:
-				fbDemoHMI();
+				fbPLCHMI();
 
 
 		END_CASE;
@@ -343,7 +348,7 @@ END_VAR
 		CASE guiCallStack[ giStackPtr ] OF
 
 			0:
-				fbRefrDemoHMI();
+				fbRefrPLCHMI();
 
 
 		END_CASE;
@@ -441,7 +446,7 @@ FUNCTION_BLOCK DrawBackPage
 	(*                         *)
 	(***************************)
 
-FUNCTION_BLOCK DrawDemoHMI
+FUNCTION_BLOCK DrawPLCHMI
 
 	VAR_OUTPUT
 	uiOutVar : UINT;
@@ -451,16 +456,14 @@ FUNCTION_BLOCK DrawDemoHMI
 	guiCallStack : ARRAY[ 0..9 ] OF UINT;
 	giStackPtr : INT;
 	fbBackPage : DrawBackPage;
-	fbDemoHMIString_1 : Static01;
-	fbDemoHMIString_4 : Static01;
-	fbDemoHMIString_6 : Static01;
-	fbDemoHMIString_8 : Static01;
-	fbDemoHMIString_11 : Static01;
-	fbDemoHMIEdit_3 : EditBox01;
-	fbDemoHMIEdit_5 : EditBox01;
-	fbDemoHMIEdit_7 : EditBox01;
-	fbDemoHMIEdit_9 : EditBox01;
-	fbDemoHMIEdit_12 : EditBox01;
+	fbPLCHMIString_1 : Static01;
+	fbPLCHMIString_4 : Static01;
+	fbPLCHMIString_11 : Static01;
+	fbPLCHMIString_13 : Static01;
+	fbPLCHMIEdit_3 : EditBox01;
+	fbPLCHMIEdit_5 : EditBox01;
+	fbPLCHMIEdit_12 : EditBox01;
+	fbPLCHMIEdit_14 : EditBox01;
 	$waitRefresh : BOOL;
 	END_VAR
 
@@ -548,38 +551,31 @@ FUNCTION_BLOCK DrawDemoHMI
 			(* *** PAGE SECTION *** *)
 
 			(* *** DRAW CONTROLS *** *)
-			fbDemoHMIString_1.accMode := kACS_INIT;
-			fbDemoHMIString_1();
-			fbDemoHMIString_1.accMode := kACS_PRINT;
-			res := Video_Line( 1, 11, 123, 11, 1, 0 );
-			fbDemoHMIEdit_3.accMode := kACS_INIT;
-			fbDemoHMIEdit_3();
-			fbDemoHMIEdit_3.accMode := kACS_PRINT;
-			fbDemoHMIString_4.accMode := kACS_INIT;
-			fbDemoHMIString_4();
-			fbDemoHMIString_4.accMode := kACS_PRINT;
-			fbDemoHMIEdit_5.accMode := kACS_INIT;
-			fbDemoHMIEdit_5();
-			fbDemoHMIEdit_5.accMode := kACS_PRINT;
-			fbDemoHMIString_6.accMode := kACS_INIT;
-			fbDemoHMIString_6();
-			fbDemoHMIString_6.accMode := kACS_PRINT;
-			fbDemoHMIEdit_7.accMode := kACS_INIT;
-			fbDemoHMIEdit_7();
-			fbDemoHMIEdit_7.accMode := kACS_PRINT;
-			fbDemoHMIString_8.accMode := kACS_INIT;
-			fbDemoHMIString_8();
-			fbDemoHMIString_8.accMode := kACS_PRINT;
-			fbDemoHMIEdit_9.accMode := kACS_INIT;
-			fbDemoHMIEdit_9();
-			fbDemoHMIEdit_9.accMode := kACS_PRINT;
-			res := Video_Line( 1, 42, 123, 42, 1, 0 );
-			fbDemoHMIString_11.accMode := kACS_INIT;
-			fbDemoHMIString_11();
-			fbDemoHMIString_11.accMode := kACS_PRINT;
-			fbDemoHMIEdit_12.accMode := kACS_INIT;
-			fbDemoHMIEdit_12();
-			fbDemoHMIEdit_12.accMode := kACS_PRINT;
+			fbPLCHMIString_1.accMode := kACS_INIT;
+			fbPLCHMIString_1();
+			fbPLCHMIString_1.accMode := kACS_PRINT;
+			fbPLCHMIEdit_3.accMode := kACS_INIT;
+			fbPLCHMIEdit_3();
+			fbPLCHMIEdit_3.accMode := kACS_PRINT;
+			fbPLCHMIString_4.accMode := kACS_INIT;
+			fbPLCHMIString_4();
+			fbPLCHMIString_4.accMode := kACS_PRINT;
+			fbPLCHMIEdit_5.accMode := kACS_INIT;
+			fbPLCHMIEdit_5();
+			fbPLCHMIEdit_5.accMode := kACS_PRINT;
+			res := Video_Line( 3, 30, 125, 30, 1, 0 );
+			fbPLCHMIString_11.accMode := kACS_INIT;
+			fbPLCHMIString_11();
+			fbPLCHMIString_11.accMode := kACS_PRINT;
+			fbPLCHMIEdit_12.accMode := kACS_INIT;
+			fbPLCHMIEdit_12();
+			fbPLCHMIEdit_12.accMode := kACS_PRINT;
+			fbPLCHMIString_13.accMode := kACS_INIT;
+			fbPLCHMIString_13();
+			fbPLCHMIString_13.accMode := kACS_PRINT;
+			fbPLCHMIEdit_14.accMode := kACS_INIT;
+			fbPLCHMIEdit_14();
+			fbPLCHMIEdit_14.accMode := kACS_PRINT;
 
 			(* Select the first selectable control *)
 			iNextSel := Video_FirstLastEdit( TRUE, FALSE );
@@ -623,7 +619,7 @@ FUNCTION_BLOCK DrawDemoHMI
 
 						CASE iNextSel OF
 
-							5,6,7,8,9:
+							4,5,6,7:
 								(* Entering the edit mode *)
 								res := Video_EnterEdit( TO_UINT( iNextSel ) );
 
@@ -683,21 +679,19 @@ FUNCTION_BLOCK DrawDemoHMI
 	(*                         *)
 	(***************************)
 
-FUNCTION_BLOCK RefrDemoHMI
+FUNCTION_BLOCK RefrPLCHMI
 
 	VAR_EXTERNAL
 	guiCallStack : ARRAY[ 0..9 ] OF UINT;
 	giStackPtr : INT;
-	fbDemoHMIString_1 : Static01;
-	fbDemoHMIString_4 : Static01;
-	fbDemoHMIString_6 : Static01;
-	fbDemoHMIString_8 : Static01;
-	fbDemoHMIString_11 : Static01;
-	fbDemoHMIEdit_3 : EditBox01;
-	fbDemoHMIEdit_5 : EditBox01;
-	fbDemoHMIEdit_7 : EditBox01;
-	fbDemoHMIEdit_9 : EditBox01;
-	fbDemoHMIEdit_12 : EditBox01;
+	fbPLCHMIString_1 : Static01;
+	fbPLCHMIString_4 : Static01;
+	fbPLCHMIString_11 : Static01;
+	fbPLCHMIString_13 : Static01;
+	fbPLCHMIEdit_3 : EditBox01;
+	fbPLCHMIEdit_5 : EditBox01;
+	fbPLCHMIEdit_12 : EditBox01;
+	fbPLCHMIEdit_14 : EditBox01;
 	$waitRefresh : BOOL;
 	END_VAR
 
@@ -729,20 +723,17 @@ FUNCTION_BLOCK RefrDemoHMI
 			$waitRefresh := FALSE;
 
 			(* *** REFRESH PAGE CONTROLS *** *)
-			IF fbDemoHMIEdit_3.accMode <> kACS_MODIFY THEN
-				fbDemoHMIEdit_3();
+			IF fbPLCHMIEdit_3.accMode <> kACS_MODIFY THEN
+				fbPLCHMIEdit_3();
 			END_IF;
-			IF fbDemoHMIEdit_5.accMode <> kACS_MODIFY THEN
-				fbDemoHMIEdit_5();
+			IF fbPLCHMIEdit_5.accMode <> kACS_MODIFY THEN
+				fbPLCHMIEdit_5();
 			END_IF;
-			IF fbDemoHMIEdit_7.accMode <> kACS_MODIFY THEN
-				fbDemoHMIEdit_7();
+			IF fbPLCHMIEdit_12.accMode <> kACS_MODIFY THEN
+				fbPLCHMIEdit_12();
 			END_IF;
-			IF fbDemoHMIEdit_9.accMode <> kACS_MODIFY THEN
-				fbDemoHMIEdit_9();
-			END_IF;
-			IF fbDemoHMIEdit_12.accMode <> kACS_MODIFY THEN
-				fbDemoHMIEdit_12();
+			IF fbPLCHMIEdit_14.accMode <> kACS_MODIFY THEN
+				fbPLCHMIEdit_14();
 			END_IF;
 
 			(* *** REFRESHING BACKGROUND ITEMS *** *)
